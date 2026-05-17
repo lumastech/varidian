@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\user\\\\Classfied\\\\PROJECTS\\\\Varidian web\" -Recurse -Force)",
+      "Bash(Select-Object FullName, PSIsContainer)",
+      "Bash(ConvertTo-Json)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\user\\\\Classfied\\\\PROJECTS\\\\varidian\\\\resources\\\\js\" -Recurse -Force)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\user\\\\Classfied\\\\PROJECTS\\\\varidian\\\\resources\\\\js\" -Recurse -Force | ForEach-Object { $_.FullName })",
+      "Read(//c/Users/user/Classfied/PROJECTS/Varidian web/**)",
+      "PowerShell(\\(Get-ChildItem -Path \"C:\\\\Users\\\\user\\\\Classfied\\\\PROJECTS\\\\varidian\\\\resources\\\\js\" -Recurse -Force\\).Count)",
+      "Bash(php artisan *)"
+    ]
+  }
+}
