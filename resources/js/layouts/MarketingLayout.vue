@@ -161,6 +161,7 @@ const socials = ['LinkedIn', 'Twitter / X', 'GitHub'];
                             <li>
                                 <a href="mailto:info@varidianlab.com" class="text-xs text-slate-500 transition-colors hover:text-slate-300">info@varidianlab.com</a>
                             </li>
+                            <li><a href="tel:+260971864421" class="text-xs text-slate-500 transition-colors hover:text-slate-300">+260 971 864 421</a></li>
                             <li><span class="text-xs text-slate-500">Lusaka, Zambia</span></li>
                             <li>
                                 <a href="https://wa.me/260971864421" target="_blank" class="text-xs text-slate-500 transition-colors hover:text-slate-300">WhatsApp Us</a>
