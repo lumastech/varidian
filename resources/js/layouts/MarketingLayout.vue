@@ -137,6 +137,7 @@ const socials = ['LinkedIn', 'Twitter / X', 'GitHub'];
                         </p>
                         <p class="text-xs text-slate-600">Lusaka, Zambia</p>
                         <p class="mt-1 text-xs text-slate-600">info@varidianlab.com</p>
+                        <p class="mt-1 text-xs text-slate-600">+260 971 864 421</p>
                     </div>
                     <div>
                         <h4 class="mb-4 text-xs font-semibold tracking-wider text-white uppercase">Services</h4>
