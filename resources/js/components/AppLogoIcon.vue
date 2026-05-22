@@ -13,5 +13,5 @@ defineProps<Props>();
 </script>
 
 <template>
-    <img src="../../images/logo.png" width="200px" alt="VARIDIAN">
+    <img src="../../images/logo.png" class="h-4" alt="VARIDIAN">
 </template>

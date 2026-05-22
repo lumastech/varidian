@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch, nextTick } from 'vue';
 
 const activeFilter = ref('All');
 const filters = ['All', 'Custom Software', 'Web & Mobile', 'Integration', 'Data & AI', 'Security & Audit'];
@@ -84,12 +84,20 @@ const industries = [
     'Manufacturing', 'Public Sector', 'Village Banking', 'Healthcare', 'Education',
 ];
 
+let obs: IntersectionObserver;
+
 onMounted(() => {
-    const obs = new IntersectionObserver(
+    obs = new IntersectionObserver(
         (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); } }),
         { threshold: 0.08 },
     );
     document.querySelectorAll('[data-reveal]').forEach((el) => obs.observe(el));
+});
+
+watch(activeFilter, () => {
+    nextTick(() => {
+        document.querySelectorAll('[data-reveal]:not(.in)').forEach((el) => obs.observe(el));
+    });
 });
 </script>
 
