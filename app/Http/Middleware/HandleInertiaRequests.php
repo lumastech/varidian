@@ -46,6 +46,12 @@ class HandleInertiaRequests extends Middleware
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'currentTeam' => fn () => $user?->currentTeam ? $user->toUserTeam($user->currentTeam) : null,
             'teams' => fn () => $user?->toUserTeams(includeCurrent: true) ?? [],
+            'contact' => [
+                'whatsapp_number' => config('contact.whatsapp_number'),
+                'whatsapp_url' => 'https://wa.me/'.config('contact.whatsapp_number'),
+                'phone' => config('contact.phone'),
+                'email' => config('contact.email'),
+            ],
         ];
     }
 }

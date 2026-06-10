@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
 import { useForm } from '@inertiajs/vue3';
 import { onMounted } from 'vue';
+import SeoHead from '@/components/SeoHead.vue';
 
 defineProps<{
     status?: string;
@@ -9,10 +9,10 @@ defineProps<{
 
 const form = useForm({
     name: '',
-    company: '',
-    email: '',
+    organisation: '',
     phone: '',
-    service: '',
+    email: '',
+    product_interest: '',
     message: '',
 });
 
@@ -25,7 +25,12 @@ function sendMessage() {
 
 onMounted(() => {
     const obs = new IntersectionObserver(
-        (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); } }),
+        (entries) =>
+            entries.forEach((e) => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('in');
+                }
+            }),
         { threshold: 0.08 },
     );
     document.querySelectorAll('[data-reveal]').forEach((el) => obs.observe(el));
@@ -33,15 +38,19 @@ onMounted(() => {
 </script>
 
 <template>
-    <Head title="Contact — Varidian" />
+    <SeoHead
+        title="Contact Varidian — Lusaka, Zambia"
+        description="Get in touch with Varidian Consulting Limited. Call, WhatsApp, or email us from Lusaka, Zambia. Request a product demo or discuss a custom development project."
+        canonical-url="https://varidianlab.com/contact"
+    />
 
     <!-- PAGE HEADER -->
     <section class="mkt-page-header relative overflow-hidden px-6 pt-40 pb-20 text-center" style="background: radial-gradient(ellipse 80% 50% at 50% -5%, rgba(0,163,255,0.10) 0%, transparent 65%), #080c10;">
         <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:60px 60px"></div>
         <div class="relative z-10 mx-auto max-w-3xl">
             <div class="mkt-chip mb-5">Get In Touch</div>
-            <h1 class="mkt-page-title mb-5">Let's Build Something<br /><span class="accent">Together</span></h1>
-            <p class="mx-auto max-w-lg text-base leading-relaxed text-slate-400">Tell us about your project, your business, or just say hello. We'll get back to you within one business day.</p>
+            <h1 class="mkt-page-title mb-5">Get in touch</h1>
+            <p class="mx-auto max-w-lg text-base leading-relaxed text-slate-400">We are based in Lusaka. Call, WhatsApp, or send us a message and we will respond within one business day.</p>
         </div>
     </section>
 
@@ -61,7 +70,7 @@ onMounted(() => {
                             <svg class="h-4 w-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                                 <path d="M5 13l4 4L19 7" />
                             </svg>
-                            Message sent! We'll get back to you within one business day.
+                            Thank you. We have received your message and will be in touch within one business day. You can also reach us directly on WhatsApp: +260 97 1864421
                         </div>
 
                         <!-- Error banner -->
@@ -79,48 +88,45 @@ onMounted(() => {
                                 <p v-if="form.errors.name" class="mt-1 text-xs text-red-400">{{ form.errors.name }}</p>
                             </div>
                             <div>
-                                <label class="contact-field-label">Company / Organisation</label>
-                                <input v-model="form.company" class="contact-field-input" type="text" placeholder="Acme Ltd" />
+                                <label class="contact-field-label">School, church, company name</label>
+                                <input v-model="form.organisation" class="contact-field-input" type="text" placeholder="School, church, company name" />
                             </div>
                         </div>
 
                         <div class="mb-5 grid gap-5 sm:grid-cols-2">
                             <div>
-                                <label class="contact-field-label">Email Address *</label>
-                                <input v-model="form.email" class="contact-field-input" :class="{ 'border-red-500/50': form.errors.email }" type="email" placeholder="john@company.com" />
-                                <p v-if="form.errors.email" class="mt-1 text-xs text-red-400">{{ form.errors.email }}</p>
+                                <label class="contact-field-label">Phone / WhatsApp *</label>
+                                <input v-model="form.phone" class="contact-field-input" :class="{ 'border-red-500/50': form.errors.phone }" type="tel" placeholder="+260..." />
+                                <p v-if="form.errors.phone" class="mt-1 text-xs text-red-400">{{ form.errors.phone }}</p>
                             </div>
                             <div>
-                                <label class="contact-field-label">Phone / WhatsApp</label>
-                                <input v-model="form.phone" class="contact-field-input" type="tel" placeholder="+260 97 ..." />
+                                <label class="contact-field-label">Email Address</label>
+                                <input v-model="form.email" class="contact-field-input" :class="{ 'border-red-500/50': form.errors.email }" type="email" placeholder="john@company.com" />
+                                <p v-if="form.errors.email" class="mt-1 text-xs text-red-400">{{ form.errors.email }}</p>
                             </div>
                         </div>
 
                         <div class="mb-5">
-                            <label class="contact-field-label">Service You're Interested In</label>
-                            <select v-model="form.service" class="contact-field-input">
-                                <option value="">Select a service...</option>
-                                <option>Custom Software Development</option>
-                                <option>Web Development</option>
-                                <option>Mobile App Development</option>
-                                <option>Payment & API Integration</option>
-                                <option>Cybersecurity</option>
-                                <option>Data Analytics & AI</option>
-                                <option>ICT Audit</option>
-                                <option>Management Consulting</option>
-                                <option>ICT Outsourcing</option>
-                                <option>ICT Equipment Supply</option>
-                                <option>Other / Not Sure Yet</option>
+                            <label class="contact-field-label">Product Interest *</label>
+                            <select v-model="form.product_interest" class="contact-field-input" :class="{ 'border-red-500/50': form.errors.product_interest }">
+                                <option value="">Select a product or service...</option>
+                                <option>School Management System</option>
+                                <option>Church Management System</option>
+                                <option>BizManager</option>
+                                <option>Village Banking</option>
+                                <option>Custom Development</option>
+                                <option>General Inquiry</option>
                             </select>
+                            <p v-if="form.errors.product_interest" class="mt-1 text-xs text-red-400">{{ form.errors.product_interest }}</p>
                         </div>
 
                         <div class="mb-7">
-                            <label class="contact-field-label">Tell Us About Your Project *</label>
+                            <label class="contact-field-label">Message *</label>
                             <textarea
                                 v-model="form.message"
                                 class="contact-field-input"
                                 :class="{ 'border-red-500/50': form.errors.message }"
-                                placeholder="Briefly describe what you're trying to build or solve. The more detail, the better."
+                                placeholder="Tell us about your organisation and what you are looking for. The more detail, the better."
                             ></textarea>
                             <p v-if="form.errors.message" class="mt-1 text-xs text-red-400">{{ form.errors.message }}</p>
                         </div>
@@ -133,7 +139,7 @@ onMounted(() => {
                                 </svg>
                                 Sending…
                             </span>
-                            <span v-else>Send Message</span>
+                            <span v-else>Send message</span>
                         </button>
 
                         <p class="mt-3 text-center text-xs text-slate-600">
@@ -154,7 +160,7 @@ onMounted(() => {
                             </svg>
                         </div>
                         <h3 class="mb-2 text-base font-bold text-white">Prefer to Chat Directly?</h3>
-                        <p class="mb-5 text-xs leading-relaxed text-slate-400">Message us on WhatsApp and we'll respond within a few hours — even on weekends.</p>
+                        <p class="mb-5 text-xs leading-relaxed text-slate-400">Message us on WhatsApp and we'll respond within a few hours.</p>
                         <a href="https://wa.me/260971864421" target="_blank" rel="noopener noreferrer" class="contact-btn-wa">
                             <svg class="h-4 w-4" fill="white" viewBox="0 0 24 24">
                                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
@@ -164,6 +170,30 @@ onMounted(() => {
                     </div>
 
                     <!-- Contact details -->
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon">
+                            <svg class="h-4 w-4 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="mb-1 text-xs text-slate-500">Location</div>
+                            <div class="text-sm text-white">Lusaka, Zambia</div>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon">
+                            <svg class="h-4 w-4 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="mb-1 text-xs text-slate-500">Phone</div>
+                            <a href="tel:+260971864421" class="text-sm text-white transition-colors hover:text-teal-400">+260 97 1864421</a>
+                        </div>
+                    </div>
+
                     <div class="contact-info-item">
                         <div class="contact-info-icon">
                             <svg class="h-4 w-4 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -179,55 +209,15 @@ onMounted(() => {
                     <div class="contact-info-item">
                         <div class="contact-info-icon">
                             <svg class="h-4 w-4 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                                <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" />
                             </svg>
                         </div>
                         <div>
-                            <div class="mb-1 text-xs text-slate-500">Office</div>
-                            <div class="text-sm text-white">Lusaka, Zambia</div>
+                            <div class="mb-1 text-xs text-slate-500">Business hours</div>
+                            <div class="text-sm text-white">Monday – Friday, 08:00 – 17:00 CAT</div>
                         </div>
-                    </div>
-
-                    <div class="contact-info-item">
-                        <div class="contact-info-icon">
-                            <svg class="h-4 w-4 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="10" /><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" />
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="mb-1 text-xs text-slate-500">Website</div>
-                            <div class="text-sm text-white">www.varidianlab.com</div>
-                        </div>
-                    </div>
-
-                    <!-- Active indicator -->
-                    <div class="rounded-xl p-4" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05)">
-                        <div class="mb-2 flex items-center gap-2">
-                            <div class="h-2 w-2 rounded-full bg-emerald-400" style="box-shadow:0 0 6px rgba(52,211,153,0.6)"></div>
-                            <span class="text-xs font-semibold text-white">We're active</span>
-                        </div>
-                        <p class="text-xs leading-relaxed text-slate-500">We typically respond within a few hours. For urgent matters, WhatsApp is the fastest way to reach us.</p>
                     </div>
                 </div>
-            </div>
-
-            <!-- Discovery call section -->
-            <div class="mkt-sep mb-16"></div>
-            <div class="mx-auto max-w-2xl text-center" data-reveal>
-                <div class="mkt-chip mb-5">Free Discovery Call</div>
-                <h2 class="contact-sec-title mb-4">Not Sure Where to Start?</h2>
-                <p class="mb-8 text-sm leading-relaxed text-slate-400">Book a complimentary 45-minute discovery call. We'll listen to your challenges, share our perspective on the best approach, and tell you honestly whether we're the right fit — no hard sell.</p>
-                <a
-                    href="https://wa.me/260971864421?text=Hi%20Varidian!%20I'd%20like%20to%20book%20a%20free%20discovery%20call."
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="contact-btn-wa inline-flex justify-center"
-                >
-                    <svg class="h-4 w-4" fill="white" viewBox="0 0 24 24">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                    </svg>
-                    Book Discovery Call on WhatsApp
-                </a>
             </div>
         </div>
     </section>

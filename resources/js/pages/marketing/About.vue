@@ -1,53 +1,24 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
 import { onMounted } from 'vue';
+import SeoHead from '@/components/SeoHead.vue';
 
-const stats = [
-    { val: '8+', label: 'Service areas covering the full ICT stack' },
-    { val: '100%', label: 'Custom-built — no off-the-shelf templates' },
-    { val: '24/7', label: 'Support & monitoring commitment' },
-    { val: '2026', label: 'Founded in Lusaka, Zambia' },
-];
-
-const values = [
-    {
-        name: 'Excellence',
-        desc: 'We hold ourselves to the highest standards in everything we deliver — from the code we write to the advice we give.',
-        icon: `<svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
-    },
-    {
-        name: 'Integrity',
-        desc: 'We are transparent, honest, and accountable in all our engagements. What we commit to, we deliver.',
-        icon: `<svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
-    },
-    {
-        name: 'Innovation',
-        desc: 'We stay ahead of technology trends to bring our clients modern, future-proof solutions that keep them competitive.',
-        icon: `<svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>`,
-    },
-    {
-        name: 'Partnership',
-        desc: 'We treat every client relationship as a long-term partnership, not a transaction. We invest in understanding your business.',
-        icon: `<svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>`,
-    },
-    {
-        name: 'Impact',
-        desc: 'We measure our success by the tangible results we create for our clients — not just delivery, but measurable business outcomes.',
-        icon: `<svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>`,
-    },
-];
-
-const steps = [
-    { num: '01', title: 'Discover', desc: 'Understand your business goals, challenges, and requirements before recommending anything.' },
-    { num: '02', title: 'Design', desc: 'Architect the right solution together — clear specs, system design, and a roadmap you can approve.' },
-    { num: '03', title: 'Build', desc: 'Develop and rigorously test your solution using modern frameworks and engineering best practices.' },
-    { num: '04', title: 'Deploy', desc: 'Launch with confidence — migration support, user training, and a smooth go-live from day one.' },
-    { num: '05', title: 'Support', desc: 'Ongoing maintenance and improvements keep your solution performing long after delivery.' },
+const companyDetails = [
+    { label: 'Registered name', value: 'Varidian Consulting Limited' },
+    { label: 'Registration', value: 'PACRA Reg. No: 120261044865' },
+    { label: 'Location', value: 'Lusaka, Zambia' },
+    { label: 'Website', value: 'varidianlab.com' },
+    { label: 'Email', value: 'info@varidianlab.com', href: 'mailto:info@varidianlab.com' },
+    { label: 'Phone / WhatsApp', value: '+260 97 1864421', href: 'tel:+260971864421' },
 ];
 
 onMounted(() => {
     const obs = new IntersectionObserver(
-        (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); } }),
+        (entries) =>
+            entries.forEach((e) => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('in');
+                }
+            }),
         { threshold: 0.08 },
     );
     document.querySelectorAll('[data-reveal]').forEach((el) => obs.observe(el));
@@ -55,43 +26,87 @@ onMounted(() => {
 </script>
 
 <template>
-    <Head title="About — Varidian" />
+    <SeoHead
+        title="About Varidian — Zambian Software Development Firm"
+        description="Varidian Consulting Limited is a Lusaka-based software development firm building sector-specific management systems for Zambian schools, churches, NGOs, and businesses."
+        canonical-url="https://varidianlab.com/about"
+    />
 
     <!-- PAGE HEADER -->
     <section class="mkt-page-header relative overflow-hidden px-6 pt-40 pb-20 text-center">
         <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:60px 60px"></div>
         <div class="relative z-10 mx-auto max-w-3xl">
             <div class="mkt-chip mb-5">About Varidian</div>
-            <h1 class="mkt-page-title mb-5">Empowering Your Business<br />Through <span class="accent">Technology</span></h1>
+            <h1 class="mkt-page-title mb-5">We build software that<br /><span class="accent">understands Zambia</span></h1>
             <p class="mx-auto max-w-lg text-base leading-relaxed text-slate-400">
-                A full-service ICT consulting firm headquartered in Lusaka, Zambia — built on the belief that the right technology, thoughtfully implemented, is one of the most powerful tools a business can have.
+                A software development firm based in Lusaka, building management systems for Zambian schools, churches, NGOs, and businesses.
             </p>
         </div>
     </section>
 
-    <!-- WHO WE ARE -->
+    <!-- ABOUT BODY -->
     <section class="px-6 py-20" style="background:#080c10">
         <div class="mx-auto max-w-6xl">
 
             <!-- Two-col intro -->
-            <div class="mb-20 grid items-center gap-14 lg:grid-cols-2" data-reveal>
+            <div class="mb-20 grid items-start gap-14 lg:grid-cols-2" data-reveal>
                 <div>
                     <div class="mkt-chip mb-5">Who We Are</div>
-                    <h2 class="about-sec-title mb-6">Built to Deliver.<br />Designed to Last.</h2>
+                    <h2 class="about-sec-title mb-6">Built from the ground up<br />for the Zambian context.</h2>
                     <p class="mb-4 text-sm leading-relaxed text-slate-400">
-                        Varidian Consulting Limited is a full-service Information and Communications Technology (ICT) consulting firm headquartered in Lusaka, Zambia. We partner with businesses across industries to design, build, and manage technology solutions that solve real problems, drive efficiency, and create lasting value.
+                        Varidian Consulting Limited is a software development firm based in Lusaka, Zambia. We build sector-specific management systems for Zambian institutions — schools, churches, NGOs, and small businesses.
                     </p>
-                    <p class="mb-6 text-sm leading-relaxed text-slate-400">
-                        From custom software development and payment system integrations to cybersecurity audits and ICT outsourcing, we deliver end-to-end technology services tailored to the specific needs of each client — whether they are an emerging startup, a growing SME, or an established enterprise.
+                    <p class="mb-4 text-sm leading-relaxed text-slate-400">
+                        Our products are not generic software adapted for Africa. They are built from the ground up for the Zambian context: the Ministry of Education three-term calendar, ECZ examination tracking, ZRA Smart Invoice compliance, NAPSA and PAYE payroll, and mobile money integrations with Airtel Money and MTN MoMo.
                     </p>
-                    <blockquote class="about-blockquote">
-                        "We do not just deliver technology. We deliver solutions that work — on time, within budget, and built to last."
-                    </blockquote>
+                    <p class="mb-4 text-sm leading-relaxed text-slate-400">
+                        We believe that the organisations doing the most important work in Zambia — the schools educating the next generation, the churches holding communities together, the microfinance groups lifting families out of poverty — deserve software built specifically for them, supported by people who understand their world.
+                    </p>
+                    <p class="text-sm leading-relaxed text-slate-400">
+                        Every system we deliver is built on a proven technology stack and supported locally. When something needs fixing, you call a number in Lusaka.
+                    </p>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div v-for="stat in stats" :key="stat.label" class="mkt-card p-6 text-center">
-                        <div class="mb-1 font-bold text-white" style="font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(28px,4vw,42px)">{{ stat.val }}</div>
-                        <div class="text-xs leading-snug text-slate-500">{{ stat.label }}</div>
+
+                <!-- Company details card -->
+                <div class="mkt-card p-8" data-reveal>
+                    <div class="mkt-chip mb-5">Company Details</div>
+                    <dl class="space-y-4">
+                        <div v-for="detail in companyDetails" :key="detail.label" class="flex flex-col gap-0.5 border-b border-white/5 pb-4 last:border-0 last:pb-0">
+                            <dt class="text-xs font-semibold uppercase tracking-wider text-slate-500">{{ detail.label }}</dt>
+                            <dd class="text-sm text-white">
+                                <a v-if="detail.href" :href="detail.href" class="transition-colors hover:text-teal-400">{{ detail.value }}</a>
+                                <span v-else>{{ detail.value }}</span>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="mkt-sep mb-20"></div>
+
+            <!-- Director / Team -->
+            <div class="mb-20" data-reveal>
+                <div class="mb-10 text-center">
+                    <div class="mkt-chip mb-4">Leadership</div>
+                    <h2 class="about-sec-title">The team behind Varidian</h2>
+                </div>
+                <div class="mx-auto max-w-2xl">
+                    <div class="mkt-card p-8">
+                        <div class="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
+                            <!-- Replace src with actual photo path: /images/team/director.jpg -->
+                            <img
+                                src=""
+                                alt="Lubomba Mulomya — Director, Varidian Consulting Limited"
+                                class="h-20 w-20 flex-shrink-0 rounded-full bg-white/10 object-cover"
+                            />
+                            <div>
+                                <h3 class="mb-1 text-base font-bold text-white">Lubomba Mulomya</h3>
+                                <p class="mb-3 text-xs font-semibold uppercase tracking-wider text-teal-400">Director &amp; Software Development Lead</p>
+                                <p class="text-sm leading-relaxed text-slate-400">
+                                    Over 10 years building software for the Zambian market and Southern African countries. Led development of systems for the Tobacco Board of Zambia, Northern Technical College, Zambian Open University, and Varidian's full product suite including ZSSMS, ChurchMS, and BizManager. Based in Lusaka.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -108,7 +123,7 @@ onMounted(() => {
                     </div>
                     <div class="mkt-chip mb-3">Our Mission</div>
                     <p class="text-sm leading-relaxed text-slate-300">
-                        To provide comprehensive, high-quality ICT solutions to businesses of all sizes across different industries — helping them achieve their strategic goals, protect their digital assets, and stay competitive in an increasingly technology-driven market.
+                        To build sector-specific software for Zambian organisations — systems that understand the local regulatory, financial, and operational context — so that schools, churches, businesses, and NGOs can focus on their work instead of their tools.
                     </p>
                 </div>
                 <div class="mkt-card p-8">
@@ -120,63 +135,8 @@ onMounted(() => {
                     </div>
                     <div class="mkt-chip mb-3" style="background:rgba(0,163,255,0.1);border-color:rgba(0,163,255,0.25);color:#00a3ff">Our Vision</div>
                     <p class="text-sm leading-relaxed text-slate-300">
-                        To be the most trusted technology partner for businesses in Zambia and the region — recognised for our commitment to quality, innovation, and the measurable impact we deliver to our clients.
+                        To be Zambia's most trusted software partner for institutions and organisations — recognised for depth of local knowledge, quality of support, and the measurable outcomes we deliver to the people and communities our clients serve.
                     </p>
-                </div>
-            </div>
-
-            <div class="mkt-sep mb-20"></div>
-
-            <!-- VALUES -->
-            <div class="mb-20" data-reveal>
-                <div class="mb-12 text-center">
-                    <div class="mkt-chip mb-4">Our Values</div>
-                    <h2 class="about-sec-title">What We Stand For</h2>
-                </div>
-                <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    <div v-for="v in values" :key="v.name" class="value-card">
-                        <div class="mb-3 text-2xl" v-html="v.icon"></div>
-                        <h3 class="mb-2 text-base font-bold text-white">{{ v.name }}</h3>
-                        <p class="text-sm leading-relaxed text-slate-400">{{ v.desc }}</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mkt-sep mb-20"></div>
-
-            <!-- PROCESS -->
-            <div class="mb-20" data-reveal>
-                <div class="mb-14 text-center">
-                    <div class="mkt-chip mb-4">Our Process</div>
-                    <h2 class="about-sec-title">How We Work</h2>
-                    <p class="mx-auto mt-4 max-w-sm text-sm text-slate-500">A structured, client-centred methodology — from understanding your needs to supporting your solution long after delivery.</p>
-                </div>
-                <div class="hidden items-start gap-0 lg:flex">
-                    <div v-for="(step, i) in steps" :key="step.title" class="flex flex-1 items-start">
-                        <div class="flex-1 px-3 text-center">
-                            <div class="about-step-node">
-                                <span class="font-bold text-sm text-teal-400" style="font-family:'Bricolage Grotesque',sans-serif">{{ step.num }}</span>
-                            </div>
-                            <h4 class="mb-2 text-sm font-semibold text-white">{{ step.title }}</h4>
-                            <p class="text-xs leading-relaxed text-slate-500">{{ step.desc }}</p>
-                        </div>
-                        <div
-                            v-if="i < steps.length - 1"
-                            class="mt-6 flex-shrink-0"
-                            style="width:20px;height:1px;background:linear-gradient(to right,rgba(0,201,167,0.3),rgba(0,163,255,0.3));margin-top:26px;min-width:20px"
-                        ></div>
-                    </div>
-                </div>
-                <div class="grid gap-6 sm:grid-cols-2 lg:hidden">
-                    <div v-for="step in steps" :key="step.title" class="flex gap-4">
-                        <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-teal-500/30 bg-teal-500/8">
-                            <span class="font-bold text-xs text-teal-400" style="font-family:'Bricolage Grotesque',sans-serif">{{ step.num }}</span>
-                        </div>
-                        <div class="pt-1">
-                            <h4 class="mb-1 text-sm font-semibold text-white">{{ step.title }}</h4>
-                            <p class="text-xs leading-relaxed text-slate-500">{{ step.desc }}</p>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -185,16 +145,16 @@ onMounted(() => {
             <!-- CTA -->
             <div class="mkt-cta-bottom px-8 py-14 text-center" data-reveal>
                 <div class="mkt-chip mb-5">Work With Us</div>
-                <h2 class="about-sec-title mb-3">Ready to Partner<br />With Varidian?</h2>
-                <p class="mx-auto mb-8 max-w-md text-sm leading-relaxed text-slate-400">Start with a free 45-minute discovery call. No obligation — just a conversation about your business and how we can help.</p>
+                <h2 class="about-sec-title mb-3">Ready to see a product<br />built for your sector?</h2>
+                <p class="mx-auto mb-8 max-w-md text-sm leading-relaxed text-slate-400">Request a demo via WhatsApp or fill in the contact form. We'll walk you through the right product for your organisation.</p>
                 <div class="flex flex-wrap items-center justify-center gap-4">
-                    <a href="https://wa.me/260971864421" target="_blank" rel="noopener noreferrer" class="mkt-btn-wa mkt-btn-wa-lg">
+                    <a href="https://wa.me/260971864421?text=Hi%2C%20I%27d%20like%20to%20learn%20more%20about%20Varidian%20products." target="_blank" rel="noopener noreferrer" class="mkt-btn-wa mkt-btn-wa-lg">
                         <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                         </svg>
-                        Book Free Discovery Call
+                        Request a demo
                     </a>
-                    <a href="/services" class="mkt-btn-outline">Explore Our Services</a>
+                    <a href="/products" class="mkt-btn-outline">See our products</a>
                 </div>
             </div>
         </div>
@@ -208,35 +168,5 @@ onMounted(() => {
     font-weight: 800;
     color: #eef2f7;
     line-height: 1.18;
-}
-.about-blockquote {
-    border-left: 2px solid rgba(0, 201, 167, 0.4);
-    padding-left: 20px;
-    font-style: italic;
-    color: #8898aa;
-    font-size: 15px;
-    line-height: 1.7;
-}
-.value-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 14px;
-    padding: 24px;
-    transition: border-color 0.25s, transform 0.25s;
-}
-.value-card:hover {
-    border-color: rgba(0, 201, 167, 0.3);
-    transform: translateY(-2px);
-}
-.about-step-node {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    border: 1px solid rgba(0, 201, 167, 0.3);
-    background: rgba(0, 201, 167, 0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 20px;
 }
 </style>

@@ -1,108 +1,77 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
+import SeoHead from '@/components/SeoHead.vue';
+import WhatsAppButton from '@/components/WhatsAppButton.vue';
 
 const activeFaq = ref<number | null>(0);
 
-const softwareTags = [
-    'Web Applications',
-    'Mobile Apps (Android & iOS)',
-    'Enterprise Systems',
-    'Cloud-Based Platforms',
-    'API & Payment Integration',
-    'Custom Business Software',
-];
-
-const services = [
+const products = [
     {
-        title: 'Web & Mobile Development',
-        desc: 'Responsive corporate websites, e-commerce platforms, web portals, and native or cross-platform mobile apps — built for performance on every device.',
-        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>`,
+        title: 'Zambian School Management System (ZSSMS)',
+        badge: null,
+        desc: 'Grades 1–12 on the MoE three-term calendar. ECZ exam tracking for Grades 7, 9, and 12. Fee collection via Airtel Money and MTN MoMo. NAPSA and PAYE payroll for staff. Built for Zambian private and community schools.',
+        href: '/products/school-management-system',
+        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422A12.083 12.083 0 0112 21.07a12.083 12.083 0 01-6.16-10.492L12 14z"/></svg>`,
     },
     {
-        title: 'Payment & Systems Integration',
-        desc: 'End-to-end integration with bank APIs, mobile money platforms (Airtel, MTN, Zamtel), and third-party systems — seamless financial workflows for your business.',
+        title: 'Church Management System',
+        badge: null,
+        desc: 'Member and cell group registry. Tithe and offering tracking with mobile money. Attendance, events, and SMS or WhatsApp notifications to your congregation. Purpose-built for Zambian churches and ministries.',
+        href: '/products/church-management-system',
+        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>`,
+    },
+    {
+        title: 'Varidian BizManager',
+        badge: 'ZRA Smart Invoice compliant',
+        desc: 'A complete business manager for Zambian SMEs. Invoicing, inventory, sales, expenses, and reports — all connected to ZRA Smart Invoice for full compliance. Works on mobile. Supported locally.',
+        href: '/products/bizmanager',
         icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>`,
     },
     {
-        title: 'Cybersecurity',
-        desc: 'Vulnerability assessments, penetration testing, cybersecurity strategy, and 24/7 monitoring to protect your systems and keep you compliant.',
-        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+        title: 'Village Banking & Microfinance Platform',
+        badge: null,
+        desc: 'Group and member management for VSLAs and microfinance organisations. Loan and savings cycle tracking, campaign management, and mobile money disbursements. Built for Zambian NGOs and community finance groups.',
+        href: '/products/village-banking',
+        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>`,
     },
-    {
-        title: 'Data Analytics & AI',
-        desc: 'Transform raw data into decisions. We build BI dashboards, data pipelines, and AI-driven automation tailored to your industry and operational needs.',
-        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>`,
-    },
-    {
-        title: 'ICT Audits',
-        desc: 'Independent assessments of your systems, security posture, databases, and business processes — delivered with a clear findings report and actionable recommendations.',
-        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>`,
-    },
-    {
-        title: 'ICT Consulting & Outsourcing',
-        desc: 'Strategic IT advisory, digital strategy, management consulting, and flexible ICT outsourcing — skilled technology capacity when and where your business needs it.',
-        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>`,
-    },
-];
-
-const steps = [
-    { num: '01', title: 'Discover', desc: 'We take time to understand your business goals, challenges, and requirements before recommending any solution.' },
-    { num: '02', title: 'Design', desc: 'We architect the right solution together — clear specifications, system design, and a roadmap you can see and approve.' },
-    { num: '03', title: 'Build', desc: 'Our engineers develop and rigorously test your solution using modern frameworks and development best practices.' },
-    { num: '04', title: 'Deploy', desc: 'We launch with confidence — migration support, user training, and a smooth go-live experience from day one.' },
-    { num: '05', title: 'Support', desc: "We don't disappear after delivery. Ongoing maintenance and improvements keep your solution performing long-term." },
 ];
 
 const whyCards = [
     {
-        title: 'End-to-End Capability',
-        desc: 'One partner for all your ICT needs — from strategy and design through development, deployment, and long-term support. No hand-offs, no gaps.',
-        preview: `<svg class="w-40 h-16 opacity-30" viewBox="0 0 160 64" fill="none" stroke="#00c9a7" stroke-width="1.5"><rect x="4" y="20" width="24" height="24" rx="3"/><rect x="44" y="20" width="24" height="24" rx="3"/><rect x="84" y="20" width="24" height="24" rx="3"/><rect x="124" y="20" width="24" height="24" rx="3" fill="#00c9a7" opacity="0.15"/><line x1="28" y1="32" x2="44" y2="32"/><line x1="68" y1="32" x2="84" y2="32"/><line x1="108" y1="32" x2="124" y2="32"/></svg>`,
+        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>`,
+        heading: 'Built in Zambia, for Zambia',
+        body: 'Our systems understand the local context — ZRA compliance, ECZ exams, NAPSA payroll, Airtel and MTN integrations. No offshore vendor offers this depth.',
     },
     {
-        title: 'Local Knowledge, Global Standards',
-        desc: 'Deep understanding of the Zambian business environment — regulatory context, mobile money, local infrastructure — combined with international technology best practices.',
-        preview: `<svg class="w-20 h-20 opacity-30" viewBox="0 0 80 80" fill="none" stroke="#00a3ff" stroke-width="1.2"><circle cx="40" cy="40" r="24"/><ellipse cx="40" cy="40" rx="11" ry="24"/><line x1="16" y1="40" x2="64" y2="40"/><line x1="20" y1="28" x2="60" y2="28"/><line x1="20" y1="52" x2="60" y2="52"/><circle cx="40" cy="18" r="4" fill="#00a3ff" opacity="0.5"/></svg>`,
+        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>`,
+        heading: 'Local support you can reach',
+        body: 'Call or WhatsApp a real person in Lusaka. No helpdesk tickets. No international time zones. We are here when something needs fixing.',
     },
     {
-        title: 'Custom-Built for You',
-        desc: "We don't offer one-size-fits-all products. Every solution is designed and built specifically for your business context, processes, and goals.",
-        preview: `<svg class="w-28 h-20 opacity-30" viewBox="0 0 112 80" fill="none" stroke="#00c9a7" stroke-width="1.2"><rect x="6" y="6" width="28" height="28" rx="4"/><rect x="42" y="6" width="28" height="28" rx="4" fill="#00c9a7" opacity="0.2"/><rect x="6" y="42" width="28" height="28" rx="4" fill="#00c9a7" opacity="0.12"/><rect x="42" y="42" width="28" height="28" rx="4"/><rect x="78" y="22" width="26" height="26" rx="4" fill="#00c9a7" opacity="0.08" stroke="#00a3ff"/></svg>`,
+        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>`,
+        heading: 'Systems that grow with you',
+        body: 'Start with one module. Add more as your organisation grows. All products are subscription-based with regular updates included.',
     },
     {
-        title: 'Experienced Team',
-        desc: 'Our engineers, developers, and consultants bring hands-on experience across financial services, e-commerce, enterprise systems, and more.',
-        preview: `<svg class="w-24 h-20 opacity-30" viewBox="0 0 96 80" fill="none" stroke="#00c9a7" stroke-width="1"><circle cx="48" cy="22" r="11"/><circle cx="18" cy="34" r="9"/><circle cx="78" cy="34" r="9"/><path d="M26 58c0-9 11-15 22-15s22 6 22 15"/><path d="M4 66c0-7 6-11 14-11"/><path d="M92 66c0-7-6-11-14-11"/></svg>`,
-    },
-    {
-        title: 'Partnership Approach',
-        desc: 'We invest in understanding your business and stay engaged long after project delivery — because technology needs evolve, and we evolve with you.',
-        preview: `<svg class="w-36 h-16 opacity-30" viewBox="0 0 144 64" fill="none" stroke="#00a3ff" stroke-width="1.5"><circle cx="24" cy="32" r="14" fill="#00a3ff" opacity="0.1"/><circle cx="120" cy="32" r="14" fill="#00a3ff" opacity="0.1"/><line x1="38" y1="32" x2="106" y2="32"/><circle cx="72" cy="32" r="7" fill="#00a3ff" opacity="0.35"/></svg>`,
-    },
-    {
-        title: 'Transparent Pricing',
-        desc: "Clear, fair pricing with no hidden costs or surprises. You know exactly what you're paying for and why — before we write a single line of code.",
-        preview: `<svg class="w-32 h-20 opacity-30" viewBox="0 0 128 80" fill="none"><rect x="8" y="52" width="16" height="22" rx="2" fill="#00c9a7" opacity="0.4"/><rect x="32" y="34" width="16" height="40" rx="2" fill="#00c9a7" opacity="0.5"/><rect x="56" y="22" width="16" height="52" rx="2" fill="#00c9a7" opacity="0.65"/><rect x="80" y="34" width="16" height="40" rx="2" fill="#00c9a7" opacity="0.5"/><rect x="104" y="46" width="16" height="28" rx="2" fill="#00c9a7" opacity="0.4"/><line x1="4" y1="20" x2="124" y2="20" stroke="#00c9a7" opacity="0.15" stroke-width="1"/></svg>`,
+        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>`,
+        heading: 'ZRA compliant from day one',
+        body: 'Varidian BizManager is built to the ZRA Smart Invoice VSDC specification. Your business stays compliant without extra effort.',
     },
 ];
 
-const testimonials = [
-    { name: 'Alex Johnson', role: 'CTO, FinEdge', initials: 'AJ', c1: '#00c9a7', c2: '#00a3ff', text: 'Varidian rebuilt our entire infrastructure in 3 months. Their cloud architecture reduced our AWS bill by 40% while doubling performance. Exceptional work.' },
-    { name: 'Priya Mehta', role: 'VP Engineering, DataSync', initials: 'PM', c1: '#9333ea', c2: '#2979ff', text: 'The team understood our data problems better than we did. They delivered a pipeline that now processes 10M records daily without breaking a sweat.' },
-    { name: 'Marcus T.', role: 'CEO, BoldStack', initials: 'MT', c1: '#f59e0b', c2: '#ef4444', text: 'From strategy to launch, Varidian was a true partner. They pushed back when we were wrong, delivered on time, and the product speaks for itself.' },
-    { name: 'Sophie Laurent', role: 'Director of IT, Renova', initials: 'SL', c1: '#10b981', c2: '#06b6d4', text: 'Our cybersecurity posture went from reactive to proactive. Zero incidents in 18 months. The 24/7 monitoring team is incredibly responsive.' },
-    { name: 'David Chen', role: 'Product Manager, TerraOps', initials: 'DC', c1: '#00a3ff', c2: '#9333ea', text: 'The mobile app they built for us launched on time and handled our first 50,000 users without a single critical issue. Outstanding execution.' },
-    { name: 'Lena Rosario', role: 'COO, NovaCraft', initials: 'LR', c1: '#f97316', c2: '#fbbf24', text: "Varidian's transparent process set them apart. We always knew what was happening, why decisions were made, and what was coming next. Rare quality." },
+const trustBar = [
+    { label: 'Location', value: 'Lusaka, Zambia' },
+    { label: 'Compliance', value: 'ZRA Smart Invoice ready' },
+    { label: 'Integrations', value: 'Airtel Money · MTN MoMo' },
+    { label: 'Support', value: 'Local phone & WhatsApp support' },
 ];
 
 const faqs = [
-    { q: 'What types of software do you build?', a: 'We build custom business applications, web platforms, mobile apps (Android & iOS), enterprise back-office systems, e-commerce solutions, and cloud-based platforms. We also handle API integrations and payment system connections with banks and mobile money providers like Airtel, MTN, and Zamtel.' },
-    { q: 'How long does a typical software project take?', a: 'It depends on scope. A standard web application typically takes 6–10 weeks. A full enterprise system or mobile app can take 3–5 months. We always provide a detailed timeline during our discovery phase so you know exactly what to expect.' },
-    { q: 'Do you work with businesses outside Zambia?', a: 'Yes. While we are headquartered in Lusaka, we serve clients across Zambia and the broader southern African region. We are fully equipped to support clients remotely and can arrange on-site presence where required.' },
-    { q: 'Can I start with one service and expand later?', a: 'Absolutely. Most clients begin with a single project — a custom application, a website, or a cybersecurity audit — and grow the relationship from there. Our services are modular and designed to scale with you.' },
-    { q: 'What makes Varidian different from other ICT firms?', a: "We combine deep technical capability with genuine business strategy thinking. We don't just write code — we understand your business, challenge assumptions where needed, and stay accountable for outcomes long after delivery." },
-    { q: 'Is there a free consultation available?', a: 'Yes. We offer a complimentary 45-minute discovery call to understand your goals, discuss your project, and determine if we\'re the right fit. No obligation, no hard sell.' },
+    { q: 'Which sectors do your products serve?', a: 'We build for Zambian schools (private and community), churches and ministries, SMEs requiring ZRA compliance, and NGOs running village banking or microfinance programmes. Every product is sector-specific, not a generic template adapted for the market.' },
+    { q: 'Are your products ZRA Smart Invoice compliant?', a: 'Yes. Varidian BizManager is fully integrated with the ZRA Smart Invoice system via the VSDC API. All invoices are submitted to ZRA in real time, with ZRA receipt numbers and QR codes printed on every invoice.' },
+    { q: 'Do the products support Airtel Money and MTN MoMo?', a: 'Yes. Our School Management System supports fee collection via Airtel Money and MTN MoMo. BizManager records mobile money payments against invoices. Village Banking supports mobile money disbursements.' },
+    { q: 'What does local support mean in practice?', a: 'It means you call or WhatsApp a number in Lusaka and speak to someone who knows your product, your setup, and the Zambian context. No international support queues, no timezone issues.' },
+    { q: 'Can I request a demo before committing?', a: 'Absolutely. WhatsApp us or fill in the contact form to request a demo of any product. We will walk you through the system and answer every question before you decide.' },
 ];
 
 onMounted(() => {
@@ -121,7 +90,11 @@ onMounted(() => {
 </script>
 
 <template>
-    <Head title="Custom Software Solutions | Lusaka, Zambia" />
+    <SeoHead
+        title="Varidian Consulting Limited — Software Built for Zambia"
+        description="We build school, church, and business management systems purpose-built for Zambian organisations. ZRA Smart Invoice compliant. Locally supported in Lusaka."
+        canonical-url="https://varidianlab.com"
+    />
 
     <!-- ══════════════ HERO ══════════════ -->
     <section class="hero-bg relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-24 pb-16 text-center">
@@ -130,132 +103,70 @@ onMounted(() => {
         <div class="relative z-10 mx-auto max-w-3xl">
             <div class="mkt-pill mb-8 inline-flex">
                 <span class="mkt-pill-dot"></span>
-                Lusaka, Zambia — Full-Service ICT Partner
+                Lusaka, Zambia — Management Systems for Zambian Organisations
             </div>
 
             <h1 class="hero-title mb-6">
-                Your Business Runs<br />
-                on <span class="accent">Software.</span><br />
-                We Build It Right.
+                Software built for<br />
+                <span class="accent">Zambian schools,<br />churches, and businesses</span>
             </h1>
 
             <p class="mx-auto mb-10 max-w-lg text-base leading-relaxed text-slate-400">
-                From custom applications and payment integrations to cybersecurity and data analytics — Varidian delivers software solutions that work on time, within budget, and built to last.
+                We build management systems that understand the Zambian context — ECZ exams, ZRA Smart Invoice compliance, Airtel Money and MTN MoMo, NAPSA payroll. Built and supported right here in Lusaka.
             </p>
 
             <div class="flex flex-wrap items-center justify-center gap-4">
-                <a href="/services" class="mkt-btn-outline-hero">Our Services</a>
-                <a href="https://wa.me/260971864421" target="_blank" rel="noopener noreferrer" class="mkt-btn-wa">
+                <a
+                    href="https://wa.me/260971864421?text=Hi%2C%20I%27d%20like%20to%20request%20a%20demo%20of%20a%20Varidian%20product."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="mkt-btn-wa mkt-btn-wa-lg"
+                >
                     <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                     </svg>
-                    Chat on WhatsApp
+                    Request a demo
                 </a>
+                <a href="/products" class="mkt-btn-outline-hero">See our products</a>
             </div>
 
+            <!-- Trust bar -->
             <div class="mt-14 flex flex-wrap items-center justify-center gap-8">
-                <div class="text-center">
-                    <div class="font-display text-2xl font-bold text-white">8+</div>
-                    <div class="mt-0.5 text-xs text-slate-500">Service areas</div>
-                </div>
-                <div class="h-8 w-px bg-white/10"></div>
-                <div class="text-center">
-                    <div class="font-display text-2xl font-bold text-white">100%</div>
-                    <div class="mt-0.5 text-xs text-slate-500">Custom-built solutions</div>
-                </div>
-                <div class="h-8 w-px bg-white/10"></div>
-                <div class="text-center">
-                    <div class="font-display text-2xl font-bold text-white">24/7</div>
-                    <div class="mt-0.5 text-xs text-slate-500">Support & monitoring</div>
+                <div v-for="t in trustBar" :key="t.label" class="text-center">
+                    <div class="text-xs text-slate-500">{{ t.label }}</div>
+                    <div class="mt-0.5 text-xs font-semibold text-slate-300">{{ t.value }}</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ══════════════ SERVICES ══════════════ -->
+    <!-- ══════════════ PRODUCTS ══════════════ -->
     <section class="px-6 py-24" style="background:#080c10">
         <div class="mx-auto max-w-6xl">
             <div class="mb-14 text-center" data-reveal>
-                <div class="mkt-chip mb-4">Services</div>
-                <h2 class="mkt-sec-title">Everything Your Business<br /><em>Needs to Grow</em></h2>
-                <p class="mx-auto mt-4 max-w-md text-sm text-slate-500">Software development is our core — supported by a full suite of ICT services designed to take your business further.</p>
+                <div class="mkt-chip mb-4">Products</div>
+                <h2 class="mkt-sec-title">Management systems<br /><em>built for Zambia</em></h2>
+                <p class="mx-auto mt-4 max-w-md text-sm text-slate-500">Each product is purpose-built for a specific Zambian sector — not adapted from a generic template.</p>
             </div>
 
-            <!-- Featured core service -->
-            <div class="service-card featured-service mb-4" data-reveal>
-                <div class="flex flex-col gap-6 sm:flex-row sm:items-start">
-                    <div class="flex-shrink-0">
-                        <div class="mkt-service-icon" style="width:48px;height:48px;border-radius:12px;">
-                            <svg class="h-6 w-6 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                                <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                            </svg>
+            <div class="grid gap-4 sm:grid-cols-2" data-reveal>
+                <div v-for="product in products" :key="product.title" class="product-card">
+                    <div class="mb-3 flex items-start gap-3">
+                        <div class="mkt-service-icon flex-shrink-0" v-html="product.icon"></div>
+                        <div>
+                            <div v-if="product.badge" class="mb-1">
+                                <span class="zra-badge">✓ {{ product.badge }}</span>
+                            </div>
+                            <h3 class="text-base font-semibold text-white">{{ product.title }}</h3>
                         </div>
                     </div>
-                    <div class="flex-1">
-                        <div class="mb-2 flex items-center gap-3">
-                            <h3 class="text-lg font-semibold text-white">Custom Software Development</h3>
-                            <span class="mkt-chip">Core Service</span>
-                        </div>
-                        <p class="mb-4 text-sm leading-relaxed text-slate-400">Our flagship practice. We design and build tailored business applications, enterprise systems, web platforms, mobile apps, and cloud-based solutions — covering the entire development lifecycle from requirements discovery through deployment and ongoing support.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span v-for="tag in softwareTags" :key="tag" class="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">{{ tag }}</span>
-                        </div>
-                    </div>
+                    <p class="mb-5 text-sm leading-relaxed text-slate-400">{{ product.desc }}</p>
+                    <a :href="product.href" class="text-xs font-semibold text-teal-400 transition-colors hover:text-teal-300">Learn more →</a>
                 </div>
             </div>
 
-            <div class="mb-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <div v-for="svc in services" :key="svc.title" class="service-card" data-reveal>
-                    <div class="mkt-service-icon" v-html="svc.icon"></div>
-                    <h3 class="mb-2 text-base font-semibold text-white">{{ svc.title }}</h3>
-                    <p class="text-sm leading-relaxed text-slate-400">{{ svc.desc }}</p>
-                </div>
-            </div>
-
-            <div class="mkt-sep my-2"></div>
-            <div class="flex flex-col items-center justify-between gap-4 pt-8 sm:flex-row">
-                <p class="text-sm text-slate-400">Have a project in mind? Let's talk about what we can build for you.</p>
-                <a href="/contact" class="mkt-btn-outline text-sm">Book Free Consultation</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ══════════════ OUR APPROACH ══════════════ -->
-    <section class="px-6 py-24" style="background:#0a0f14">
-        <div class="mx-auto max-w-5xl">
-            <div class="mb-16 text-center" data-reveal>
-                <div class="mkt-chip mb-4">Our Approach</div>
-                <h2 class="mkt-sec-title">How We <em>Deliver</em></h2>
-                <p class="mx-auto mt-4 max-w-sm text-sm text-slate-500">A structured, client-centred process — from understanding your needs to supporting your solution long-term.</p>
-            </div>
-
-            <!-- Desktop: row with connectors -->
-            <div class="hidden items-start gap-0 lg:flex" data-reveal>
-                <div v-for="(step, i) in steps" :key="step.title" class="flex flex-1 items-start">
-                    <div class="step-wrap flex-1 px-2 text-center">
-                        <div class="step-node">
-                            <span class="font-display text-sm font-bold text-teal-400">{{ step.num }}</span>
-                        </div>
-                        <h4 class="mb-2 text-sm font-semibold text-white">{{ step.title }}</h4>
-                        <p class="text-xs leading-relaxed text-slate-500">{{ step.desc }}</p>
-                    </div>
-                    <div v-if="i < steps.length - 1" class="step-connector mx-1 mt-6 hidden lg:block" style="min-width:20px;"></div>
-                </div>
-            </div>
-
-            <!-- Mobile: stacked -->
-            <div class="grid gap-6 sm:grid-cols-2 lg:hidden" data-reveal>
-                <div v-for="step in steps" :key="step.title" class="flex gap-4">
-                    <div class="flex-shrink-0">
-                        <div class="step-node" style="margin:0;width:40px;height:40px;">
-                            <span class="font-display text-xs font-bold text-teal-400">{{ step.num }}</span>
-                        </div>
-                    </div>
-                    <div class="pt-2">
-                        <h4 class="mb-1 text-sm font-semibold text-white">{{ step.title }}</h4>
-                        <p class="text-xs leading-relaxed text-slate-500">{{ step.desc }}</p>
-                    </div>
-                </div>
+            <div class="mt-10 text-center" data-reveal>
+                <a href="/products" class="mkt-btn-outline">View all products</a>
             </div>
         </div>
     </section>
@@ -264,48 +175,14 @@ onMounted(() => {
     <section class="why-bg px-6 py-24">
         <div class="mx-auto max-w-6xl">
             <div class="mb-14 text-center" data-reveal>
-                <div class="mkt-chip mb-4">Why Us</div>
-                <h2 class="mkt-sec-title">What Sets Varidian<br /><em>Apart</em></h2>
+                <div class="mkt-chip mb-4">Why Varidian</div>
+                <h2 class="mkt-sec-title">What sets Varidian<br /><em>apart</em></h2>
             </div>
-            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <div v-for="w in whyCards" :key="w.title" class="why-card" data-reveal>
-                    <div class="why-card-preview flex h-36 items-center justify-center p-5" v-html="w.preview"></div>
-                    <div class="p-5">
-                        <h4 class="mb-1.5 text-sm font-semibold text-white">{{ w.title }}</h4>
-                        <p class="text-xs leading-relaxed text-slate-400">{{ w.desc }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ══════════════ TESTIMONIALS ══════════════ -->
-    <section class="px-6 py-24" style="background:#0a0f14">
-        <div class="mx-auto max-w-6xl">
-            <div class="mb-14 text-center" data-reveal>
-                <div class="mkt-chip mb-4">Testimonials</div>
-                <h2 class="mkt-sec-title">What Our <em>Clients Say</em></h2>
-            </div>
-            <div class="columns-1 gap-4 space-y-4 sm:columns-2 lg:columns-3" data-reveal>
-                <div v-for="t in testimonials" :key="t.name" class="testi-card mb-4 break-inside-avoid">
-                    <div class="mb-3 flex gap-0.5">
-                        <svg v-for="i in 5" :key="i" class="h-3.5 w-3.5 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                    </div>
-                    <p class="mb-4 text-sm leading-relaxed text-slate-300">"{{ t.text }}"</p>
-                    <div class="flex items-center gap-3">
-                        <div
-                            class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold text-white"
-                            :style="`background: linear-gradient(135deg, ${t.c1}, ${t.c2})`"
-                        >
-                            {{ t.initials }}
-                        </div>
-                        <div>
-                            <div class="text-xs font-semibold text-white">{{ t.name }}</div>
-                            <div class="text-xs text-slate-500">{{ t.role }}</div>
-                        </div>
-                    </div>
+            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <div v-for="w in whyCards" :key="w.heading" class="why-card p-6" data-reveal>
+                    <div class="mkt-service-icon mb-4" v-html="w.icon"></div>
+                    <h4 class="mb-2 text-sm font-semibold text-white">{{ w.heading }}</h4>
+                    <p class="text-xs leading-relaxed text-slate-400">{{ w.body }}</p>
                 </div>
             </div>
         </div>
@@ -316,7 +193,7 @@ onMounted(() => {
         <div class="mx-auto max-w-3xl">
             <div class="mb-14 text-center" data-reveal>
                 <div class="mkt-chip mb-4">FAQ</div>
-                <h2 class="mkt-sec-title">Common <em>Questions</em></h2>
+                <h2 class="mkt-sec-title">Common <em>questions</em></h2>
             </div>
             <div data-reveal>
                 <div
@@ -353,20 +230,20 @@ onMounted(() => {
     <section class="px-6 py-24" style="background:#080c10">
         <div class="mx-auto max-w-4xl">
             <div class="mkt-cta-bottom px-8 py-16 text-center" data-reveal>
-                <div class="mkt-chip mb-6">Let's Build Together</div>
+                <div class="mkt-chip mb-6">Let's get started</div>
                 <h2 class="mkt-sec-title mb-4">
-                    Ready to Build Something<br />
-                    <span style="background: linear-gradient(90deg,#00c9a7,#00a3ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">That Lasts?</span>
+                    Ready to see a product<br />
+                    <span style="background: linear-gradient(90deg,#00c9a7,#00a3ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">in action?</span>
                 </h2>
-                <p class="mx-auto mb-8 max-w-md text-sm leading-relaxed text-slate-400">Start with a free 45-minute discovery call. We'll learn about your business, your goals, and whether we're the right fit — no obligation, no pressure.</p>
+                <p class="mx-auto mb-8 max-w-md text-sm leading-relaxed text-slate-400">Request a demo and we'll walk you through the product most relevant to your organisation. No obligation — just a practical conversation.</p>
                 <div class="flex flex-wrap items-center justify-center gap-4">
-                    <a href="https://wa.me/260971864421" target="_blank" rel="noopener noreferrer" class="mkt-btn-wa mkt-btn-wa-lg">
-                        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                        </svg>
-                        Book Free Discovery Call
-                    </a>
-                    <a href="/services" class="mkt-btn-outline">View Our Services</a>
+                    <WhatsAppButton
+                        variant="inline"
+                        label="Request a demo"
+                        message="Hi, I'd like to request a demo of a Varidian product."
+                        class="mkt-btn-wa-lg"
+                    />
+                    <a href="/products" class="mkt-btn-outline">See our products</a>
                 </div>
             </div>
         </div>
@@ -432,62 +309,17 @@ onMounted(() => {
     border-color: rgba(255, 255, 255, 0.35);
     background: rgba(255, 255, 255, 0.07);
 }
-.mkt-btn-solid-hero {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 999px;
-    padding: 10px 26px;
-    font-size: 14px;
-    color: #fff;
-    cursor: pointer;
-    transition: background 0.2s;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-}
-.mkt-btn-solid-hero:hover {
-    background: rgba(255, 255, 255, 0.15);
-}
-.service-card {
+.product-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.07);
     border-radius: 14px;
     padding: 28px 24px;
     transition: border-color 0.25s, background 0.25s, transform 0.25s;
 }
-.service-card:hover {
+.product-card:hover {
     border-color: rgba(0, 201, 167, 0.3);
     background: rgba(0, 201, 167, 0.04);
     transform: translateY(-3px);
-}
-.service-card.featured-service {
-    border-color: rgba(0, 201, 167, 0.25);
-    background: linear-gradient(160deg, rgba(0, 201, 167, 0.07), rgba(0, 163, 255, 0.04));
-}
-.service-card.featured-service:hover {
-    border-color: rgba(0, 201, 167, 0.5);
-}
-.step-node {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    border: 1px solid rgba(0, 201, 167, 0.3);
-    background: rgba(0, 201, 167, 0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 20px;
-    transition: border-color 0.25s, background 0.25s;
-}
-.step-wrap:hover .step-node {
-    border-color: rgba(0, 201, 167, 0.6);
-    background: rgba(0, 201, 167, 0.15);
-}
-.step-connector {
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, rgba(0, 201, 167, 0.3), rgba(0, 163, 255, 0.3));
-    margin-top: -26px;
 }
 .why-card {
     background: rgba(255, 255, 255, 0.03);
@@ -499,25 +331,22 @@ onMounted(() => {
 .why-card:hover {
     border-color: rgba(0, 163, 255, 0.3);
 }
-.why-card-preview {
-    background: rgba(0, 0, 0, 0.4);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-.testi-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 14px;
-    padding: 20px;
-    transition: border-color 0.25s;
-}
-.testi-card:hover {
-    border-color: rgba(0, 201, 167, 0.25);
-}
 .faq-row {
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     transition: background 0.2s;
 }
 .faq-row:hover {
     background: rgba(255, 255, 255, 0.02);
+}
+.zra-badge {
+    display: inline-block;
+    background: rgba(0, 201, 167, 0.12);
+    border: 1px solid rgba(0, 201, 167, 0.3);
+    color: #00c9a7;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    border-radius: 999px;
+    padding: 2px 8px;
 }
 </style>
