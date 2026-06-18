@@ -22,6 +22,8 @@ Route::inertia('/products/village-banking', 'marketing/products/VillageBanking')
 
 // Sitemap
 Route::get('/sitemap.xml', function () {
+    $lastmod = now()->toDateString();
+
     $urls = [
         ['loc' => url('/'), 'changefreq' => 'weekly', 'priority' => '1.0'],
         ['loc' => url('/about'), 'changefreq' => 'monthly', 'priority' => '0.8'],
@@ -38,6 +40,7 @@ Route::get('/sitemap.xml', function () {
     foreach ($urls as $url) {
         $xml .= '<url>';
         $xml .= '<loc>'.htmlspecialchars($url['loc']).'</loc>';
+        $xml .= '<lastmod>'.$lastmod.'</lastmod>';
         $xml .= '<changefreq>'.$url['changefreq'].'</changefreq>';
         $xml .= '<priority>'.$url['priority'].'</priority>';
         $xml .= '</url>';
