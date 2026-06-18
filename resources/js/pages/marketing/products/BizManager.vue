@@ -17,8 +17,8 @@ const features = [
         desc: 'All invoices submitted to ZRA\'s Smart Invoice system in real time via the VSDC API. ZRA receipt number and QR code printed on every invoice.',
     },
     {
-        title: 'Offline queue',
-        desc: 'Transactions are queued locally when connectivity is unavailable and submitted to ZRA automatically when the connection resumes.',
+        title: 'Offline-first operation',
+        desc: 'The system works without internet. Transactions, inventory changes, and sales are captured locally and synced to ZRA and the cloud automatically when connectivity returns.',
     },
     {
         title: 'Inventory management',
@@ -56,7 +56,7 @@ const features = [
 
     <!-- PAGE HEADER -->
     <section class="mkt-page-header relative overflow-hidden px-6 pt-40 pb-20 text-center">
-        <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:60px 60px"></div>
+        <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(var(--mkt-dot-grid) 1px,transparent 1px),linear-gradient(90deg,var(--mkt-dot-grid) 1px,transparent 1px);background-size:60px 60px"></div>
         <div class="relative z-10 mx-auto max-w-3xl">
             <!-- ZRA compliance badge -->
             <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-teal-500/30 bg-teal-500/10 px-4 py-2 text-sm font-semibold text-teal-400">
@@ -73,7 +73,7 @@ const features = [
     </section>
 
     <!-- FEATURES -->
-    <section class="px-6 py-20" style="background:#080c10">
+    <section class="mkt-sec-dark px-6 py-20">
         <div class="mx-auto max-w-6xl">
             <div class="mb-14 text-center" data-reveal>
                 <div class="mkt-chip mb-4">Features</div>
@@ -116,16 +116,16 @@ const features = [
     font-family: 'Bricolage Grotesque', sans-serif;
     font-size: clamp(24px, 3.5vw, 42px);
     font-weight: 800;
-    color: #eef2f7;
+    color: var(--mkt-text-h);
     line-height: 1.15;
 }
 .prod-sec-title em {
     font-style: normal;
-    color: #8898aa;
+    color: var(--mkt-text-m);
 }
 .feature-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: var(--mkt-surface);
+    border: 1px solid var(--mkt-line);
     border-radius: 14px;
     padding: 24px;
     transition: border-color 0.25s;
@@ -134,7 +134,7 @@ const features = [
     border-color: rgba(0, 201, 167, 0.25);
 }
 .pricing-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--mkt-surface);
     border: 1px solid rgba(0, 201, 167, 0.2);
     border-radius: 16px;
     padding: 40px 32px;

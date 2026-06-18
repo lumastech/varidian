@@ -45,25 +45,25 @@ onMounted(() => {
     />
 
     <!-- PAGE HEADER -->
-    <section class="mkt-page-header relative overflow-hidden px-6 pt-40 pb-20 text-center" style="background: radial-gradient(ellipse 80% 50% at 50% -5%, rgba(0,163,255,0.10) 0%, transparent 65%), #080c10;">
-        <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:60px 60px"></div>
+    <section class="relative overflow-hidden px-6 pt-40 pb-20 text-center" style="background:radial-gradient(ellipse 80% 50% at 50% -5%, rgba(0,163,255,0.10) 0%, transparent 65%), var(--mkt-bg);border-bottom:1px solid var(--mkt-line)">
+        <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(var(--mkt-dot-grid) 1px,transparent 1px),linear-gradient(90deg,var(--mkt-dot-grid) 1px,transparent 1px);background-size:60px 60px"></div>
         <div class="relative z-10 mx-auto max-w-3xl">
             <div class="mkt-chip mb-5">Get In Touch</div>
             <h1 class="mkt-page-title mb-5">Get in touch</h1>
-            <p class="mx-auto max-w-lg text-base leading-relaxed text-slate-400">We are based in Lusaka. Call, WhatsApp, or send us a message and we will respond within one business day.</p>
+            <p class="mx-auto max-w-lg text-base leading-relaxed" style="color:var(--mkt-text-m)">We are based in Zambia. Call, WhatsApp, or send us a message and we will respond within one business day.</p>
         </div>
     </section>
 
     <!-- CONTACT BODY -->
-    <section class="px-6 py-20" style="background:#080c10">
+    <section class="mkt-sec-dark px-6 py-20">
         <div class="mx-auto max-w-6xl">
             <div class="mb-16 grid gap-10 lg:grid-cols-5">
 
                 <!-- FORM -->
                 <div class="lg:col-span-3" data-reveal>
                     <div class="contact-form-card">
-                        <h2 class="mb-1 text-lg font-bold text-white">Send Us a Message</h2>
-                        <p class="mb-8 text-xs text-slate-500">Fill in the form and we'll get back to you within one business day.</p>
+                        <h2 class="mb-1 text-lg font-bold" style="color:var(--mkt-text-h)">Send Us a Message</h2>
+                        <p class="mb-8 text-xs" style="color:var(--mkt-text-m)">Fill in the form and we'll get back to you within one business day.</p>
 
                         <!-- Success banner -->
                         <div v-if="status === 'message-sent'" class="contact-success-banner mb-6 flex items-center gap-3">
@@ -142,9 +142,9 @@ onMounted(() => {
                             <span v-else>Send message</span>
                         </button>
 
-                        <p class="mt-3 text-center text-xs text-slate-600">
+                        <p class="mt-3 text-center text-xs" style="color:var(--mkt-text-m)">
                             Or
-                            <a href="https://wa.me/260971864421" target="_blank" rel="noopener noreferrer" class="text-slate-500 underline transition-colors hover:text-teal-400">send via WhatsApp instead</a>
+                            <a href="https://wa.me/260971864421" target="_blank" rel="noopener noreferrer" class="underline transition-colors hover:text-teal-400" style="color:var(--mkt-text-m)">send via WhatsApp instead</a>
                         </p>
                     </div>
                 </div>
@@ -159,8 +159,8 @@ onMounted(() => {
                                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                             </svg>
                         </div>
-                        <h3 class="mb-2 text-base font-bold text-white">Prefer to Chat Directly?</h3>
-                        <p class="mb-5 text-xs leading-relaxed text-slate-400">Message us on WhatsApp and we'll respond within a few hours.</p>
+                        <h3 class="mb-2 text-base font-bold" style="color:var(--mkt-text-h)">Prefer to Chat Directly?</h3>
+                        <p class="mb-5 text-xs leading-relaxed" style="color:var(--mkt-text-m)">Message us on WhatsApp and we'll respond within a few hours.</p>
                         <a href="https://wa.me/260971864421" target="_blank" rel="noopener noreferrer" class="contact-btn-wa">
                             <svg class="h-4 w-4" fill="white" viewBox="0 0 24 24">
                                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
@@ -177,8 +177,8 @@ onMounted(() => {
                             </svg>
                         </div>
                         <div>
-                            <div class="mb-1 text-xs text-slate-500">Location</div>
-                            <div class="text-sm text-white">Lusaka, Zambia</div>
+                            <div class="mb-1 text-xs" style="color:var(--mkt-text-m)">Location</div>
+                            <div class="text-sm" style="color:var(--mkt-text-h)">Lusaka, Zambia</div>
                         </div>
                     </div>
 
@@ -189,8 +189,8 @@ onMounted(() => {
                             </svg>
                         </div>
                         <div>
-                            <div class="mb-1 text-xs text-slate-500">Phone</div>
-                            <a href="tel:+260971864421" class="text-sm text-white transition-colors hover:text-teal-400">+260 97 1864421</a>
+                            <div class="mb-1 text-xs" style="color:var(--mkt-text-m)">Phone</div>
+                            <a href="tel:+260971864421" class="text-sm transition-colors hover:text-teal-400" style="color:var(--mkt-text-h)">+260 97 1864421</a>
                         </div>
                     </div>
 
@@ -201,8 +201,8 @@ onMounted(() => {
                             </svg>
                         </div>
                         <div>
-                            <div class="mb-1 text-xs text-slate-500">Email</div>
-                            <a href="mailto:info@varidianlab.com" class="text-sm text-white transition-colors hover:text-teal-400">info@varidianlab.com</a>
+                            <div class="mb-1 text-xs" style="color:var(--mkt-text-m)">Email</div>
+                            <a href="mailto:info@varidianlab.com" class="text-sm transition-colors hover:text-teal-400" style="color:var(--mkt-text-h)">info@varidianlab.com</a>
                         </div>
                     </div>
 
@@ -213,8 +213,8 @@ onMounted(() => {
                             </svg>
                         </div>
                         <div>
-                            <div class="mb-1 text-xs text-slate-500">Business hours</div>
-                            <div class="text-sm text-white">Monday – Friday, 08:00 – 17:00 CAT</div>
+                            <div class="mb-1 text-xs" style="color:var(--mkt-text-m)">Business hours</div>
+                            <div class="text-sm" style="color:var(--mkt-text-h)">Monday – Friday, 08:00 – 17:00 CAT</div>
                         </div>
                     </div>
                 </div>
@@ -228,12 +228,12 @@ onMounted(() => {
     font-family: 'Bricolage Grotesque', sans-serif;
     font-size: clamp(22px, 3vw, 36px);
     font-weight: 800;
-    color: #eef2f7;
+    color: var(--mkt-text-h);
     line-height: 1.2;
 }
 .contact-form-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--mkt-surface);
+    border: 1px solid var(--mkt-line);
     border-radius: 18px;
     padding: 36px;
 }
@@ -243,31 +243,31 @@ onMounted(() => {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #8898aa;
+    color: var(--mkt-text-m);
     margin-bottom: 8px;
 }
 .contact-field-input {
     width: 100%;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--mkt-surface-2);
+    border: 1px solid var(--mkt-line-s);
     border-radius: 10px;
     padding: 11px 15px;
     font-size: 14px;
-    color: #eef2f7;
+    color: var(--mkt-text-h);
     font-family: inherit;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, background 0.2s;
     outline: none;
 }
 .contact-field-input:focus {
     border-color: rgba(0, 201, 167, 0.5);
-    background: rgba(255, 255, 255, 0.07);
+    background: var(--mkt-surface);
 }
 .contact-field-input::placeholder {
-    color: #4a5568;
+    color: var(--mkt-muted);
 }
 select.contact-field-input option {
-    background: #111827;
-    color: #eef2f7;
+    background: var(--mkt-bg-2);
+    color: var(--mkt-text-h);
 }
 textarea.contact-field-input {
     resize: vertical;
@@ -278,8 +278,8 @@ textarea.contact-field-input {
     align-items: flex-start;
     gap: 14px;
     padding: 18px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: var(--mkt-surface);
+    border: 1px solid var(--mkt-line);
     border-radius: 12px;
     transition: border-color 0.2s;
 }

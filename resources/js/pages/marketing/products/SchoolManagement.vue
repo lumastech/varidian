@@ -25,6 +25,10 @@ const features = [
         desc: 'Issue fee invoices and collect payments via Airtel Money or MTN MoMo. Automated receipts and arrears tracking. No more paper receipt books.',
     },
     {
+        title: 'Offline-first operation',
+        desc: 'The system works without internet. Fee records, marks, and attendance are captured locally and synced automatically when connectivity returns.',
+    },
+    {
         title: 'NAPSA & PAYE payroll',
         desc: 'Monthly payroll computation for teaching and non-teaching staff. NAPSA contributions and PAYE deductions calculated automatically.',
     },
@@ -34,7 +38,7 @@ const features = [
     },
     {
         title: 'Multi-school architecture',
-        desc: 'One system for school groups or boards managing multiple campuses.',
+        desc: 'One system for school groups or boards managing multiple campuses across Zambia or the region.',
     },
 ];
 </script>
@@ -48,7 +52,7 @@ const features = [
 
     <!-- PAGE HEADER -->
     <section class="mkt-page-header relative overflow-hidden px-6 pt-40 pb-20 text-center">
-        <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:60px 60px"></div>
+        <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(var(--mkt-dot-grid) 1px,transparent 1px),linear-gradient(90deg,var(--mkt-dot-grid) 1px,transparent 1px);background-size:60px 60px"></div>
         <div class="relative z-10 mx-auto max-w-3xl">
             <div class="mkt-chip mb-5">School Management</div>
             <h1 class="mkt-page-title mb-5">Zambian School Management<br />System <span class="accent">(ZSSMS)</span></h1>
@@ -59,7 +63,7 @@ const features = [
     </section>
 
     <!-- FEATURES -->
-    <section class="px-6 py-20" style="background:#080c10">
+    <section class="mkt-sec-dark px-6 py-20">
         <div class="mx-auto max-w-6xl">
             <div class="mb-14 text-center" data-reveal>
                 <div class="mkt-chip mb-4">Features</div>
@@ -101,16 +105,16 @@ const features = [
     font-family: 'Bricolage Grotesque', sans-serif;
     font-size: clamp(24px, 3.5vw, 42px);
     font-weight: 800;
-    color: #eef2f7;
+    color: var(--mkt-text-h);
     line-height: 1.15;
 }
 .prod-sec-title em {
     font-style: normal;
-    color: #8898aa;
+    color: var(--mkt-text-m);
 }
 .feature-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: var(--mkt-surface);
+    border: 1px solid var(--mkt-line);
     border-radius: 14px;
     padding: 24px;
     transition: border-color 0.25s;
@@ -119,7 +123,7 @@ const features = [
     border-color: rgba(0, 201, 167, 0.25);
 }
 .pricing-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--mkt-surface);
     border: 1px solid rgba(0, 201, 167, 0.2);
     border-radius: 16px;
     padding: 40px 32px;

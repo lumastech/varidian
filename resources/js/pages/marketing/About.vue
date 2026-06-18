@@ -5,7 +5,7 @@ import SeoHead from '@/components/SeoHead.vue';
 const companyDetails = [
     { label: 'Registered name', value: 'Varidian Consulting Limited' },
     { label: 'Registration', value: 'PACRA Reg. No: 120261044865' },
-    { label: 'Location', value: 'Lusaka, Zambia' },
+    { label: 'Address', value: '10 Miles Great North Road, Chieftainess Mungule, Chibombo, Central Province, Zambia' },
     { label: 'Website', value: 'varidianlab.com' },
     { label: 'Email', value: 'info@varidianlab.com', href: 'mailto:info@varidianlab.com' },
     { label: 'Phone / WhatsApp', value: '+260 97 1864421', href: 'tel:+260971864421' },
@@ -27,43 +27,43 @@ onMounted(() => {
 
 <template>
     <SeoHead
-        title="About Varidian — Zambian Software Development Firm"
-        description="Varidian Consulting Limited is a Lusaka-based software development firm building sector-specific management systems for Zambian schools, churches, NGOs, and businesses."
+        title="About Varidian — Software Built for Africa"
+        description="Varidian Consulting Limited is a Zambia-based software development firm building offline-first, sector-specific management systems for African schools, churches, NGOs, and businesses."
         canonical-url="https://varidianlab.com/about"
     />
 
     <!-- PAGE HEADER -->
     <section class="mkt-page-header relative overflow-hidden px-6 pt-40 pb-20 text-center">
-        <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:60px 60px"></div>
+        <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(var(--mkt-dot-grid) 1px,transparent 1px),linear-gradient(90deg,var(--mkt-dot-grid) 1px,transparent 1px);background-size:60px 60px"></div>
         <div class="relative z-10 mx-auto max-w-3xl">
             <div class="mkt-chip mb-5">About Varidian</div>
-            <h1 class="mkt-page-title mb-5">We build software that<br /><span class="accent">understands Zambia</span></h1>
-            <p class="mx-auto max-w-lg text-base leading-relaxed text-slate-400">
-                A software development firm based in Lusaka, building management systems for Zambian schools, churches, NGOs, and businesses.
+            <h1 class="mkt-page-title mb-5">Built from Zambia,<br /><span class="accent">deployed across Africa</span></h1>
+            <p class="mx-auto max-w-lg text-base leading-relaxed" style="color:var(--mkt-text-m)">
+                A software development firm based in Chibombo, Zambia, building offline-first management systems for African schools, churches, NGOs, and businesses.
             </p>
         </div>
     </section>
 
     <!-- ABOUT BODY -->
-    <section class="px-6 py-20" style="background:#080c10">
+    <section class="mkt-sec-dark px-6 py-20">
         <div class="mx-auto max-w-6xl">
 
             <!-- Two-col intro -->
             <div class="mb-20 grid items-start gap-14 lg:grid-cols-2" data-reveal>
                 <div>
                     <div class="mkt-chip mb-5">Who We Are</div>
-                    <h2 class="about-sec-title mb-6">Built from the ground up<br />for the Zambian context.</h2>
-                    <p class="mb-4 text-sm leading-relaxed text-slate-400">
-                        Varidian Consulting Limited is a software development firm based in Lusaka, Zambia. We build sector-specific management systems for Zambian institutions — schools, churches, NGOs, and small businesses.
+                    <h2 class="about-sec-title mb-6">Software that understands<br />the African context.</h2>
+                    <p class="mb-4 text-sm leading-relaxed" style="color:var(--mkt-text-m)">
+                        Varidian Consulting Limited is a software development firm based in Zambia. We build sector-specific management systems for African institutions — schools, churches, NGOs, and small businesses — designed to work in the conditions where those institutions actually operate.
                     </p>
-                    <p class="mb-4 text-sm leading-relaxed text-slate-400">
-                        Our products are not generic software adapted for Africa. They are built from the ground up for the Zambian context: the Ministry of Education three-term calendar, ECZ examination tracking, ZRA Smart Invoice compliance, NAPSA and PAYE payroll, and mobile money integrations with Airtel Money and MTN MoMo.
+                    <p class="mb-4 text-sm leading-relaxed" style="color:var(--mkt-text-m)">
+                        Our products are not generic software adapted for Africa. They are built from the ground up for the African context: the Zambian Ministry of Education three-term calendar, ECZ examination tracking, ZRA Smart Invoice compliance, NAPSA and PAYE payroll, mobile money integrations with Airtel Money, MTN MoMo, and Zamtel Kwacha, and offline-first operation where connectivity is intermittent.
                     </p>
-                    <p class="mb-4 text-sm leading-relaxed text-slate-400">
-                        We believe that the organisations doing the most important work in Zambia — the schools educating the next generation, the churches holding communities together, the microfinance groups lifting families out of poverty — deserve software built specifically for them, supported by people who understand their world.
+                    <p class="mb-4 text-sm leading-relaxed" style="color:var(--mkt-text-m)">
+                        We believe the organisations doing the most important work in Africa — the schools educating the next generation, the churches holding communities together, the microfinance groups lifting families out of poverty — deserve software built specifically for them, supported by people who understand their world.
                     </p>
-                    <p class="text-sm leading-relaxed text-slate-400">
-                        Every system we deliver is built on a proven technology stack and supported locally. When something needs fixing, you call a number in Lusaka.
+                    <p class="text-sm leading-relaxed" style="color:var(--mkt-text-m)">
+                        Our home base is Zambia. Our systems are deployed across Zambia, Zimbabwe, Malawi, Tanzania, and beyond. Every system we deliver is built on a proven technology stack, works offline, and is supported locally.
                     </p>
                 </div>
 
@@ -71,9 +71,9 @@ onMounted(() => {
                 <div class="mkt-card p-8" data-reveal>
                     <div class="mkt-chip mb-5">Company Details</div>
                     <dl class="space-y-4">
-                        <div v-for="detail in companyDetails" :key="detail.label" class="flex flex-col gap-0.5 border-b border-white/5 pb-4 last:border-0 last:pb-0">
-                            <dt class="text-xs font-semibold uppercase tracking-wider text-slate-500">{{ detail.label }}</dt>
-                            <dd class="text-sm text-white">
+                        <div v-for="detail in companyDetails" :key="detail.label" class="flex flex-col gap-0.5 border-b pb-4 last:border-0 last:pb-0" style="border-color:var(--mkt-line)">
+                            <dt class="text-xs font-semibold uppercase tracking-wider" style="color:var(--mkt-text-m)">{{ detail.label }}</dt>
+                            <dd class="text-sm" style="color:var(--mkt-text-h)">
                                 <a v-if="detail.href" :href="detail.href" class="transition-colors hover:text-teal-400">{{ detail.value }}</a>
                                 <span v-else>{{ detail.value }}</span>
                             </dd>
@@ -84,26 +84,46 @@ onMounted(() => {
 
             <div class="mkt-sep mb-20"></div>
 
-            <!-- Director / Team -->
+            <!-- Leadership -->
             <div class="mb-20" data-reveal>
                 <div class="mb-10 text-center">
                     <div class="mkt-chip mb-4">Leadership</div>
                     <h2 class="about-sec-title">The team behind Varidian</h2>
                 </div>
-                <div class="mx-auto max-w-2xl">
-                    <div class="mkt-card p-8">
-                        <div class="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
-                            <!-- Replace src with actual photo path: /images/team/director.jpg -->
-                            <img
-                                src=""
-                                alt="Lubomba Mulomya — Director, Varidian Consulting Limited"
-                                class="h-20 w-20 flex-shrink-0 rounded-full bg-white/10 object-cover"
-                            />
+                <div class="mx-auto max-w-3xl grid gap-6 sm:grid-cols-2">
+                    <!-- Executive Chairperson -->
+                    <div class="mkt-card p-7">
+                        <div class="flex flex-col items-center gap-5 text-center">
+                            <div class="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full" style="background:rgba(0,201,167,0.1);border:1px solid rgba(0,201,167,0.25)">
+                                <svg class="h-7 w-7 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                    <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                            </div>
                             <div>
-                                <h3 class="mb-1 text-base font-bold text-white">Lubomba Mulomya</h3>
+                                <h3 class="mb-1 text-base font-bold" style="color:var(--mkt-text-h)">Banji Chisumpa</h3>
+                                <p class="mb-3 text-xs font-semibold uppercase tracking-wider text-teal-400">Executive Chairperson</p>
+                                <p class="text-sm leading-relaxed" style="color:var(--mkt-text-m)">
+                                    Provides strategic leadership and oversight for Varidian's operations, partnerships, and growth across African markets.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Director & Dev Lead -->
+                    <div class="mkt-card p-7">
+                        <div class="flex flex-col items-center gap-5 text-center">
+                            <!-- Replace src with actual photo path: /images/team/director.jpg -->
+                            <div class="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full"
+                                style="background:rgba(0,201,167,0.1);border:1px solid rgba(0,201,167,0.25)">
+                                <svg class="h-7 w-7 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5"
+                                    viewBox="0 0 24 24">
+                                    <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="mb-1 text-base font-bold" style="color:var(--mkt-text-h)">Lubomba Mulomya</h3>
                                 <p class="mb-3 text-xs font-semibold uppercase tracking-wider text-teal-400">Director &amp; Software Development Lead</p>
-                                <p class="text-sm leading-relaxed text-slate-400">
-                                    Over 10 years building software for the Zambian market and Southern African countries. Led development of systems for the Tobacco Board of Zambia, Northern Technical College, Zambian Open University, and Varidian's full product suite including ZSSMS, ChurchMS, and BizManager. Based in Lusaka.
+                                <p class="text-sm leading-relaxed" style="color:var(--mkt-text-m)">
+                                    Over 10 years building software for African institutions. Led development of systems for the Tobacco Board of Zambia, Northern Technical College, and Varidian's full product suite — ZSSMS, ChurchMS, BizManager, and Village Banking.
                                 </p>
                             </div>
                         </div>
@@ -122,8 +142,8 @@ onMounted(() => {
                         </svg>
                     </div>
                     <div class="mkt-chip mb-3">Our Mission</div>
-                    <p class="text-sm leading-relaxed text-slate-300">
-                        To build sector-specific software for Zambian organisations — systems that understand the local regulatory, financial, and operational context — so that schools, churches, businesses, and NGOs can focus on their work instead of their tools.
+                    <p class="text-sm leading-relaxed" style="color:var(--mkt-text)">
+                        To build offline-first, sector-specific software for African organisations — systems that understand the local regulatory, financial, and operating context — so that schools, churches, businesses, and NGOs can focus on their work instead of their tools.
                     </p>
                 </div>
                 <div class="mkt-card p-8">
@@ -134,8 +154,8 @@ onMounted(() => {
                         </svg>
                     </div>
                     <div class="mkt-chip mb-3" style="background:rgba(0,163,255,0.1);border-color:rgba(0,163,255,0.25);color:#00a3ff">Our Vision</div>
-                    <p class="text-sm leading-relaxed text-slate-300">
-                        To be Zambia's most trusted software partner for institutions and organisations — recognised for depth of local knowledge, quality of support, and the measurable outcomes we deliver to the people and communities our clients serve.
+                    <p class="text-sm leading-relaxed" style="color:var(--mkt-text)">
+                        To be Africa's most trusted software partner for institutions and organisations — recognised for depth of local knowledge, quality of support, and the measurable outcomes we deliver to the people and communities our clients serve.
                     </p>
                 </div>
             </div>
@@ -146,7 +166,7 @@ onMounted(() => {
             <div class="mkt-cta-bottom px-8 py-14 text-center" data-reveal>
                 <div class="mkt-chip mb-5">Work With Us</div>
                 <h2 class="about-sec-title mb-3">Ready to see a product<br />built for your sector?</h2>
-                <p class="mx-auto mb-8 max-w-md text-sm leading-relaxed text-slate-400">Request a demo via WhatsApp or fill in the contact form. We'll walk you through the right product for your organisation.</p>
+                <p class="mx-auto mb-8 max-w-md text-sm leading-relaxed" style="color:var(--mkt-text-m)">Request a demo via WhatsApp or fill in the contact form. We'll walk you through the right product for your organisation.</p>
                 <div class="flex flex-wrap items-center justify-center gap-4">
                     <a href="https://wa.me/260971864421?text=Hi%2C%20I%27d%20like%20to%20learn%20more%20about%20Varidian%20products." target="_blank" rel="noopener noreferrer" class="mkt-btn-wa mkt-btn-wa-lg">
                         <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
@@ -166,7 +186,7 @@ onMounted(() => {
     font-family: 'Bricolage Grotesque', sans-serif;
     font-size: clamp(22px, 3vw, 38px);
     font-weight: 800;
-    color: #eef2f7;
+    color: var(--mkt-text-h);
     line-height: 1.18;
 }
 </style>

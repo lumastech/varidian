@@ -247,11 +247,58 @@ const jsonLd = JSON.stringify({
 </template>
 
 <style>
+/* ── CSS Custom Properties: dark by default, auto-switches to light ── */
+:root {
+    --mkt-bg:        #080c10;
+    --mkt-bg-2:      #0a0f14;
+    --mkt-surface:   rgba(255, 255, 255, 0.03);
+    --mkt-surface-2: rgba(255, 255, 255, 0.015);
+    --mkt-text:      #c8d0db;
+    --mkt-text-h:    #eef2f7;
+    --mkt-text-m:    #8898aa;
+    --mkt-muted:     #9ba8b8;
+    --mkt-line:      rgba(255, 255, 255, 0.07);
+    --mkt-line-s:    rgba(255, 255, 255, 0.14);
+    --mkt-nav-bg:    rgba(8, 12, 16, 0.75);
+    --mkt-dot-grid:  rgba(255, 255, 255, 0.025);
+    --mkt-shadow:    0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --mkt-bg:        #f8fafc;
+        --mkt-bg-2:      #f1f5f9;
+        --mkt-surface:   #ffffff;
+        --mkt-surface-2: #f8fafc;
+        --mkt-text:      #334155;
+        --mkt-text-h:    #0f172a;
+        --mkt-text-m:    #64748b;
+        --mkt-muted:     #94a3b8;
+        --mkt-line:      rgba(0, 0, 0, 0.08);
+        --mkt-line-s:    rgba(0, 0, 0, 0.16);
+        --mkt-nav-bg:    rgba(248, 250, 252, 0.88);
+        --mkt-dot-grid:  rgba(0, 0, 0, 0.045);
+        --mkt-shadow:    0 20px 60px rgba(0, 0, 0, 0.12);
+    }
+}
+
+/* ── Light-mode overrides for Tailwind color utilities ── */
+@media (prefers-color-scheme: light) {
+    .mkt-root .text-white       { color: var(--mkt-text-h); }
+    .mkt-root .text-slate-300   { color: var(--mkt-text); }
+    .mkt-root .text-slate-400   { color: var(--mkt-text-m); }
+    .mkt-root .text-slate-500   { color: var(--mkt-text-m); }
+    .mkt-root .text-slate-600   { color: var(--mkt-text-m); }
+    .mkt-root .border-white\/5  { border-color: rgba(0, 0, 0, 0.06); }
+    .mkt-root .border-white\/10 { border-color: rgba(0, 0, 0, 0.1); }
+    .mkt-root::before           { opacity: 0.12; }
+}
+
 /* ── Marketing root ── */
 .mkt-root {
     font-family: 'Inter', sans-serif;
-    background: #080c10;
-    color: #c8d0db;
+    background: var(--mkt-bg);
+    color: var(--mkt-text);
     overflow-x: hidden;
     min-height: 100vh;
 }
@@ -269,28 +316,28 @@ const jsonLd = JSON.stringify({
 
 /* ── Nav ── */
 .mkt-nav {
-    background: rgba(8, 12, 16, 0.7);
+    background: var(--mkt-nav-bg);
     backdrop-filter: blur(18px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid var(--mkt-line);
 }
 .mkt-logo {
     font-family: 'Bricolage Grotesque', sans-serif;
     font-weight: 700;
-    color: white;
+    color: var(--mkt-text-h);
     font-size: 18px;
     letter-spacing: -0.02em;
     text-decoration: none;
     display: inline-block;
 }
 .mkt-nav-pill {
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--mkt-line-s);
+    background: var(--mkt-surface);
     border-radius: 999px;
     padding: 5px 18px;
 }
 .mkt-nav-link {
     font-size: 13px;
-    color: #8898aa;
+    color: var(--mkt-text-m);
     transition: color 0.2s;
     text-decoration: none;
     cursor: pointer;
@@ -298,10 +345,10 @@ const jsonLd = JSON.stringify({
     padding-bottom: 2px;
 }
 .mkt-nav-link:hover {
-    color: #e2e8f0;
+    color: var(--mkt-text-h);
 }
 .mkt-nav-link--active {
-    color: #e2e8f0;
+    color: var(--mkt-text-h);
 }
 .mkt-nav-link--active::after {
     content: '';
@@ -317,18 +364,18 @@ const jsonLd = JSON.stringify({
 
 /* ── Products dropdown ── */
 .mkt-dropdown-menu {
-    background: rgba(10, 15, 20, 0.98);
+    background: var(--mkt-bg-2);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--mkt-line);
     border-radius: 12px;
     padding: 6px;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--mkt-shadow);
 }
 .mkt-dropdown-item {
     display: block;
     padding: 9px 14px;
     font-size: 13px;
-    color: #8898aa;
+    color: var(--mkt-text-m);
     border-radius: 8px;
     text-decoration: none;
     transition: background 0.15s, color 0.15s;
@@ -336,7 +383,7 @@ const jsonLd = JSON.stringify({
 }
 .mkt-dropdown-item:hover {
     background: rgba(0, 201, 167, 0.1);
-    color: #e2e8f0;
+    color: var(--mkt-text-h);
 }
 .mkt-dropdown-enter-active,
 .mkt-dropdown-leave-active {
@@ -353,24 +400,23 @@ const jsonLd = JSON.stringify({
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--mkt-surface);
+    border: 1px solid var(--mkt-line);
     border-radius: 8px;
-    color: #c8d0db;
+    color: var(--mkt-text);
     padding: 6px;
     cursor: pointer;
     transition: background 0.2s, border-color 0.2s;
 }
 .mkt-hamburger:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: var(--mkt-line-s);
 }
 
 /* ── Mobile menu ── */
 .mkt-mobile-menu {
-    background: rgba(8, 12, 16, 0.97);
+    background: var(--mkt-bg);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid var(--mkt-line);
     padding: 8px 24px 24px;
 }
 .mkt-mobile-link {
@@ -378,20 +424,20 @@ const jsonLd = JSON.stringify({
     align-items: center;
     font-size: 15px;
     font-weight: 500;
-    color: #8898aa;
+    color: var(--mkt-text-m);
     text-decoration: none;
     padding: 14px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid var(--mkt-line);
     transition: color 0.2s;
 }
 .mkt-mobile-link:last-of-type {
     border-bottom: none;
 }
 .mkt-mobile-link:hover {
-    color: #e2e8f0;
+    color: var(--mkt-text-h);
 }
 .mkt-mobile-link--active {
-    color: #e2e8f0;
+    color: var(--mkt-text-h);
 }
 
 /* ── Mobile menu slide transition ── */
@@ -430,14 +476,16 @@ const jsonLd = JSON.stringify({
 
 /* ── Footer ── */
 .mkt-footer {
-    background: #080c10;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--mkt-bg-2);
+    border-top: 1px solid var(--mkt-line);
 }
 
 /* ── Common shared utilities ── */
+.mkt-sec-dark { background: var(--mkt-bg); }
+.mkt-sec-alt  { background: var(--mkt-bg-2); }
 .mkt-sep {
     height: 1px;
-    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.07), transparent);
+    background: linear-gradient(to right, transparent, var(--mkt-line-s), transparent);
 }
 .mkt-chip {
     display: inline-block;
@@ -455,19 +503,19 @@ const jsonLd = JSON.stringify({
     font-family: 'Bricolage Grotesque', sans-serif;
     font-size: clamp(28px, 4vw, 48px);
     font-weight: 800;
-    color: #eef2f7;
+    color: var(--mkt-text-h);
     line-height: 1.15;
 }
 .mkt-sec-title em {
     font-style: normal;
-    color: #8898aa;
+    color: var(--mkt-text-m);
 }
 .mkt-page-title {
     font-family: 'Bricolage Grotesque', sans-serif;
     font-size: clamp(32px, 5vw, 60px);
     font-weight: 800;
     line-height: 1.08;
-    color: #eef2f7;
+    color: var(--mkt-text-h);
 }
 .mkt-page-title .accent {
     background: linear-gradient(90deg, #00c9a7, #00a3ff);
@@ -492,33 +540,32 @@ const jsonLd = JSON.stringify({
     opacity: 0.88;
 }
 .mkt-btn-outline {
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid var(--mkt-line-s);
     border-radius: 999px;
     padding: 10px 26px;
     font-size: 14px;
-    color: #c8d0db;
-    background: rgba(255, 255, 255, 0.04);
+    color: var(--mkt-text);
+    background: var(--mkt-surface);
     cursor: pointer;
     transition: border-color 0.2s, background 0.2s;
     display: inline-block;
     text-decoration: none;
 }
 .mkt-btn-outline:hover {
-    border-color: rgba(255, 255, 255, 0.35);
-    background: rgba(255, 255, 255, 0.07);
+    border-color: #00c9a7;
 }
 .mkt-cta-bottom {
-    background: radial-gradient(ellipse 70% 70% at 50% 100%, rgba(0, 180, 160, 0.18) 0%, transparent 70%), rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: radial-gradient(ellipse 70% 70% at 50% 100%, rgba(0, 180, 160, 0.15) 0%, transparent 70%), var(--mkt-surface);
+    border: 1px solid var(--mkt-line);
     border-radius: 20px;
 }
 .mkt-page-header {
-    background: radial-gradient(ellipse 80% 50% at 50% -5%, rgba(0, 201, 167, 0.12) 0%, transparent 65%), #080c10;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: radial-gradient(ellipse 80% 50% at 50% -5%, rgba(0, 201, 167, 0.1) 0%, transparent 65%), var(--mkt-bg);
+    border-bottom: 1px solid var(--mkt-line);
 }
 .mkt-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: var(--mkt-surface);
+    border: 1px solid var(--mkt-line);
     border-radius: 14px;
     transition: border-color 0.25s;
 }

@@ -14,17 +14,17 @@ onMounted(() => {
 
 const products = [
     {
-        title: 'Zambian School Management System (ZSSMS)',
+        title: 'School Management System (ZSSMS)',
         badge: null,
-        desc: 'Grades 1–12 on the MoE three-term calendar. ECZ exam tracking, Airtel/MTN fee collection, NAPSA payroll. Built for Zambian private and community schools.',
+        desc: 'Grades 1–12 on the MoE three-term calendar. ECZ exam tracking, Airtel/MTN fee collection, NAPSA payroll. Offline-first — works through connectivity outages. Built for schools across Africa.',
         href: '/products/school-management-system',
         price: 'From K12,000/year',
-        tags: ['ECZ Exams', 'Mobile Money', 'NAPSA Payroll', 'MoE Calendar'],
+        tags: ['ECZ Exams', 'Mobile Money', 'NAPSA Payroll', 'Offline-first'],
     },
     {
         title: 'Church Management System',
         badge: null,
-        desc: 'Member and cell group registry. Tithe and offering tracking with mobile money. Attendance, events, and SMS or WhatsApp notifications for your congregation.',
+        desc: 'Member and cell group registry. Tithe and offering tracking with mobile money. Attendance, events, and SMS or WhatsApp notifications. Purpose-built for African churches and ministries.',
         href: '/products/church-management-system',
         price: 'From K6,000/year',
         tags: ['Member Registry', 'Tithe Tracking', 'SMS/WhatsApp', 'Multi-campus'],
@@ -32,15 +32,15 @@ const products = [
     {
         title: 'Varidian BizManager',
         badge: 'ZRA Smart Invoice compliant',
-        desc: 'A complete business manager for Zambian SMEs. Invoicing, inventory, sales, expenses, and reports — connected to ZRA Smart Invoice for full compliance.',
+        desc: 'Complete business manager for SMEs. Invoicing, inventory, sales, expenses — integrated with ZRA Smart Invoice. Offline queue ensures no transactions are lost during outages.',
         href: '/products/bizmanager',
         price: 'From K2,400/year',
-        tags: ['ZRA Smart Invoice', 'Inventory', 'Mobile Money', 'VAT Reports'],
+        tags: ['ZRA Smart Invoice', 'Inventory', 'Offline Queue', 'VAT Reports'],
     },
     {
         title: 'Village Banking & Microfinance Platform',
         badge: null,
-        desc: 'Group and member management for VSLAs and microfinance organisations. Loan and savings cycle tracking, and mobile money disbursements.',
+        desc: 'Group and member management for VSLAs and NGO microfinance programmes. Loan and savings cycle tracking, mobile money disbursements. Field agent portal works offline.',
         href: '/products/village-banking',
         price: 'Custom pricing',
         tags: ['VSLA Groups', 'Loan Tracking', 'Mobile Money', 'Field Agents'],
@@ -51,24 +51,24 @@ const products = [
 <template>
     <SeoHead
         title="Our Products — Varidian Consulting Limited"
-        description="School management, church management, ZRA-compliant business management, and village banking systems — purpose-built for Zambian organisations."
+        description="School management, church management, ZRA-compliant business management, and village banking systems — purpose-built for African institutions. Offline-first, mobile-ready."
         canonical-url="https://varidianlab.com/products"
     />
 
     <!-- PAGE HEADER -->
     <section class="mkt-page-header relative overflow-hidden px-6 pt-40 pb-20 text-center">
-        <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:60px 60px"></div>
+        <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(var(--mkt-dot-grid) 1px,transparent 1px),linear-gradient(90deg,var(--mkt-dot-grid) 1px,transparent 1px);background-size:60px 60px"></div>
         <div class="relative z-10 mx-auto max-w-3xl">
             <div class="mkt-chip mb-5">Our Products</div>
-            <h1 class="mkt-page-title mb-5">Management systems<br /><span class="accent">built for Zambia</span></h1>
-            <p class="mx-auto max-w-lg text-base leading-relaxed text-slate-400">
-                Each product is purpose-built for a specific Zambian sector — not adapted from a generic template. All products are web-based, mobile-friendly, and locally supported.
+            <h1 class="mkt-page-title mb-5">Management systems<br /><span class="accent">built for Africa</span></h1>
+            <p class="mx-auto max-w-lg text-base leading-relaxed" style="color:var(--mkt-text-m)">
+                Each product is purpose-built for a specific sector — not adapted from a generic template. Offline-first, mobile-ready, and locally supported.
             </p>
         </div>
     </section>
 
     <!-- PRODUCTS GRID -->
-    <section class="px-6 py-20" style="background:#080c10">
+    <section class="mkt-sec-dark px-6 py-20">
         <div class="mx-auto max-w-6xl">
             <div class="grid gap-6 sm:grid-cols-2" data-reveal>
                 <div v-for="product in products" :key="product.title" class="prod-index-card flex flex-col">
@@ -105,8 +105,8 @@ const products = [
 
 <style scoped>
 .prod-index-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: var(--mkt-surface);
+    border: 1px solid var(--mkt-line);
     border-radius: 16px;
     padding: 28px;
     transition: border-color 0.25s, transform 0.25s;
@@ -116,13 +116,13 @@ const products = [
     transform: translateY(-3px);
 }
 .prod-tag {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--mkt-surface-2);
+    border: 1px solid var(--mkt-line);
     border-radius: 999px;
     padding: 2px 10px;
     font-size: 10px;
     font-weight: 500;
-    color: #8898aa;
+    color: var(--mkt-text-m);
 }
 .zra-badge {
     display: inline-block;
