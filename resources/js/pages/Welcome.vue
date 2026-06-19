@@ -122,7 +122,8 @@ onMounted(() => {
 <template>
     <SeoHead
         title="Varidian Consulting Limited — Software that understands Africa"
-        description="We build web, mobile and desktop management systems for African schools, churches, NGOs, and businesses. Offline-first, ZRA Smart Invoice compliant, locally supported in Lusaka."
+        description="We design and build web, mobile and desktop management systems for African institutions — purpose-built for the local context. ECZ exams, ZRA tax compliance, Airtel, MTN and Zamtel mobile money, NAPSA payroll, and offline-first where connectivity is limited."
+        keywords="varidianlab, varidian lab, varidian consulting, school management system Africa, church management system Zambia, ZRA Smart Invoice software, business management Zambia, village banking VSLA software, offline-first management system, ECZ exam tracking system, NAPSA payroll software Zambia, Airtel Money MTN MoMo integration, Varidian Consulting Limited, African school management software, church software Africa, microfinance NGO software Zambia"
         canonical-url="https://varidianlab.com"
     />
 
