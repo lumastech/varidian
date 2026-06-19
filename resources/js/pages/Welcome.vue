@@ -283,7 +283,7 @@ onMounted(() => {
     </section>
 
     <!-- ══════════════ WHY VARIDIAN ══════════════ -->
-    <section class="mkt-sec-alt px-6 py-24">
+    <section class="mkt-sec-dark px-6 py-24">
         <div class="mx-auto max-w-6xl">
             <div class="mb-14 text-center" data-reveal>
                 <div class="mkt-chip mb-4">Why Varidian</div>
