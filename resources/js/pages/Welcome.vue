@@ -60,24 +60,34 @@ const offlineFeatures = [
 
 const whyCards = [
     {
-        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>`,
-        heading: 'Built from Zambia, deployed across Africa',
-        body: 'Our home is Lusaka. Our systems are built for the African context — local compliance, local payment rails, local operating conditions. Deployed across Zambia, Zimbabwe, Malawi, and beyond.',
+        icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>`,
+        heading: 'Built for African contexts — not adapted for them',
+        body: 'Our products are not generic systems modified to bolt on mobile money. Local regulations, mobile payments, low-bandwidth environments and offline use are the foundation from day one — not additions.',
+        large: true,
     },
     {
-        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><line x1="1" y1="1" x2="23" y2="23"/><path d="M16.72 11.06A10.94 10.94 0 0119 12.55M5 12.55a10.94 10.94 0 015.17-2.39M10.71 5.05A16 16 0 0122.56 9M1.42 9a15.91 15.91 0 014.7-2.88M8.53 16.11a6 6 0 006.95 0M12 20h.01"/></svg>`,
-        heading: 'Offline-first by design',
-        body: 'Every product is built for intermittent connectivity. Data is stored locally, queued, and synced automatically. Your operations never stop because the internet did.',
+        icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><line x1="1" y1="1" x2="23" y2="23"/><path d="M16.72 11.06A10.94 10.94 0 0119 12.55M5 12.55a10.94 10.94 0 015.17-2.39M10.71 5.05A16 16 0 0122.56 9M1.42 9a15.91 15.91 0 014.7-2.88M8.53 16.11a6 6 0 006.95 0M12 20h.01"/></svg>`,
+        heading: 'Offline-first where it counts',
+        body: 'Offline queues, local data storage and background sync are capabilities we build in deliberately, not workarounds added after the fact. A genuine differentiator in African markets.',
+        large: true,
     },
     {
-        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`,
-        heading: 'Web, mobile & desktop',
-        body: 'All products run across web browsers, Android, iOS, and Windows desktop. Your team uses the same system from any device, wherever they are.',
+        icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`,
+        heading: 'Multi-platform delivery',
+        body: 'We deliver across web, mobile and desktop — selecting the right platform and stack for each project rather than forcing every problem into one solution.',
+        large: false,
     },
     {
-        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>`,
-        heading: 'Local support you can reach',
-        body: 'Call or WhatsApp a real person in Lusaka. No helpdesk tickets. No international time zones. We are here when something needs fixing.',
+        icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>`,
+        heading: 'Financial governance at board level',
+        body: 'With a senior government finance director on the board, financial accountability and regulatory awareness are embedded at the highest level of the company.',
+        large: false,
+    },
+    {
+        icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>`,
+        heading: 'Locally supported, regionally scaled',
+        body: 'Clients get a real contact reachable by phone or WhatsApp. Our support infrastructure is local; our reach is continental.',
+        large: false,
     },
 ];
 
@@ -273,17 +283,24 @@ onMounted(() => {
     </section>
 
     <!-- ══════════════ WHY VARIDIAN ══════════════ -->
-    <section class="mkt-sec-dark px-6 py-24">
+    <section class="mkt-sec-alt px-6 py-24">
         <div class="mx-auto max-w-6xl">
             <div class="mb-14 text-center" data-reveal>
                 <div class="mkt-chip mb-4">Why Varidian</div>
-                <h2 class="mkt-sec-title">What sets Varidian<br /><em>apart</em></h2>
+                <h2 class="mkt-sec-title">What sets Varidian <em>apart</em></h2>
             </div>
-            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                <div v-for="w in whyCards" :key="w.heading" class="why-card p-6" data-reveal>
-                    <div class="mkt-service-icon mb-4" v-html="w.icon"></div>
-                    <h4 class="mb-2 text-sm font-semibold" style="color:var(--mkt-text-h)">{{ w.heading }}</h4>
-                    <p class="text-xs leading-relaxed" style="color:var(--mkt-text-m)">{{ w.body }}</p>
+            <div class="why-grid" data-reveal>
+                <div
+                    v-for="w in whyCards"
+                    :key="w.heading"
+                    class="why-card"
+                    :class="w.large ? 'why-card--large' : 'why-card--small'"
+                >
+                    <div class="why-icon-wrap">
+                        <span v-html="w.icon"></span>
+                    </div>
+                    <h4 class="why-card-title">{{ w.heading }}</h4>
+                    <p class="why-card-body">{{ w.body }}</p>
                 </div>
             </div>
         </div>
@@ -579,15 +596,62 @@ onMounted(() => {
 }
 
 /* ── Why cards ── */
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 14px;
+}
+.why-card--large { grid-column: span 3; }
+.why-card--small { grid-column: span 2; }
+
+@media (max-width: 767px) {
+    .why-grid { grid-template-columns: 1fr; }
+    .why-card--large,
+    .why-card--small { grid-column: span 1; }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+    .why-grid { grid-template-columns: repeat(2, 1fr); }
+    .why-card--large,
+    .why-card--small { grid-column: span 1; }
+}
+
 .why-card {
     background: var(--mkt-surface);
     border: 1px solid var(--mkt-line);
-    border-radius: 14px;
-    overflow: hidden;
-    transition: border-color 0.25s;
+    border-radius: 18px;
+    padding: 28px;
+    transition:
+        border-color 0.25s,
+        box-shadow 0.25s;
 }
 .why-card:hover {
-    border-color: rgba(0, 163, 255, 0.3);
+    border-color: rgba(0, 163, 255, 0.28);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+}
+.why-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(0, 163, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00a3ff;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+}
+.why-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--mkt-text-h);
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+}
+.why-card-body {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--mkt-text-m);
 }
 
 /* ── FAQ ── */
