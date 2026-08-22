@@ -1,0 +1,232 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Varidian Consulting — Software that understands Africa</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+:root{--brand:#0F9ED5;--brand-600:#0B82B3;--brand-700:#0A6B93;--brand-50:#ECF8FD;--brand-100:#D2EEFA;--brand-200:#A6DDF3;--deep:#0E4258;--deepest:#082C3C;--ink:#102029;--ink-700:#2A3E49;--muted:#4F5F6B;--muted-2:#6B7C88;--line:#E2E8EE;--line-2:#CBD5DD;--surface:#FFFFFF;--surface-2:#F7F9FB;--radius:16px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--surface);color:var(--ink-700);font-family:Manrope,system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+h1,h2,h3,h4{font-family:'Bricolage Grotesque',Manrope,sans-serif;color:var(--ink);letter-spacing:-.02em;margin:0}
+a{color:var(--brand-600);text-decoration:none}
+a:hover{color:var(--brand-700)}
+img{display:block;max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+/* header */
+.hdr{position:absolute;top:0;left:0;right:0;z-index:20}
+.hdr-in{display:flex;align-items:center;gap:32px;padding:22px 24px;max-width:1120px;margin:0 auto}
+.hdr-mark{display:flex;align-items:center}
+.hdr-mark img{height:22px;width:auto}
+.hdr-nav{display:flex;gap:26px;margin-left:auto}
+.hdr-nav a{color:rgba(255,255,255,.78);font-size:14px;font-weight:600}
+.hdr-nav a:hover{color:#fff}
+.hdr-cta{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--ink);font-size:14px;font-weight:700;padding:10px 18px;border-radius:10px}
+.hdr-cta:hover{background:var(--brand-50);color:var(--ink)}
+@media(max-width:860px){.hdr-nav{display:none}}
+/* hero */
+.hero{position:relative;overflow:hidden;background:var(--deepest);min-height:min(760px,100vh);display:flex;flex-direction:column;justify-content:center;padding:150px 0 0}
+.hero-photo{position:absolute;inset:0}
+.hero-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.15) brightness(.72) blur(1.5px);transform:scale(1.06);opacity:.42}
+.hero-photo::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 90% 70% at 50% 20%,rgba(15,158,213,.30),transparent 62%),linear-gradient(180deg,rgba(8,44,60,.86) 0%,rgba(8,44,60,.80) 45%,rgba(8,44,60,.96) 100%)}
+.hero-grid{position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.07) 1px,transparent 0);background-size:34px 34px}
+.hero-in{position:relative;text-align:center;max-width:880px;margin:0 auto;padding:0 24px}
+.pill{display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(166,221,243,.38);background:rgba(15,158,213,.14);color:#A6DDF3;border-radius:999px;padding:6px 15px;font-size:12.5px;font-weight:600;letter-spacing:.02em;backdrop-filter:blur(4px)}
+.pill i{width:7px;height:7px;border-radius:50%;background:var(--brand);display:block}
+h1.hero-title{color:#fff;font-size:clamp(42px,6vw,72px);font-weight:800;line-height:1.03;margin:26px 0 0}
+.hero-title .accent{color:var(--brand)}
+.hero-body{color:rgba(255,255,255,.74);font-size:17px;line-height:1.68;max-width:640px;margin:22px auto 0}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:34px}
+.btn-wa{display:inline-flex;align-items:center;gap:10px;background:var(--brand);color:#fff;font-weight:700;font-size:15px;padding:14px 26px;border-radius:12px;box-shadow:0 10px 30px rgba(15,158,213,.35)}
+.btn-wa:hover{background:var(--brand-600);color:#fff}
+.btn-ghost{display:inline-flex;align-items:center;padding:14px 26px;border-radius:12px;font-size:15px;font-weight:700;color:#fff;border:1.5px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06)}
+.btn-ghost:hover{border-color:rgba(255,255,255,.6);color:#fff}
+.trust{position:relative;margin-top:72px;border-top:1px solid rgba(255,255,255,.12);background:rgba(8,44,60,.4);backdrop-filter:blur(6px)}
+.trust-in{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:1120px;margin:0 auto;padding:26px 24px}
+.trust-item{text-align:center}
+.trust-l{font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:rgba(166,221,243,.75)}
+.trust-v{margin-top:6px;font-size:14.5px;font-weight:700;color:#fff}
+@media(max-width:700px){.trust-in{grid-template-columns:repeat(2,1fr);gap:20px 8px}}
+/* sections */
+section.pad{padding:110px 0}
+.sec-alt{background:var(--surface-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.chip{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--brand-600);background:var(--brand-50);border:1px solid var(--brand-100);border-radius:999px;padding:5px 13px}
+.sec-title{font-size:clamp(30px,3.4vw,42px);font-weight:700;line-height:1.14;margin-top:18px}
+.sec-title em{font-style:normal;color:var(--brand-600)}
+.sec-head{text-align:center;max-width:620px;margin:0 auto 56px}
+.sec-lead{color:var(--muted);font-size:15.5px;margin-top:16px}
+/* duotone helper */
+.duo{position:relative;overflow:hidden;background:var(--deepest)}
+.duo img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1) brightness(.85);opacity:.62}
+.duo::after{content:"";position:absolute;inset:0;background:linear-gradient(165deg,rgba(15,158,213,.42),rgba(8,44,60,.78));mix-blend-mode:multiply}
+/* product cards */
+.prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+@media(max-width:760px){.prod-grid{grid-template-columns:1fr}}
+.prod{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);transition:border-color .25s,transform .25s,box-shadow .25s}
+.prod:hover{border-color:var(--brand-200);transform:translateY(-3px);box-shadow:0 18px 44px rgba(14,66,88,.09)}
+.prod-img{height:132px;position:relative;border-radius:15px 15px 0 0;overflow:visible}
+.prod-img img,.prod-img::after{border-radius:15px 15px 0 0}
+.prod-ico{position:absolute;left:20px;bottom:-22px;z-index:2;width:46px;height:46px;border-radius:12px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--brand-600);box-shadow:0 6px 18px rgba(14,66,88,.12)}
+.prod-body{padding:38px 24px 26px}
+.prod h3{font-size:17px;font-weight:700;line-height:1.3}
+.prod p{color:var(--muted);font-size:14.5px;line-height:1.65;margin:12px 0 20px}
+.prod a.more{font-size:13px;font-weight:700}
+.center-cta{text-align:center;margin-top:42px}
+.btn-outline{display:inline-flex;align-items:center;padding:13px 26px;border-radius:12px;font-size:14.5px;font-weight:700;color:var(--ink);border:1.5px solid var(--line-2);background:#fff}
+.btn-outline:hover{border-color:var(--brand);color:var(--ink)}
+/* offline band */
+.band{position:relative;overflow:hidden;background:var(--deepest);color:#fff;padding:104px 0}
+.band .duo-bg{position:absolute;inset:0}
+.band .duo-bg img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) brightness(.7);opacity:.36}
+.band .duo-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,rgba(8,44,60,.95) 0%,rgba(8,44,60,.86) 52%,rgba(15,158,213,.42) 100%)}
+.band-in{position:relative;display:grid;grid-template-columns:56px 1fr;gap:34px;max-width:1120px;margin:0 auto;padding:0 24px}
+@media(max-width:700px){.band-in{grid-template-columns:1fr;gap:22px}}
+.band-ico{width:56px;height:56px;border-radius:14px;background:rgba(15,158,213,.18);border:1px solid rgba(166,221,243,.3);display:flex;align-items:center;justify-content:center;margin-top:4px}
+.band .chip{background:rgba(15,158,213,.16);border-color:rgba(166,221,243,.32);color:#A6DDF3}
+.band h2{color:#fff}
+.band .sec-title em{color:var(--brand)}
+.band p.lead{color:rgba(255,255,255,.74);font-size:15.5px;max-width:640px;margin:18px 0 34px}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:760px){.feat-grid{grid-template-columns:1fr}}
+.feat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);border-radius:14px;padding:20px}
+.feat h4{color:#A6DDF3;font-family:Manrope,sans-serif;font-size:11.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.feat p{color:rgba(255,255,255,.7);font-size:13.5px;line-height:1.62;margin:9px 0 0}
+/* why grid */
+.why-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.why-l{grid-column:span 3}
+.why-s{grid-column:span 2}
+@media(max-width:1023px){.why-grid{grid-template-columns:repeat(2,1fr)}.why-l,.why-s{grid-column:span 1}}
+@media(max-width:640px){.why-grid{grid-template-columns:1fr}}
+.why{background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px;transition:border-color .25s,box-shadow .25s}
+.why:hover{border-color:var(--brand-200);box-shadow:0 14px 40px rgba(14,66,88,.08)}
+.why-ico{width:46px;height:46px;border-radius:12px;background:var(--brand-50);border:1px solid var(--brand-100);display:flex;align-items:center;justify-content:center;color:var(--brand-600);margin-bottom:20px}
+.why h4{font-size:16.5px;font-weight:700;line-height:1.35}
+.why p{color:var(--muted);font-size:14px;line-height:1.65;margin:10px 0 0}
+.why--photo{padding:0;overflow:hidden;position:relative;min-height:230px;display:flex;align-items:flex-end;border-color:transparent}
+.why--photo .duo{position:absolute;inset:0}
+.why--photo .why-txt{position:relative;padding:26px;color:#fff}
+.why--photo h4{color:#fff}
+.why--photo p{color:rgba(255,255,255,.75)}
+/* faq */
+.faq{max-width:760px;margin:0 auto}
+.faq-row{border-bottom:1px solid var(--line);padding:20px 8px;cursor:pointer;transition:background .2s}
+.faq-row:hover{background:#fff}
+.faq-q{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.faq-q span{font-size:15.5px;font-weight:600;color:var(--ink)}
+.faq-mark{width:28px;height:28px;flex:none;border-radius:50%;border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center;color:var(--muted-2);transition:.25s}
+.faq-row.open .faq-mark{background:var(--brand-50);border-color:var(--brand-200);color:var(--brand-600);transform:rotate(180deg)}
+.faq-a{display:none;color:var(--muted);font-size:14.5px;line-height:1.7;padding:12px 44px 4px 0}
+.faq-row.open .faq-a{display:block}
+/* bottom cta */
+.cta{position:relative;overflow:hidden;border-radius:24px;background:linear-gradient(150deg,var(--deep),var(--deepest) 60%);padding:74px 32px;text-align:center;color:#fff}
+.cta::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 90% at 80% 0%,rgba(15,158,213,.42),transparent 60%)}
+.cta>*{position:relative}
+.cta h2{color:#fff;margin-top:20px}
+.cta .accent{color:var(--brand)}
+.cta p{color:rgba(255,255,255,.72);font-size:15.5px;max-width:520px;margin:18px auto 32px}
+.cta .chip{background:rgba(15,158,213,.16);border-color:rgba(166,221,243,.32);color:#A6DDF3}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.cta .btn-ghost{border-color:rgba(255,255,255,.3)}
+/* credits */
+.credits{background:var(--surface-2);border-top:1px solid var(--line);padding:44px 0;font-size:12.5px;color:var(--muted-2);line-height:1.7}
+.credits h5{font-family:Manrope,sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:var(--muted);margin:0 0 12px}
+.credits ul{margin:0;padding-left:18px;display:grid;gap:5px}
+[data-reveal]{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+[data-reveal].in{opacity:1;transform:none}
+</style></head><body>
+
+<header class="hdr"><div class="hdr-in"><a class="hdr-mark" href="#"><img src="../../assets/brand/varidian-logo-white.png" alt="Varidian"></a><nav class="hdr-nav"><a href="#">Home</a><a href="#products">Products</a><a href="#why">About</a><a href="#cta">Contact</a></nav><a class="hdr-cta" href="#cta">Request a demo</a></div></header>
+
+<section class="hero" data-screen-label="Hero">
+<div class="hero-photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Lusaka,%20capital%20city%20of%20Zambia.jpg?width=1800" alt="Lusaka, Zambia"></div>
+<div class="hero-grid"></div>
+<div class="hero-in">
+<div class="pill"><i></i>Built from Lusaka · Deployed across Africa</div>
+<h1 class="hero-title">Software that understands <span class="accent">Africa.</span></h1>
+<p class="hero-body">We design and build web, mobile and desktop management systems for African institutions — purpose-built for the local context. ECZ exams, ZRA tax compliance, Airtel, MTN and Zamtel mobile money, NAPSA payroll, and offline-first where connectivity is limited.</p>
+<div class="hero-actions">
+<a class="btn-wa" href="https://wa.me/260971864421?text=Hi%2C%20I%27d%20like%20to%20request%20a%20demo%20of%20a%20Varidian%20product." target="_blank" rel="noopener noreferrer"><svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Request a demo</a>
+<a class="btn-ghost" href="#products">See our products</a>
+</div>
+</div>
+<div class="trust"><div class="trust-in">
+<div class="trust-item"><div class="trust-l">Home Base</div><div class="trust-v">Lusaka, Zambia</div></div>
+<div class="trust-item"><div class="trust-l">Platforms</div><div class="trust-v">Web · Mobile · Desktop</div></div>
+<div class="trust-item"><div class="trust-l">Integrations</div><div class="trust-v">Airtel · MTN · Zamtel</div></div>
+<div class="trust-item"><div class="trust-l">Reach</div><div class="trust-v">Deployed across Africa</div></div>
+</div></div>
+</section>
+
+<section class="pad" id="products" data-screen-label="Products"><div class="wrap">
+<div class="sec-head" data-reveal><div class="chip">Products</div><h2 class="sec-title">Management systems<br><em>built for African institutions</em></h2><p class="sec-lead">Each product is purpose-built for a specific sector — not adapted from a generic template. Offline-first, mobile-ready, and locally supported.</p></div>
+<div class="prod-grid" data-reveal>
+
+<article class="prod"><div class="prod-img duo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Zambian%20kids%20learning%20how%20to%20use%20computers.jpg?width=900" alt="Pupils learning to use computers, Zambia"><div class="prod-ico"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422A12.083 12.083 0 0112 21.07a12.083 12.083 0 01-6.16-10.492L12 14z"/></svg></div></div><div class="prod-body"><h3>School Management System (ZSSMS)</h3><p>Grades 1–12 on the MoE three-term calendar. ECZ exam tracking, Airtel/MTN fee collection, NAPSA payroll. Offline-first — continues working through connectivity outages.</p><a class="more" href="/products/school-management-system">Learn more →</a></div></article>
+
+<article class="prod"><div class="prod-img duo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/The%20Great%20Psalms%20Choir.jpg?width=900" alt="Church choir"><div class="prod-ico"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div></div><div class="prod-body"><h3>Church Management System</h3><p>Member and cell group registry. Tithe and offering tracking with mobile money. Attendance, events, and SMS or WhatsApp notifications. Purpose-built for African churches and ministries.</p><a class="more" href="/products/church-management-system">Learn more →</a></div></article>
+
+<article class="prod"><div class="prod-img duo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/A%20trader%20at%20Makola%20Market.jpg?width=900" alt="A trader at a market stall"><div class="prod-ico"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg></div></div><div class="prod-body"><h3>Varidian BizManager</h3><p>Complete business manager for SMEs. Invoicing, inventory, sales, expenses — fully integrated with ZRA Smart Invoice. Offline queue ensures no lost transactions during outages.</p><a class="more" href="/products/bizmanager">Learn more →</a></div></article>
+
+<article class="prod"><div class="prod-img duo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/A%20traditional%20market%20woman.jpg?width=900" alt="Market trader"><div class="prod-ico"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div></div><div class="prod-body"><h3>Village Banking &amp; Microfinance</h3><p>Group and member management for VSLAs and NGO microfinance programmes. Loan and savings cycle tracking, mobile money disbursements. Field agent portal works offline.</p><a class="more" href="/products/village-banking">Learn more →</a></div></article>
+
+</div>
+<div class="center-cta" data-reveal><a class="btn-outline" href="/products">View all products</a></div>
+</div></section>
+
+<section class="band" id="offline" data-screen-label="Offline-first">
+<div class="duo-bg"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Woman%20on%20mobile%20money%20kiosk.jpg?width=1600" alt="Mobile money kiosk"></div>
+<div class="band-in" data-reveal>
+<div class="band-ico"><svg width="26" height="26" fill="none" stroke="#0F9ED5" stroke-width="1.5" viewBox="0 0 24 24"><line x1="1" y1="1" x2="23" y2="23"/><path d="M16.72 11.06A10.94 10.94 0 0119 12.55M5 12.55a10.94 10.94 0 015.17-2.39M10.71 5.05A16 16 0 0122.56 9M1.42 9a15.91 15.91 0 014.7-2.88M8.53 16.11a6 6 0 006.95 0M12 20h.01"/></svg></div>
+<div>
+<div class="chip">Offline-first</div>
+<h2 class="sec-title">Built for the reality<br><em>of African connectivity.</em></h2>
+<p class="lead">Every Varidian product is designed to keep working when your internet goes down. Data is stored locally on the device. Transactions are queued. The moment connectivity returns, everything syncs automatically — no lost data, no manual re-entry.</p>
+<div class="feat-grid">
+<div class="feat"><h4>Local data storage</h4><p>All records are saved on-device first. Internet is used to sync, not to function.</p></div>
+<div class="feat"><h4>Automatic sync</h4><p>The moment connectivity returns, all queued transactions and changes sync without any manual action.</p></div>
+<div class="feat"><h4>No data loss</h4><p>Fee payments, exam marks, invoices, savings records — nothing is ever lost to a network outage.</p></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="pad" id="why" data-screen-label="Why Varidian"><div class="wrap">
+<div class="sec-head" data-reveal><div class="chip">Why Varidian</div><h2 class="sec-title">What sets Varidian <em>apart</em></h2></div>
+<div class="why-grid" data-reveal>
+<div class="why why-l"><div class="why-ico"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg></div><h4>Built for African contexts — not adapted for them</h4><p>Our products are not generic systems modified to bolt on mobile money. Local regulations, mobile payments, low-bandwidth environments and offline use are the foundation from day one — not additions.</p></div>
+<div class="why why-l"><div class="why-ico"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><line x1="1" y1="1" x2="23" y2="23"/><path d="M16.72 11.06A10.94 10.94 0 0119 12.55M5 12.55a10.94 10.94 0 015.17-2.39M10.71 5.05A16 16 0 0122.56 9M1.42 9a15.91 15.91 0 014.7-2.88M8.53 16.11a6 6 0 006.95 0M12 20h.01"/></svg></div><h4>Offline-first where it counts</h4><p>Offline queues, local data storage and background sync are capabilities we build in deliberately, not workarounds added after the fact. A genuine differentiator in African markets.</p></div>
+<div class="why why-s"><div class="why-ico"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><h4>Multi-platform delivery</h4><p>We deliver across web, mobile and desktop — selecting the right platform and stack for each project rather than forcing every problem into one solution.</p></div>
+<div class="why why-s"><div class="why-ico"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div><h4>Financial governance at board level</h4><p>With a senior government finance director on the board, financial accountability and regulatory awareness are embedded at the highest level of the company.</p></div>
+<div class="why why-s why--photo"><div class="duo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/2010%20Cairo%20Road%20Lusaka%20Zambia%204973669840.jpg?width=900" alt="Cairo Road, Lusaka"></div><div class="why-txt"><h4>Locally supported, regionally scaled</h4><p>Clients get a real contact reachable by phone or WhatsApp. Our support infrastructure is local; our reach is continental.</p></div></div>
+</div>
+</div></section>
+
+<section class="pad sec-alt" id="faq" data-screen-label="FAQ"><div class="wrap">
+<div class="sec-head" data-reveal><div class="chip">FAQ</div><h2 class="sec-title">Common <em>questions</em></h2></div>
+<div class="faq" data-reveal>
+<div class="faq-row open"><div class="faq-q"><span>Which sectors do your products serve?</span><div class="faq-mark"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></div></div><div class="faq-a">We build for schools (private, community, and higher education), churches and ministries, SMEs requiring ZRA compliance, and NGOs running village banking or microfinance programmes. Our primary market is Zambia but our systems are deployed across East and Southern Africa.</div></div>
+<div class="faq-row"><div class="faq-q"><span>What does "offline-first" mean in practice?</span><div class="faq-mark"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></div></div><div class="faq-a">Every Varidian product stores data locally on the device and continues working during internet outages. When connectivity returns, all changes sync automatically. For BizManager, invoices are queued and submitted to ZRA once the connection resumes. For schools, fee records and exam marks are captured regardless of connectivity.</div></div>
+<div class="faq-row"><div class="faq-q"><span>Are your products ZRA Smart Invoice compliant?</span><div class="faq-mark"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></div></div><div class="faq-a">Yes. Varidian BizManager is fully integrated with ZRA Smart Invoice via the VSDC API. All invoices are submitted to ZRA in real time with ZRA receipt numbers and QR codes printed on every invoice. The offline queue handles submissions automatically when connectivity returns.</div></div>
+<div class="faq-row"><div class="faq-q"><span>Do you work with organisations outside Zambia?</span><div class="faq-mark"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></div></div><div class="faq-a">Yes. While Zambia is our home base, our systems have been deployed in Zimbabwe, Malawi, Tanzania, and other countries. Product features can be adapted for local compliance and payment systems in other African markets.</div></div>
+<div class="faq-row"><div class="faq-q"><span>Can I request a demo before committing?</span><div class="faq-mark"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></div></div><div class="faq-a">Absolutely. WhatsApp us or fill in the contact form to request a demo of any product. We will walk you through the system and answer every question before you decide.</div></div>
+</div>
+</div></section>
+
+<section class="pad" id="cta" data-screen-label="Bottom CTA"><div class="wrap"><div class="cta" data-reveal>
+<div class="chip">Let's get started</div>
+<h2 class="sec-title">Ready to see a product<br><span class="accent">in action?</span></h2>
+<p>Request a demo and we'll walk you through the product most relevant to your organisation. No obligation — just a practical conversation.</p>
+<div class="cta-row"><a class="btn-wa" href="https://wa.me/260971864421?text=Hi%2C%20I%27d%20like%20to%20request%20a%20demo%20of%20a%20Varidian%20product." target="_blank" rel="noopener noreferrer"><svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Request a demo</a><a class="btn-ghost" href="#products">See our products</a></div>
+</div></div></section>
+
+<footer class="credits"><div class="wrap">
+<h5>Mockup image sources — replace before launch</h5>
+<ul>
+<li>Hero: “Lusaka, capital city of Zambia” — Wikimedia Commons, CC BY-SA 4.0</li>
+<li>Products: “Zambian kids learning how to use computers”, “The Great Psalms Choir”, “A trader at Makola Market”, “A traditional market woman” — Wikimedia Commons</li>
+<li>Offline-first band: “Woman on mobile money kiosk” — Wikimedia Commons</li>
+<li>Why Varidian: “2010 Cairo Road Lusaka Zambia” — Wikimedia Commons</li>
+</ul>
+</div></footer>
+
+<script>
+document.querySelectorAll('.faq-row').forEach(function(r){r.addEventListener('click',function(){var open=r.classList.contains('open');document.querySelectorAll('.faq-row').forEach(function(x){x.classList.remove('open')});if(!open){r.classList.add('open')}})});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in')}})},{threshold:.1});
+document.querySelectorAll('[data-reveal]').forEach(function(el){io.observe(el)});
+</script>
+</body></html>
