@@ -76,3 +76,10 @@ test('landing page no longer renders the ZRA compliance badge', function () {
         ->not->toContain("badge: 'ZRA Smart Invoice compliant'")
         ->not->toContain('product.badge');
 });
+
+test('marketing nav hides the hamburger button on desktop widths', function () {
+    $layout = file_get_contents(resource_path('js/layouts/MarketingLayout.vue'));
+
+    // `.mkt-hamburger` sets its own display, which overrides Tailwind's layered `lg:hidden`.
+    expect($layout)->toMatch('#@media \(min-width: 1024px\) \{\s*\.mkt-hamburger \{\s*display: none;#');
+});

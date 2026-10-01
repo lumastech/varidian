@@ -415,6 +415,12 @@ const jsonLd = JSON.stringify({
     cursor: pointer;
     transition: background 0.2s, border-color 0.2s;
 }
+/* Unlayered CSS beats Tailwind's `lg:hidden`, so the breakpoint lives here. */
+@media (min-width: 1024px) {
+    .mkt-hamburger {
+        display: none;
+    }
+}
 .mkt-hamburger:hover {
     border-color: var(--mkt-line-s);
 }
