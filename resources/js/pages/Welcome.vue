@@ -1,157 +1,193 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { useForm } from '@inertiajs/vue3';
+import { onMounted, ref } from 'vue';
 import SeoHead from '@/components/SeoHead.vue';
 import WhatsAppButton from '@/components/WhatsAppButton.vue';
 
-interface Product {
+interface Service {
     title: string;
+    body: string;
+    icon: string;
+}
+
+interface Product {
+    sector: string;
+    name: string;
     desc: string;
     href: string;
-    icon: string;
-    img: string;
-    alt: string;
 }
 
-interface WhyCard {
-    heading: string;
+interface HostingPlan {
+    name: string;
+    price: string | null;
+    spec: string;
+    featured: boolean;
+}
+
+interface CaseStudy {
+    tag: string;
+    title: string;
     body: string;
-    large: boolean;
-    icon?: string;
-    photo?: boolean;
-    img?: string;
-    alt?: string;
+    preview: string;
 }
 
-const activeFaq = ref<number | null>(0);
+const integrations = [
+    { title: 'Airtel Money', body: 'Collections & payouts' },
+    { title: 'MTN MoMo', body: 'Collections & payouts' },
+    { title: 'ZRA Smart Invoice', body: 'Tax-compliant invoicing' },
+    { title: 'Bulk SMS', body: 'Alerts & reminders' },
+    { title: 'NAPSA & PAYE', body: 'Payroll deductions' },
+    { title: 'Local hosting', body: 'Data stays in Zambia' },
+];
 
-/**
- * Placeholder photography — Wikimedia Commons, CC BY-SA. Replace with Varidian's
- * own photography (or licence-free stock) before launch; the paths stay the same.
- */
-const photos = {
-    hero: '/images/landing/hero-lusaka.jpg',
-    school: '/images/landing/product-school.jpg',
-    church: '/images/landing/product-church.jpg',
-    biz: '/images/landing/product-biz.jpg',
-    village: '/images/landing/product-village.jpg',
-    mobileMoney: '/images/landing/band-mobile-money.jpg',
-    local: '/images/landing/why-local.jpg',
-};
+const audiences = ['Private & mission schools', 'NGOs', 'Churches', 'Microfinance & village banking', 'SMEs', 'Universities & colleges'];
 
-const trustBar = [
-    { label: 'Home Base', value: 'Lusaka, Zambia' },
-    { label: 'Platforms', value: 'Web · Mobile · Desktop' },
-    { label: 'Integrations', value: 'Airtel · MTN · Zamtel' },
-    { label: 'Reach', value: 'Deployed across Africa' },
+const services: Service[] = [
+    {
+        title: 'Custom software',
+        body: 'Web platforms, portals and internal systems designed around your processes — not the other way round.',
+        icon: `<svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5"/><path d="M16 7l5 5-5 5"/><path d="M14 4l-4 16"/></svg>`,
+    },
+    {
+        title: 'AI & automation',
+        body: 'Practical AI for businesses — document processing, assistants and workflow automation, with local inference options for sensitive data.',
+        icon: `<svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>`,
+    },
+    {
+        title: 'Zambian web hosting',
+        body: 'Websites and applications hosted on servers in Zambia, supporting your obligations under the Data Protection Act, 2021.',
+        icon: `<svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>`,
+    },
+    {
+        title: 'Consulting & support',
+        body: 'Digital strategy, system audits and ongoing IT support, with service levels that match how critical your system is.',
+        icon: `<svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>`,
+    },
 ];
 
 const products: Product[] = [
     {
-        title: 'School Management System (ZSSMS)',
-        desc: 'Grades 1–12 on the MoE three-term calendar. ECZ exam tracking, Airtel/MTN fee collection, NAPSA payroll. Offline-first — continues working through connectivity outages.',
+        sector: 'Education',
+        name: 'SKUU',
+        desc: 'School & student management for Grades 1–12 — enrolment, fees via mobile money, ECZ exam tracking, payroll and parent SMS.',
         href: '/products/school-management-system',
-        img: photos.school,
-        alt: 'Pupils learning to use computers, Zambia',
-        icon: `<svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422A12.083 12.083 0 0112 21.07a12.083 12.083 0 01-6.16-10.492L12 14z"/></svg>`,
     },
     {
-        title: 'Church Management System',
-        desc: 'Member and cell group registry. Tithe and offering tracking with mobile money. Attendance, events, and SMS or WhatsApp notifications. Purpose-built for African churches and ministries.',
-        href: '/products/church-management-system',
-        img: photos.church,
-        alt: 'Church choir',
-        icon: `<svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>`,
+        sector: 'Non-profit',
+        name: 'Varidian Reach',
+        desc: 'NGO management — beneficiaries, programmes, donors and reporting in one dedicated installation per organisation.',
+        href: '#contact',
     },
     {
-        title: 'Varidian BizManager',
-        desc: 'Complete business manager for SMEs. Invoicing, inventory, sales, expenses — fully integrated with ZRA Smart Invoice. Offline queue ensures no lost transactions during outages.',
+        sector: 'Business',
+        name: 'BizManager',
+        desc: 'SME business management with ZRA Smart Invoice integration — sales, stock, customers and compliant invoices.',
         href: '/products/bizmanager',
-        img: photos.biz,
-        alt: 'A trader at a market stall',
-        icon: `<svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>`,
     },
     {
-        title: 'Village Banking & Microfinance',
-        desc: 'Group and member management for VSLAs and NGO microfinance programmes. Loan and savings cycle tracking, mobile money disbursements. Field agent portal works offline.',
+        sector: 'Accounting',
+        name: 'Varidian Books',
+        desc: 'Offline-first accounting that keeps working when the connection drops, and syncs when it returns.',
+        href: '#contact',
+    },
+    {
+        sector: 'Finance',
+        name: 'Village Banking',
+        desc: 'Microfinance and savings-group platform — members, loans, repayments and mobile money collections.',
         href: '/products/village-banking',
-        img: photos.village,
-        alt: 'Market trader',
-        icon: `<svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>`,
+    },
+    {
+        sector: 'Faith',
+        name: 'ChurchMS',
+        desc: 'Church management — membership, giving, groups, events and congregation communication.',
+        href: '/products/church-management-system',
+    },
+    {
+        sector: 'Higher education',
+        name: 'Coursify',
+        desc: 'Online learning management for universities and colleges — courses, assessments and student progress.',
+        href: '#contact',
+    },
+    {
+        sector: 'Events',
+        name: 'Varidian Events',
+        desc: 'Event registration and ticketing with online payments — a data-protection-compliant alternative to generic forms.',
+        href: '#contact',
     },
 ];
 
-const offlineFeatures = [
+const reasons = [
     {
-        title: 'Local data storage',
-        body: 'All records are saved on-device first. Internet is used to sync, not to function.',
+        title: 'Built for local systems',
+        body: 'Airtel Money, MTN MoMo, ZRA Smart Invoice, NAPSA, PAYE and bulk SMS — integrated, not bolted on.',
     },
     {
-        title: 'Automatic sync',
-        body: 'The moment connectivity returns, all queued transactions and changes sync without any manual action.',
+        title: 'Your data stays home',
+        body: 'Hosted on our own servers in Zambia, so personal data is stored at rest within the country.',
     },
     {
-        title: 'No data loss',
-        body: 'Fee payments, exam marks, invoices, savings records — nothing is ever lost to a network outage.',
-    },
-];
-
-const whyCards: WhyCard[] = [
-    {
-        icon: `<svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>`,
-        heading: 'Built for African contexts — not adapted for them',
-        body: 'Our products are not generic systems modified to bolt on mobile money. Local regulations, mobile payments, low-bandwidth environments and offline use are the foundation from day one — not additions.',
-        large: true,
+        title: 'Own it or rent it',
+        body: 'Choose a monthly cloud subscription, or a one-off licence where you own the system and its customisations.',
     },
     {
-        icon: `<svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><line x1="1" y1="1" x2="23" y2="23"/><path d="M16.72 11.06A10.94 10.94 0 0119 12.55M5 12.55a10.94 10.94 0 015.17-2.39M10.71 5.05A16 16 0 0122.56 9M1.42 9a15.91 15.91 0 014.7-2.88M8.53 16.11a6 6 0 006.95 0M12 20h.01"/></svg>`,
-        heading: 'Offline-first where it counts',
-        body: 'Offline queues, local data storage and background sync are capabilities we build in deliberately, not workarounds added after the fact. A genuine differentiator in African markets.',
-        large: true,
-    },
-    {
-        icon: `<svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`,
-        heading: 'Multi-platform delivery',
-        body: 'We deliver across web, mobile and desktop — selecting the right platform and stack for each project rather than forcing every problem into one solution.',
-        large: false,
-    },
-    {
-        icon: `<svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>`,
-        heading: 'Financial governance at board level',
-        body: 'With a senior government finance director on the board, financial accountability and regulatory awareness are embedded at the highest level of the company.',
-        large: false,
-    },
-    {
-        heading: 'Locally supported, regionally scaled',
-        body: 'Clients get a real contact reachable by phone or WhatsApp. Our support infrastructure is local; our reach is continental.',
-        large: false,
-        photo: true,
-        img: photos.local,
-        alt: 'Cairo Road, Lusaka',
+        title: 'Support you can reach',
+        body: 'Standard support included on hosted plans, with premium support and SLAs available.',
     },
 ];
 
-const faqs = [
+/**
+ * Set `price` to the monthly ZMW figure once pricing is final; null renders "Pricing on request".
+ */
+const hostingPlans: HostingPlan[] = [
+    { name: 'Starter', price: null, spec: '1 website · SSD storage', featured: false },
+    { name: 'Business', price: null, spec: 'Multiple websites · SSD storage', featured: true },
+    { name: 'Developer', price: null, spec: 'Unlimited sites · multi-PHP', featured: false },
+];
+
+const caseStudies: CaseStudy[] = [
     {
-        q: 'Which sectors do your products serve?',
-        a: 'We build for schools (private, community, and higher education), churches and ministries, SMEs requiring ZRA compliance, and NGOs running village banking or microfinance programmes. Our primary market is Zambia but our systems are deployed across East and Southern Africa.',
+        tag: 'NGO · Southern Province',
+        title: "Choma District Women's Development Association",
+        body: 'A seven-module management system and public website for chomadwda.org, covering members, programmes and reporting.',
+        preview: 'Admin dashboard',
     },
     {
-        q: 'What does "offline-first" mean in practice?',
-        a: 'Every Varidian product stores data locally on the device and continues working during internet outages. When connectivity returns, all changes sync automatically. For BizManager, invoices are queued and submitted to ZRA once the connection resumes. For schools, fee records and exam marks are captured regardless of connectivity.',
-    },
-    {
-        q: 'Are your products ZRA Smart Invoice compliant?',
-        a: 'Yes. Varidian BizManager is fully integrated with ZRA Smart Invoice via the VSDC API. All invoices are submitted to ZRA in real time with ZRA receipt numbers and QR codes printed on every invoice. The offline queue handles submissions automatically when connectivity returns.',
-    },
-    {
-        q: 'Do you work with organisations outside Zambia?',
-        a: 'Yes. While Zambia is our home base, our systems have been deployed in Zimbabwe, Malawi, Tanzania, and other countries. Product features can be adapted for local compliance and payment systems in other African markets.',
-    },
-    {
-        q: 'Can I request a demo before committing?',
-        a: 'Absolutely. WhatsApp us or fill in the contact form to request a demo of any product. We will walk you through the system and answer every question before you decide.',
+        tag: 'Microfinance',
+        title: 'ZMAI village banking platform',
+        body: 'A savings and microfinance platform managing members, loans and repayments.',
+        preview: 'Loans module',
     },
 ];
+
+const steps = [
+    { title: 'Discover', body: 'We map your processes, users and compliance needs on site.' },
+    { title: 'Design', body: 'A clear scope, fixed quotation and screens you approve before we build.' },
+    { title: 'Build', body: 'Iterative delivery with regular demos, testing and staff training.' },
+    { title: 'Run & support', body: 'Hosting, monitoring, backups and support after go-live.' },
+];
+
+const enquiryTopics = ['Custom Development', 'AI & Automation', 'Web Hosting', 'Consulting & Support', ...products.map((p) => p.name), 'General Inquiry'];
+
+const form = useForm({
+    name: '',
+    organisation: '',
+    phone: '',
+    email: '',
+    product_interest: '',
+    message: '',
+});
+
+const enquirySent = ref(false);
+
+function sendEnquiry(): void {
+    form.post('/contact', {
+        preserveScroll: true,
+        onSuccess: () => {
+            form.reset();
+            enquirySent.value = true;
+        },
+    });
+}
 
 onMounted(() => {
     const observer = new IntersectionObserver(
@@ -170,198 +206,239 @@ onMounted(() => {
 
 <template>
     <SeoHead
-        title="Varidian Consulting Limited — Software that understands Africa"
-        description="We design and build web, mobile and desktop management systems for African institutions — purpose-built for the local context. ECZ exams, ZRA tax compliance, Airtel, MTN and Zamtel mobile money, NAPSA payroll, and offline-first where connectivity is limited."
-        keywords="varidianlab, varidian lab, varidian consulting, school management system Africa, church management system Zambia, ZRA Smart Invoice software, business management Zambia, village banking VSLA software, offline-first management system, ECZ exam tracking system, NAPSA payroll software Zambia, Airtel Money MTN MoMo integration, Varidian Consulting Limited, African school management software, church software Africa, microfinance NGO software Zambia"
+        title="Varidian Consulting Limited — Software built for the way Zambia works"
+        description="Varidian designs, builds and hosts business systems for schools, NGOs, SMEs and institutions — with mobile money, SMS and ZRA compliance built in from day one, and your data kept in Zambia."
+        keywords="varidianlab, varidian lab, varidian consulting, software house Lusaka, school management system Zambia, NGO management software, church management system Zambia, ZRA Smart Invoice software, village banking software, web hosting Zambia, data protection act Zambia hosting, Airtel Money MTN MoMo integration, AI automation Zambia, Varidian Consulting Limited"
         canonical-url="https://varidianlab.com"
     />
 
     <div class="v-landing">
         <!-- ══════════════ HERO ══════════════ -->
-        <section class="v-hero">
-            <div class="v-hero-photo">
-                <img :src="photos.hero" alt="Lusaka, Zambia" />
-            </div>
+        <section id="top" class="v-hero">
             <div class="v-hero-grid"></div>
 
             <div class="v-hero-in">
-                <div class="v-pill">
-                    <i></i>
-                    Built from Lusaka · Deployed across Africa
+                <div class="v-hero-copy">
+                    <div class="v-pill">
+                        <i></i>
+                        Software house · Lusaka, Zambia
+                    </div>
+                    <h1 class="v-hero-title">Software built for the way <span class="v-accent">Zambia works.</span></h1>
+                    <p class="v-hero-body">
+                        Varidian designs, builds and hosts business systems for schools, NGOs, SMEs and institutions — with mobile money, SMS and ZRA compliance built in from day one, and your data kept in Zambia.
+                    </p>
+                    <div class="v-hero-actions">
+                        <WhatsAppButton variant="inline" label="Start a project" message="Hi, I'd like to start a project with Varidian." class="v-btn-wa" />
+                        <a href="#products" class="v-btn-ghost">Explore our products</a>
+                    </div>
                 </div>
-                <h1 class="v-hero-title">Software that understands <span class="v-accent">Africa.</span></h1>
-                <p class="v-hero-body">
-                    We design and build web, mobile and desktop management systems for African institutions — purpose-built for the local context. ECZ exams, ZRA tax compliance, Airtel, MTN and Zamtel mobile money, NAPSA payroll, and offline-first where connectivity is limited.
-                </p>
-                <div class="v-hero-actions">
-                    <a
-                        href="https://wa.me/260971864421?text=Hi%2C%20I%27d%20like%20to%20request%20a%20demo%20of%20a%20Varidian%20product."
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="v-btn-wa"
-                    >
-                        <svg fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                        </svg>
-                        Request a demo
-                    </a>
-                    <a href="/products" class="v-btn-ghost">See our products</a>
+
+                <div class="v-int">
+                    <div class="v-int-l">Integrated out of the box</div>
+                    <div class="v-int-grid">
+                        <div v-for="item in integrations" :key="item.title" class="v-int-item">
+                            <div class="v-int-t">{{ item.title }}</div>
+                            <div class="v-int-b">{{ item.body }}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Trust strip -->
-            <div class="v-trust">
-                <div class="v-trust-in">
-                    <div v-for="t in trustBar" :key="t.label" class="v-trust-item">
-                        <div class="v-trust-l">{{ t.label }}</div>
-                        <div class="v-trust-v">{{ t.value }}</div>
+        <!-- ══════════════ BUILT FOR ══════════════ -->
+        <section aria-label="Who we serve" class="v-strip">
+            <div class="v-wrap v-strip-in">
+                <span class="v-strip-l">Built for</span>
+                <span v-for="audience in audiences" :key="audience" class="v-strip-v">{{ audience }}</span>
+            </div>
+        </section>
+
+        <!-- ══════════════ SERVICES ══════════════ -->
+        <section id="services" class="v-sec">
+            <div class="v-wrap">
+                <div class="v-sec-head" data-reveal>
+                    <div class="v-chip">What we do</div>
+                    <h2 class="v-sec-title">One partner from first idea <em>to running system.</em></h2>
+                </div>
+
+                <div class="v-svc-grid" data-reveal>
+                    <div v-for="service in services" :key="service.title" class="v-card">
+                        <!-- eslint-disable-next-line vue/no-v-html -->
+                        <div class="v-card-ico" v-html="service.icon"></div>
+                        <h3>{{ service.title }}</h3>
+                        <p>{{ service.body }}</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- ══════════════ PRODUCTS ══════════════ -->
-        <section id="products" class="v-sec">
+        <section id="products" class="v-sec v-sec-alt">
             <div class="v-wrap">
-                <div class="v-sec-head" data-reveal>
-                    <div class="v-chip">Products</div>
-                    <h2 class="v-sec-title">Management systems<br /><em>built for African institutions</em></h2>
-                    <p class="v-sec-lead">Each product is purpose-built for a specific sector — not adapted from a generic template. Offline-first, mobile-ready, and locally supported.</p>
+                <div class="v-sec-head v-sec-head--split" data-reveal>
+                    <div>
+                        <div class="v-chip">Ready-made platforms</div>
+                        <h2 class="v-sec-title">Proven products, <em>configured for you.</em></h2>
+                        <p class="v-sec-lead">Start faster with a Varidian platform — on our cloud for a monthly fee, or licensed outright and installed on your own infrastructure.</p>
+                    </div>
+                    <WhatsAppButton variant="inline" label="Request a demo" message="Hi, I'd like to request a demo of a Varidian product." class="v-btn-outline" />
                 </div>
 
                 <div class="v-prod-grid" data-reveal>
-                    <article v-for="product in products" :key="product.title" class="v-prod">
-                        <div class="v-prod-img v-duo">
-                            <img :src="product.img" :alt="product.alt" />
-                            <!-- eslint-disable-next-line vue/no-v-html -->
-                            <div class="v-prod-ico" v-html="product.icon"></div>
-                        </div>
-                        <div class="v-prod-body">
-                            <h3>{{ product.title }}</h3>
-                            <p>{{ product.desc }}</p>
-                            <a :href="product.href" class="v-more">Learn more →</a>
-                        </div>
-                    </article>
-                </div>
-
-                <div class="v-center-cta" data-reveal>
-                    <a href="/products" class="v-btn-outline">View all products</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- ══════════════ OFFLINE-FIRST ══════════════ -->
-        <section id="offline" class="v-band">
-            <div class="v-band-photo">
-                <img :src="photos.mobileMoney" alt="Mobile money kiosk" />
-            </div>
-            <div class="v-band-in" data-reveal>
-                <div class="v-band-ico">
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <line x1="1" y1="1" x2="23" y2="23" />
-                        <path d="M16.72 11.06A10.94 10.94 0 0119 12.55M5 12.55a10.94 10.94 0 015.17-2.39M10.71 5.05A16 16 0 0122.56 9M1.42 9a15.91 15.91 0 014.7-2.88M8.53 16.11a6 6 0 006.95 0M12 20h.01" />
-                    </svg>
-                </div>
-                <div>
-                    <div class="v-chip">Offline-first</div>
-                    <h2 class="v-sec-title">Built for the reality<br /><em>of African connectivity.</em></h2>
-                    <p class="v-band-lead">
-                        Every Varidian product is designed to keep working when your internet goes down. Data is stored locally on the device. Transactions are queued. The moment connectivity returns, everything syncs automatically — no lost data, no manual re-entry.
-                    </p>
-                    <div class="v-feat-grid">
-                        <div v-for="item in offlineFeatures" :key="item.title" class="v-feat">
-                            <h4>{{ item.title }}</h4>
-                            <p>{{ item.body }}</p>
-                        </div>
-                    </div>
+                    <a v-for="product in products" :key="product.name" :href="product.href" class="v-prod">
+                        <div class="v-prod-sector">{{ product.sector }}</div>
+                        <div class="v-prod-name">{{ product.name }}</div>
+                        <p>{{ product.desc }}</p>
+                        <span class="v-more">{{ product.href.startsWith('/') ? 'Learn more →' : 'Ask about it →' }}</span>
+                    </a>
                 </div>
             </div>
         </section>
 
         <!-- ══════════════ WHY VARIDIAN ══════════════ -->
-        <section id="why" class="v-sec">
-            <div class="v-wrap">
-                <div class="v-sec-head" data-reveal>
+        <section id="about" class="v-sec">
+            <div class="v-wrap v-why" data-reveal>
+                <div class="v-why-head">
                     <div class="v-chip">Why Varidian</div>
-                    <h2 class="v-sec-title">What sets Varidian <em>apart</em></h2>
+                    <h2 class="v-sec-title">Local knowledge <em>is the feature.</em></h2>
+                    <p class="v-sec-lead">
+                        Imported software rarely understands mobile money, ZRA rules or the school calendar. Ours starts there. We're a Lusaka team that answers the phone, visits the site and stays after go-live.
+                    </p>
                 </div>
+                <ol class="v-why-list">
+                    <li v-for="(reason, i) in reasons" :key="reason.title" class="v-why-row">
+                        <span class="v-why-n">{{ String(i + 1).padStart(2, '0') }}</span>
+                        <div>
+                            <h4>{{ reason.title }}</h4>
+                            <p>{{ reason.body }}</p>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </section>
 
-                <div class="v-why-grid" data-reveal>
-                    <div
-                        v-for="w in whyCards"
-                        :key="w.heading"
-                        class="v-why"
-                        :class="[w.large ? 'v-why--l' : 'v-why--s', { 'v-why--photo': w.photo }]"
-                    >
-                        <template v-if="w.photo">
-                            <div class="v-duo">
-                                <img :src="w.img" :alt="w.alt" />
-                            </div>
-                            <div class="v-why-txt">
-                                <h4>{{ w.heading }}</h4>
-                                <p>{{ w.body }}</p>
-                            </div>
-                        </template>
-                        <template v-else>
-                            <!-- eslint-disable-next-line vue/no-v-html -->
-                            <div class="v-why-ico" v-html="w.icon"></div>
-                            <h4>{{ w.heading }}</h4>
-                            <p>{{ w.body }}</p>
-                        </template>
+        <!-- ══════════════ HOSTING ══════════════ -->
+        <section id="hosting" class="v-band">
+            <div class="v-hero-grid"></div>
+            <div class="v-wrap v-band-in" data-reveal>
+                <div>
+                    <div class="v-chip">Varidian Hosting</div>
+                    <h2 class="v-sec-title">Hosting in Zambia, <em>priced for Zambian businesses.</em></h2>
+                    <p class="v-band-lead">Shared hosting for SMEs, developers and existing clients — free SSL, daily backups and local support, with your files stored on Zambian soil.</p>
+                </div>
+                <div class="v-plan-grid">
+                    <div v-for="plan in hostingPlans" :key="plan.name" class="v-plan" :class="{ 'v-plan--featured': plan.featured }">
+                        <div class="v-plan-name">{{ plan.name }}</div>
+                        <div v-if="plan.price" class="v-plan-price">ZMW {{ plan.price }}<span>/mo</span></div>
+                        <WhatsAppButton
+                            v-else
+                            variant="inline"
+                            label="Pricing on request"
+                            :message="`Hi, I'd like pricing for the ${plan.name} hosting plan.`"
+                            class="v-plan-ask"
+                        />
+                        <div class="v-plan-spec">{{ plan.spec }}</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ══════════════ FAQ ══════════════ -->
-        <section id="faq" class="v-sec v-sec-alt">
+        <!-- ══════════════ SELECTED WORK ══════════════ -->
+        <section id="work" class="v-sec">
             <div class="v-wrap">
                 <div class="v-sec-head" data-reveal>
-                    <div class="v-chip">FAQ</div>
-                    <h2 class="v-sec-title">Common <em>questions</em></h2>
+                    <div class="v-chip">Selected work</div>
+                    <h2 class="v-sec-title">Systems running <em>in the field.</em></h2>
                 </div>
 
-                <div class="v-faq" data-reveal>
-                    <div
-                        v-for="(faq, i) in faqs"
-                        :key="i"
-                        class="v-faq-row"
-                        :class="{ 'is-open': activeFaq === i }"
-                        @click="activeFaq = activeFaq === i ? null : i"
-                    >
-                        <div class="v-faq-q">
-                            <span>{{ faq.q }}</span>
-                            <div class="v-faq-mark">
-                                <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24">
-                                    <path d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </div>
+                <div class="v-work-grid" data-reveal>
+                    <article v-for="study in caseStudies" :key="study.title" class="v-work">
+                        <div class="v-work-shot" aria-hidden="true">
+                            <span>{{ study.preview }}</span>
                         </div>
-                        <div v-if="activeFaq === i" class="v-faq-a">{{ faq.a }}</div>
+                        <div class="v-work-body">
+                            <div class="v-prod-sector">{{ study.tag }}</div>
+                            <h3>{{ study.title }}</h3>
+                            <p>{{ study.body }}</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════ PROCESS ══════════════ -->
+        <section class="v-sec v-sec-alt">
+            <div class="v-wrap">
+                <div class="v-sec-head" data-reveal>
+                    <div class="v-chip">Process</div>
+                    <h2 class="v-sec-title">How <em>we work</em></h2>
+                </div>
+                <div class="v-steps" data-reveal>
+                    <div v-for="(step, i) in steps" :key="step.title" class="v-step">
+                        <h4>{{ i + 1 }}. {{ step.title }}</h4>
+                        <p>{{ step.body }}</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ══════════════ BOTTOM CTA ══════════════ -->
-        <section id="cta" class="v-sec">
+        <!-- ══════════════ CONTACT ══════════════ -->
+        <section id="contact" class="v-sec">
             <div class="v-wrap">
                 <div class="v-cta" data-reveal>
-                    <div class="v-chip">Let's get started</div>
-                    <h2 class="v-sec-title">
-                        Ready to see a product<br />
-                        <span class="v-accent">in action?</span>
-                    </h2>
-                    <p class="v-cta-lead">Request a demo and we'll walk you through the product most relevant to your organisation. No obligation — just a practical conversation.</p>
-                    <div class="v-cta-row">
-                        <WhatsAppButton
-                            variant="inline"
-                            label="Request a demo"
-                            message="Hi, I'd like to request a demo of a Varidian product."
-                            class="v-btn-wa"
-                        />
-                        <a href="/products" class="v-btn-ghost">See our products</a>
+                    <div class="v-cta-copy">
+                        <div class="v-chip">Let's get started</div>
+                        <h2 class="v-sec-title">Have a system in mind? <span class="v-accent">Let's talk it through.</span></h2>
+                        <p class="v-cta-lead">Tell us what you need. We'll come back within one working day with next steps and, where possible, a ballpark figure.</p>
+                        <ul class="v-cta-details">
+                            <li>Lusaka, Zambia</li>
+                            <li><a href="tel:+260971864421">+260 97 1864421</a></li>
+                            <li><a href="mailto:info@varidianlab.com">info@varidianlab.com</a></li>
+                        </ul>
+                        <WhatsAppButton variant="inline" label="Chat on WhatsApp" message="Hi, I'd like to talk through a system with Varidian." class="v-btn-wa" />
                     </div>
+
+                    <form class="v-form" @submit.prevent="sendEnquiry">
+                        <div v-if="enquirySent" class="v-form-ok" role="status">Thanks — your enquiry is on its way. We'll be in touch within one working day.</div>
+
+                        <label>
+                            Name
+                            <input v-model="form.name" type="text" autocomplete="name" required />
+                            <span v-if="form.errors.name" class="v-form-err">{{ form.errors.name }}</span>
+                        </label>
+                        <label>
+                            Organisation
+                            <input v-model="form.organisation" type="text" autocomplete="organization" />
+                        </label>
+                        <div class="v-form-row">
+                            <label>
+                                Phone
+                                <input v-model="form.phone" type="tel" autocomplete="tel" placeholder="+260…" required />
+                                <span v-if="form.errors.phone" class="v-form-err">{{ form.errors.phone }}</span>
+                            </label>
+                            <label>
+                                Email
+                                <input v-model="form.email" type="email" autocomplete="email" />
+                                <span v-if="form.errors.email" class="v-form-err">{{ form.errors.email }}</span>
+                            </label>
+                        </div>
+                        <label>
+                            Interested in
+                            <select v-model="form.product_interest" required>
+                                <option value="" disabled>Select a product or service…</option>
+                                <option v-for="topic in enquiryTopics" :key="topic">{{ topic }}</option>
+                            </select>
+                            <span v-if="form.errors.product_interest" class="v-form-err">{{ form.errors.product_interest }}</span>
+                        </label>
+                        <label>
+                            What do you need?
+                            <textarea v-model="form.message" rows="4" required></textarea>
+                            <span v-if="form.errors.message" class="v-form-err">{{ form.errors.message }}</span>
+                        </label>
+                        <button type="submit" class="v-btn-wa v-form-btn" :disabled="form.processing">
+                            {{ form.processing ? 'Sending…' : 'Send enquiry' }}
+                        </button>
+                    </form>
                 </div>
             </div>
         </section>
@@ -370,10 +447,10 @@ onMounted(() => {
 
 <style>
 /* ══════════════════════════════════════════════════════════════
-   Landing page — Varidian Blue redesign.
+   Landing page — Varidian Blue.
    Brand tokens are scoped to .v-landing so the shared mkt-* system
    is untouched. Dark values are the default (matching the site);
-   the light overrides carry the handoff's literal hex values.
+   light overrides follow below.
    ══════════════════════════════════════════════════════════════ */
 .v-landing {
     --v-brand: #0f9ed5;
@@ -393,9 +470,7 @@ onMounted(() => {
     --v-well-border: rgba(166, 221, 243, 0.3);
     --v-well-icon: var(--v-brand-200);
     --v-hover-border: rgba(166, 221, 243, 0.35);
-    --v-prod-shadow: 0 18px 44px rgba(0, 0, 0, 0.4);
-    --v-why-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
-    --v-ico-tile-bg: #0f171d;
+    --v-card-shadow: 0 18px 44px rgba(0, 0, 0, 0.4);
 }
 
 @media (prefers-color-scheme: light) {
@@ -410,9 +485,7 @@ onMounted(() => {
         --v-well-border: #d2eefa;
         --v-well-icon: var(--v-brand-600);
         --v-hover-border: var(--v-brand-200);
-        --v-prod-shadow: 0 18px 44px rgba(14, 66, 88, 0.09);
-        --v-why-shadow: 0 14px 40px rgba(14, 66, 88, 0.08);
-        --v-ico-tile-bg: #ffffff;
+        --v-card-shadow: 0 18px 44px rgba(14, 66, 88, 0.09);
     }
 }
 
@@ -425,6 +498,9 @@ onMounted(() => {
     letter-spacing: -0.02em;
     margin: 0;
 }
+.v-landing section[id] {
+    scroll-margin-top: 80px;
+}
 
 .v-wrap {
     max-width: 1120px;
@@ -434,7 +510,7 @@ onMounted(() => {
 
 /* ── Sections ── */
 .v-sec {
-    padding: 110px 0;
+    padding: 104px 0;
     background: var(--mkt-bg);
 }
 .v-sec-alt {
@@ -443,14 +519,24 @@ onMounted(() => {
     border-bottom: 1px solid var(--mkt-line);
 }
 .v-sec-head {
-    text-align: center;
-    max-width: 620px;
-    margin: 0 auto 56px;
+    max-width: 680px;
+    margin: 0 0 48px;
+}
+.v-sec-head--split {
+    max-width: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+}
+.v-sec-head--split > div {
+    max-width: 680px;
 }
 .v-sec-title {
-    font-size: clamp(30px, 3.4vw, 42px);
+    font-size: clamp(30px, 3.4vw, 44px);
     font-weight: 700;
-    line-height: 1.14;
+    line-height: 1.12;
     margin-top: 18px;
 }
 .v-sec-title em {
@@ -460,6 +546,7 @@ onMounted(() => {
 .v-sec-lead {
     color: var(--mkt-text-m);
     font-size: 15.5px;
+    line-height: 1.7;
     margin-top: 16px;
 }
 .v-chip {
@@ -479,15 +566,18 @@ onMounted(() => {
 .v-landing .v-btn-wa {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     background: var(--v-brand);
     color: #fff;
     font-weight: 700;
     font-size: 15px;
     padding: 14px 26px;
+    border: 0;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(15, 158, 213, 0.35);
     text-decoration: none;
+    cursor: pointer;
     transition: background 0.2s;
 }
 .v-landing .v-btn-wa:hover {
@@ -516,10 +606,11 @@ onMounted(() => {
     border-color: rgba(255, 255, 255, 0.6);
     color: #fff;
 }
-.v-btn-outline {
+.v-landing .v-btn-outline {
     display: inline-flex;
     align-items: center;
-    padding: 13px 26px;
+    gap: 10px;
+    padding: 13px 24px;
     border-radius: 12px;
     font-size: 14.5px;
     font-weight: 700;
@@ -529,54 +620,40 @@ onMounted(() => {
     text-decoration: none;
     transition: border-color 0.2s;
 }
-.v-btn-outline:hover {
+.v-landing .v-btn-outline:hover {
     border-color: var(--v-brand);
+    background: var(--mkt-surface);
     color: var(--mkt-text-h);
+}
+.v-landing .v-btn-outline svg {
+    color: var(--v-brand);
 }
 
 /* ── Hero ── */
 .v-hero {
     position: relative;
     overflow: hidden;
-    background: var(--v-deepest);
-    min-height: min(760px, 100vh);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 150px 0 0;
-}
-.v-hero-photo {
-    position: absolute;
-    inset: 0;
-}
-.v-hero-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: grayscale(0.35) contrast(1.08) brightness(0.92);
-    transform: scale(1.06);
-    opacity: 0.9;
-}
-.v-hero-photo::after {
-    content: '';
-    position: absolute;
-    inset: 0;
     background:
-        radial-gradient(ellipse 90% 70% at 50% 20%, rgba(15, 158, 213, 0.26), transparent 62%),
-        linear-gradient(180deg, rgba(8, 44, 60, 0.62) 0%, rgba(8, 44, 60, 0.52) 45%, rgba(8, 44, 60, 0.82) 100%);
+        radial-gradient(ellipse 70% 80% at 85% 10%, rgba(15, 158, 213, 0.3), transparent 60%),
+        linear-gradient(160deg, var(--v-deep), var(--v-deepest) 55%);
+    padding: 150px 0 96px;
 }
 .v-hero-grid {
     position: absolute;
     inset: 0;
     background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.07) 1px, transparent 0);
     background-size: 34px 34px;
+    pointer-events: none;
 }
 .v-hero-in {
     position: relative;
-    text-align: center;
-    max-width: 880px;
+    max-width: 1120px;
     margin: 0 auto;
     padding: 0 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+    gap: 56px;
+    align-items: center;
 }
 .v-pill {
     display: inline-flex;
@@ -590,7 +667,6 @@ onMounted(() => {
     font-size: 12.5px;
     font-weight: 600;
     letter-spacing: 0.02em;
-    backdrop-filter: blur(4px);
 }
 .v-pill i {
     width: 7px;
@@ -602,312 +678,112 @@ onMounted(() => {
 }
 .v-hero .v-hero-title {
     color: #fff;
-    font-size: clamp(42px, 6vw, 72px);
+    font-size: clamp(40px, 5.4vw, 68px);
     font-weight: 800;
     line-height: 1.03;
     margin: 26px 0 0;
-    /* The hero photo sits at near-full opacity behind this, so the white needs
-       its own scrim to read as white rather than washing into the image. */
-    text-shadow: 0 2px 20px rgba(8, 44, 60, 0.8), 0 1px 4px rgba(8, 44, 60, 0.65);
 }
-.v-hero .v-accent {
+.v-landing .v-accent {
     color: var(--v-brand);
 }
 .v-hero-body {
-    color: rgba(255, 255, 255, 0.88);
+    color: rgba(255, 255, 255, 0.82);
     font-size: 17px;
     line-height: 1.68;
-    max-width: 640px;
-    margin: 22px auto 0;
-    text-shadow: 0 1px 12px rgba(8, 44, 60, 0.75);
+    max-width: 560px;
+    margin: 22px 0 0;
 }
 .v-hero-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 14px;
-    justify-content: center;
     margin-top: 34px;
 }
 
-/* ── Trust strip ── */
-.v-trust {
-    position: relative;
-    margin-top: 72px;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(8, 44, 60, 0.4);
+/* ── Integrations card ── */
+.v-int {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(166, 221, 243, 0.2);
+    border-radius: 18px;
+    padding: 26px;
     backdrop-filter: blur(6px);
 }
-.v-trust-in {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 26px 24px;
-}
-.v-trust-item {
-    text-align: center;
-}
-.v-trust-l {
-    font-size: 10.5px;
+.v-int-l,
+.v-strip-l {
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.09em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgba(166, 221, 243, 0.75);
+    color: rgba(166, 221, 243, 0.8);
 }
-.v-trust-v {
-    margin-top: 6px;
-    font-size: 14.5px;
-    font-weight: 700;
-    color: #fff;
-}
-@media (max-width: 700px) {
-    .v-trust-in {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px 8px;
-    }
-}
-
-/* ── Duotone photo treatment ── */
-.v-duo {
-    position: relative;
-    overflow: hidden;
-    background: var(--v-deepest);
-}
-.v-duo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: grayscale(0.3) contrast(1.05) brightness(1);
-    opacity: 1;
-}
-.v-duo::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(165deg, rgba(15, 158, 213, 0.22), rgba(8, 44, 60, 0.4));
-    mix-blend-mode: multiply;
-}
-
-/* ── Product cards ── */
-.v-prod-grid {
+.v-int-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 22px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 18px;
 }
-@media (max-width: 760px) {
-    .v-prod-grid {
-        grid-template-columns: 1fr;
-    }
+.v-int-item {
+    background: rgba(8, 44, 60, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 16px;
 }
-.v-prod {
-    position: relative;
+.v-int-t {
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+}
+.v-int-b {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 13px;
+    margin-top: 2px;
+}
+
+/* ── Built-for strip ── */
+.v-strip {
+    background: var(--mkt-bg-2);
+    border-bottom: 1px solid var(--mkt-line);
+    padding: 26px 0;
+}
+.v-strip-in {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 32px;
+}
+.v-strip .v-strip-l {
+    color: var(--v-chip-text);
+}
+.v-strip-v {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--mkt-text-h);
+}
+
+/* ── Service cards ── */
+.v-svc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+    gap: 18px;
+}
+.v-card,
+.v-prod,
+.v-work {
     background: var(--mkt-surface);
     border: 1px solid var(--mkt-line);
     border-radius: 16px;
     transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
 }
-.v-prod:hover {
+.v-card:hover,
+.v-prod:hover,
+.v-work:hover {
     border-color: var(--v-hover-border);
-    transform: translateY(-3px);
-    box-shadow: var(--v-prod-shadow);
+    box-shadow: var(--v-card-shadow);
 }
-.v-prod-img {
-    height: 132px;
-    position: relative;
-    border-radius: 15px 15px 0 0;
-    overflow: visible;
-}
-.v-prod-img img,
-.v-prod-img::after {
-    border-radius: 15px 15px 0 0;
-}
-.v-prod-ico {
-    position: absolute;
-    left: 20px;
-    bottom: -22px;
-    z-index: 2;
-    width: 46px;
-    height: 46px;
-    border-radius: 12px;
-    background: var(--v-ico-tile-bg);
-    border: 1px solid var(--mkt-line);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--v-well-icon);
-    box-shadow: 0 6px 18px rgba(14, 66, 88, 0.12);
-}
-.v-prod-body {
-    padding: 38px 24px 26px;
-}
-.v-prod h3 {
-    font-size: 17px;
-    font-weight: 700;
-    line-height: 1.3;
-}
-.v-prod p {
-    color: var(--mkt-text-m);
-    font-size: 14.5px;
-    line-height: 1.65;
-    margin: 12px 0 20px;
-}
-.v-more {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--v-link);
-    text-decoration: none;
-    transition: color 0.2s;
-}
-.v-more:hover {
-    color: var(--v-link-hover);
-}
-.v-center-cta {
-    text-align: center;
-    margin-top: 42px;
-}
-
-/* ── Offline-first band ── */
-.v-band {
-    position: relative;
-    overflow: hidden;
-    background: var(--v-deepest);
-    color: #fff;
-    padding: 104px 0;
-}
-.v-band-photo {
-    position: absolute;
-    inset: 0;
-}
-.v-band-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: grayscale(0.4) brightness(0.9);
-    opacity: 0.8;
-}
-.v-band-photo::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(105deg, rgba(8, 44, 60, 0.88) 0%, rgba(8, 44, 60, 0.7) 52%, rgba(15, 158, 213, 0.3) 100%);
-}
-.v-band-in {
-    position: relative;
-    display: grid;
-    grid-template-columns: 56px 1fr;
-    gap: 34px;
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 0 24px;
-}
-@media (max-width: 700px) {
-    .v-band-in {
-        grid-template-columns: 1fr;
-        gap: 22px;
-    }
-}
-.v-band-ico {
-    width: 56px;
-    height: 56px;
-    border-radius: 14px;
-    background: rgba(15, 158, 213, 0.18);
-    border: 1px solid rgba(166, 221, 243, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--v-brand);
-    margin-top: 4px;
-}
-.v-band .v-chip {
-    background: rgba(15, 158, 213, 0.16);
-    border-color: rgba(166, 221, 243, 0.32);
-    color: var(--v-brand-200);
-}
-.v-band h2 {
-    color: #fff;
-}
-.v-band .v-sec-title {
-    color: #fff;
-}
-.v-band .v-sec-title em {
-    color: var(--v-brand);
-}
-.v-band-lead {
-    color: rgba(255, 255, 255, 0.74);
-    font-size: 15.5px;
-    max-width: 640px;
-    margin: 18px 0 34px;
-}
-.v-feat-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-}
-@media (max-width: 760px) {
-    .v-feat-grid {
-        grid-template-columns: 1fr;
-    }
-}
-.v-feat {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.13);
-    border-radius: 14px;
-    padding: 20px;
-}
-.v-feat h4 {
-    color: var(--v-brand-200);
-    font-family: inherit;
-    font-size: 11.5px;
-    font-weight: 800;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-}
-.v-feat p {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 13.5px;
-    line-height: 1.62;
-    margin: 9px 0 0;
-}
-
-/* ── Why Varidian ── */
-.v-why-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 16px;
-}
-.v-why--l {
-    grid-column: span 3;
-}
-.v-why--s {
-    grid-column: span 2;
-}
-@media (max-width: 1023px) {
-    .v-why-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .v-why--l,
-    .v-why--s {
-        grid-column: span 1;
-    }
-}
-@media (max-width: 640px) {
-    .v-why-grid {
-        grid-template-columns: 1fr;
-    }
-}
-.v-why {
-    background: var(--mkt-surface);
-    border: 1px solid var(--mkt-line);
-    border-radius: 18px;
+.v-card {
     padding: 28px;
-    transition: border-color 0.25s, box-shadow 0.25s;
 }
-.v-why:hover {
-    border-color: var(--v-hover-border);
-    box-shadow: var(--v-why-shadow);
-}
-.v-why-ico {
+.v-card-ico {
     width: 46px;
     height: 46px;
     border-radius: 12px;
@@ -919,148 +795,399 @@ onMounted(() => {
     color: var(--v-well-icon);
     margin-bottom: 20px;
 }
-.v-why h4 {
-    font-size: 16.5px;
-    font-weight: 700;
-    line-height: 1.35;
+.v-card-ico svg {
+    width: 22px;
+    height: 22px;
 }
-.v-why p {
+.v-card h3 {
+    font-size: 19px;
+    font-weight: 700;
+}
+.v-card p {
     color: var(--mkt-text-m);
-    font-size: 14px;
+    font-size: 14.5px;
     line-height: 1.65;
     margin: 10px 0 0;
 }
-.v-why--photo {
-    padding: 0;
-    overflow: hidden;
-    position: relative;
-    min-height: 230px;
-    display: flex;
-    align-items: flex-end;
-    border-color: transparent;
-}
-.v-why--photo .v-duo {
-    position: absolute;
-    inset: 0;
-}
-.v-why--photo .v-duo::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: linear-gradient(180deg, transparent 30%, rgba(8, 44, 60, 0.82) 100%);
-}
-.v-why-txt {
-    position: relative;
-    padding: 26px;
-    color: #fff;
-}
-.v-why--photo h4 {
-    color: #fff;
-}
-.v-why--photo p {
-    color: rgba(255, 255, 255, 0.75);
-}
 
-/* ── FAQ ── */
-.v-faq {
-    max-width: 760px;
-    margin: 0 auto;
+/* ── Product cards ── */
+.v-prod-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+    gap: 18px;
 }
-.v-faq-row {
-    border-bottom: 1px solid var(--mkt-line);
-    padding: 20px 8px;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.v-faq-row:hover {
-    background: var(--mkt-surface);
-}
-.v-faq-q {
+.v-prod {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
+    flex-direction: column;
+    padding: 26px;
+    text-decoration: none;
+    color: inherit;
 }
-.v-faq-q span {
-    font-size: 15.5px;
-    font-weight: 600;
+.v-prod:hover {
+    transform: translateY(-3px);
+}
+.v-prod-sector {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--v-accent-text);
+}
+.v-prod-name {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
     color: var(--mkt-text-h);
+    margin-top: 8px;
 }
-.v-faq-mark {
-    width: 28px;
-    height: 28px;
-    flex: none;
-    border-radius: 50%;
-    border: 1px solid var(--mkt-line-s);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--mkt-text-m);
-    transition: 0.25s;
-}
-.v-faq-mark svg {
-    width: 13px;
-    height: 13px;
-}
-.v-faq-row.is-open .v-faq-mark {
-    background: var(--v-well-bg);
-    border-color: var(--v-well-border);
-    color: var(--v-well-icon);
-    transform: rotate(180deg);
-}
-.v-faq-a {
+.v-prod p {
+    flex: 1;
     color: var(--mkt-text-m);
     font-size: 14.5px;
-    line-height: 1.7;
-    padding: 12px 44px 4px 0;
+    line-height: 1.65;
+    margin: 10px 0 18px;
+}
+.v-more {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--v-link);
+    transition: color 0.2s;
+}
+.v-prod:hover .v-more {
+    color: var(--v-link-hover);
 }
 
-/* ── Bottom CTA ── */
-.v-cta {
+/* ── Why Varidian ── */
+.v-why {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+    gap: 56px;
+    align-items: start;
+}
+.v-why-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.v-why-row {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 16px;
+    padding: 22px 0;
+    border-top: 1px solid var(--mkt-line-s);
+}
+.v-why-row:last-child {
+    border-bottom: 1px solid var(--mkt-line-s);
+}
+.v-why-n {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--v-accent-text);
+    padding-top: 2px;
+}
+.v-why-row h4 {
+    font-size: 18px;
+    font-weight: 700;
+}
+.v-why-row p {
+    color: var(--mkt-text-m);
+    font-size: 14.5px;
+    line-height: 1.65;
+    margin: 6px 0 0;
+}
+
+/* ── Hosting band ── */
+.v-band {
     position: relative;
     overflow: hidden;
-    border-radius: 24px;
-    background: linear-gradient(150deg, var(--v-deep), var(--v-deepest) 60%);
-    padding: 74px 32px;
-    text-align: center;
+    background:
+        radial-gradient(ellipse 60% 90% at 100% 50%, rgba(15, 158, 213, 0.35), transparent 65%),
+        linear-gradient(105deg, var(--v-deepest), var(--v-deep));
     color: #fff;
+    padding: 96px 0;
 }
-.v-cta::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 70% 90% at 80% 0%, rgba(15, 158, 213, 0.42), transparent 60%);
-}
-.v-cta > * {
+.v-band-in {
     position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+    gap: 48px;
+    align-items: center;
 }
-.v-cta h2 {
-    color: #fff;
-    margin-top: 20px;
-}
-.v-cta .v-accent {
-    color: var(--v-brand);
-}
-.v-cta-lead {
-    color: rgba(255, 255, 255, 0.72);
-    font-size: 15.5px;
-    max-width: 520px;
-    margin: 18px auto 32px;
-}
+.v-band .v-chip,
 .v-cta .v-chip {
     background: rgba(15, 158, 213, 0.16);
     border-color: rgba(166, 221, 243, 0.32);
     color: var(--v-brand-200);
 }
-.v-cta-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    justify-content: center;
+.v-landing .v-band .v-sec-title,
+.v-landing .v-cta .v-sec-title {
+    color: #fff;
 }
-.v-cta .v-btn-ghost {
-    border-color: rgba(255, 255, 255, 0.3);
+.v-band .v-sec-title em {
+    color: var(--v-brand);
+}
+.v-band-lead {
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 15.5px;
+    line-height: 1.7;
+    max-width: 560px;
+    margin: 18px 0 0;
+}
+.v-plan-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr));
+    gap: 14px;
+}
+.v-plan {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 14px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.v-plan--featured {
+    border-color: var(--v-brand);
+    box-shadow: 0 0 0 1px var(--v-brand), 0 14px 40px rgba(15, 158, 213, 0.25);
+}
+.v-plan-name {
+    color: var(--v-brand-200);
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+.v-plan-price {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: #fff;
+}
+.v-plan-price span {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+}
+.v-landing .v-plan .v-plan-ask {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+}
+.v-landing .v-plan .v-plan-ask:hover {
+    background: none;
+    color: var(--v-brand-200);
+}
+.v-landing .v-plan .v-plan-ask svg {
+    width: 15px;
+    height: 15px;
+    color: var(--v-brand);
+}
+.v-plan-spec {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13.5px;
+    line-height: 1.5;
+}
+
+/* ── Selected work ── */
+.v-work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+    gap: 22px;
+}
+.v-work {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.v-work-shot {
+    position: relative;
+    height: 220px;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+    background:
+        radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.09) 1px, transparent 0) 0 0 / 22px 22px,
+        linear-gradient(150deg, var(--v-deep), var(--v-deepest) 70%);
+}
+.v-work-shot span {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--v-brand-200);
+    background: rgba(8, 44, 60, 0.7);
+    border: 1px solid rgba(166, 221, 243, 0.3);
+    border-radius: 999px;
+    padding: 5px 12px;
+}
+.v-work-body {
+    padding: 28px;
+}
+.v-work h3 {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-top: 8px;
+}
+.v-work p {
+    color: var(--mkt-text-m);
+    font-size: 14.5px;
+    line-height: 1.65;
+    margin: 10px 0 0;
+}
+
+/* ── Process ── */
+.v-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+    gap: 24px;
+}
+.v-step {
+    border-top: 3px solid var(--v-brand);
+    padding-top: 18px;
+}
+.v-step h4 {
+    font-size: 18px;
+    font-weight: 700;
+}
+.v-step p {
+    color: var(--mkt-text-m);
+    font-size: 14.5px;
+    line-height: 1.65;
+    margin: 8px 0 0;
+}
+
+/* ── Contact ── */
+.v-cta {
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+    background: linear-gradient(150deg, var(--v-deep), var(--v-deepest) 60%);
+    padding: 64px 48px;
+    color: #fff;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+    gap: 48px;
+}
+.v-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 90% at 0% 0%, rgba(15, 158, 213, 0.38), transparent 60%);
+    pointer-events: none;
+}
+.v-cta > * {
+    position: relative;
+}
+@media (max-width: 640px) {
+    .v-cta {
+        padding: 40px 22px;
+    }
+}
+.v-cta-lead {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 15.5px;
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 18px 0 24px;
+}
+.v-cta-details {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 15px;
+}
+.v-cta-details a {
+    color: inherit;
+    text-decoration: none;
+}
+.v-cta-details a:hover {
+    color: var(--v-brand-200);
+}
+.v-form {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(166, 221, 243, 0.2);
+    border-radius: 18px;
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.v-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.88);
+}
+.v-form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+    gap: 16px;
+}
+.v-form input,
+.v-form select,
+.v-form textarea {
+    min-height: 46px;
+    border-radius: 10px;
+    border: 1px solid rgba(166, 221, 243, 0.25);
+    background: rgba(8, 44, 60, 0.7);
+    color: #fff;
+    padding: 0 14px;
+    font: inherit;
+    font-weight: 400;
+    transition: border-color 0.2s;
+}
+.v-form textarea {
+    padding: 12px 14px;
+    resize: vertical;
+}
+.v-form select option {
+    background: var(--v-deepest);
+}
+.v-form input:focus,
+.v-form select:focus,
+.v-form textarea:focus {
+    outline: none;
+    border-color: var(--v-brand);
+}
+.v-form-err {
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #fca5a5;
+}
+.v-form-ok {
+    font-size: 14px;
+    color: var(--v-brand-200);
+    background: rgba(15, 158, 213, 0.14);
+    border: 1px solid rgba(166, 221, 243, 0.3);
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+.v-landing .v-form-btn {
+    min-height: 50px;
+    font: inherit;
+    font-weight: 700;
+}
+.v-landing .v-form-btn:disabled {
+    opacity: 0.6;
+    cursor: wait;
 }
 
 /* ── Scroll reveal ── */
