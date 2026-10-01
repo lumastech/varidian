@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Varidian Homepage</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F3F4EF}
+a{color:#0B5D3B}a:hover{color:#08402A}
+</style>
+</helmet>
+<div style="font-family: 'IBM Plex Sans', system-ui, sans-serif; color: #10201A; background: #F3F4EF; width: 100%; font-size: 17px; line-height: 1.6">
+
+<!-- NAV -->
+<header style="background: #0A2A1E; color: #F3F4EF">
+<div style="max-width: 1240px; margin: 0 auto; padding: 18px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
+<a href="#top" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #F3F4EF">
+<svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" aria-hidden="true"><path d="M5 6 L17 28 L29 6"></path><path d="M11 6 L17 17 L23 6" stroke="{{accent}}"></path></svg>
+<span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: 0.04em">VARIDIAN</span>
+</a>
+<nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 28px; font-size: 15px; font-weight: 500">
+<a href="#services" style="color: #DCE3DD; text-decoration: none">Services</a>
+<a href="#products" style="color: #DCE3DD; text-decoration: none">Products</a>
+<a href="#hosting" style="color: #DCE3DD; text-decoration: none">Hosting</a>
+<a href="#work" style="color: #DCE3DD; text-decoration: none">Our work</a>
+<a href="#about" style="color: #DCE3DD; text-decoration: none">About</a>
+</nav>
+<a href="#contact" style="background: {{accent}}; color: #FFFFFF; text-decoration: none; font-weight: 600; font-size: 15px; padding: 12px 20px; border-radius: 8px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">Book a consultation</a>
+</div>
+</header>
+
+<!-- HERO -->
+<section id="top" style="background: #0A2A1E; color: #F3F4EF; padding: 72px 24px 96px">
+<div style="max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 56px; align-items: center">
+<div style="display: flex; flex-direction: column; gap: 28px">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: #9FC7B2">Software house · Lusaka, Zambia</div>
+<h1 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(42px, 5.6vw, 76px); line-height: 1.02; letter-spacing: -0.02em">Software built for the way Zambia works.</h1>
+<p style="margin: 0; font-size: 19px; color: #C9D6CE; max-width: 560px">Varidian designs, builds and hosts business systems for schools, NGOs, SMEs and institutions — with mobile money, SMS and ZRA compliance built in from day one, and your data kept in Zambia.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 14px">
+<a href="#contact" style="background: {{accent}}; color: #FFFFFF; text-decoration: none; font-weight: 600; padding: 15px 26px; border-radius: 8px">Start a project</a>
+<a href="#products" style="border: 1.5px solid #4F7A65; color: #F3F4EF; text-decoration: none; font-weight: 600; padding: 14px 26px; border-radius: 8px">Explore our products</a>
+</div>
+</div>
+<div style="background: #12392A; border: 1px solid #23513D; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 18px">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #9FC7B2; letter-spacing: 0.08em; text-transform: uppercase">Integrated out of the box</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<div style="background: #0A2A1E; border-radius: 10px; padding: 16px"><div style="font-weight: 600">Airtel Money</div><div style="font-size: 14px; color: #9FB4A8">Collections &amp; payouts</div></div>
+<div style="background: #0A2A1E; border-radius: 10px; padding: 16px"><div style="font-weight: 600">MTN MoMo</div><div style="font-size: 14px; color: #9FB4A8">Collections &amp; payouts</div></div>
+<div style="background: #0A2A1E; border-radius: 10px; padding: 16px"><div style="font-weight: 600">ZRA Smart Invoice</div><div style="font-size: 14px; color: #9FB4A8">Tax-compliant invoicing</div></div>
+<div style="background: #0A2A1E; border-radius: 10px; padding: 16px"><div style="font-weight: 600">Bulk SMS</div><div style="font-size: 14px; color: #9FB4A8">Alerts &amp; reminders</div></div>
+<div style="background: #0A2A1E; border-radius: 10px; padding: 16px"><div style="font-weight: 600">NAPSA &amp; PAYE</div><div style="font-size: 14px; color: #9FB4A8">Payroll deductions</div></div>
+<div style="background: #0A2A1E; border-radius: 10px; padding: 16px"><div style="font-weight: 600">Local hosting</div><div style="font-size: 14px; color: #9FB4A8">Data stays in Zambia</div></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- BUILT FOR STRIP -->
+<section aria-label="Who we serve" style="background: #FFFFFF; border-bottom: 1px solid #E1E5DE; padding: 28px 24px">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 32px; font-weight: 600; color: #3B4B44">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: #5F6F67">Built for</span>
+<span>Private &amp; mission schools</span><span>NGOs</span><span>Churches</span><span>Microfinance &amp; village banking</span><span>SMEs</span><span>Universities &amp; colleges</span>
+</div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" style="padding: 104px 24px">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px">
+<div style="display: flex; flex-direction: column; gap: 14px; max-width: 720px">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: {{primary}}">What we do</div>
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(32px, 3.6vw, 48px); line-height: 1.08; letter-spacing: -0.01em">One partner from first idea to running system.</h2>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px">
+<div style="background: #FFFFFF; border: 1px solid #E1E5DE; border-radius: 14px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="{{primary}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7l-5 5 5 5"></path><path d="M16 7l5 5-5 5"></path><path d="M14 4l-4 16"></path></svg>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 23px; font-weight: 700">Custom software</h3>
+<p style="margin: 0; color: #4A5A52">Web platforms, portals and internal systems designed around your processes — not the other way round.</p>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #E1E5DE; border-radius: 14px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="{{primary}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"></rect><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"></path></svg>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 23px; font-weight: 700">AI &amp; automation</h3>
+<p style="margin: 0; color: #4A5A52">Practical AI for businesses — document processing, assistants and workflow automation, with local inference options for sensitive data.</p>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #E1E5DE; border-radius: 14px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="{{primary}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="1.5"></rect><rect x="3" y="13" width="18" height="7" rx="1.5"></rect><path d="M7 7.5h.01M7 16.5h.01"></path></svg>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 23px; font-weight: 700">Zambian web hosting</h3>
+<p style="margin: 0; color: #4A5A52">Websites and applications hosted on servers in Zambia, supporting your obligations under the Data Protection Act, 2021.</p>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #E1E5DE; border-radius: 14px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="{{primary}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"></path><path d="M12 7v5l3 3"></path></svg>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 23px; font-weight: 700">Consulting &amp; support</h3>
+<p style="margin: 0; color: #4A5A52">Digital strategy, system audits and ongoing IT support, with service levels that match how critical your system is.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products" style="background: #FFFFFF; padding: 104px 24px; border-top: 1px solid #E1E5DE; border-bottom: 1px solid #E1E5DE">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 14px; max-width: 680px">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: {{primary}}">Ready-made platforms</div>
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(32px, 3.6vw, 48px); line-height: 1.08">Proven products, configured for you.</h2>
+<p style="margin: 0; color: #4A5A52">Start faster with a Varidian platform — on our cloud for a monthly fee, or licensed outright and installed on your own infrastructure.</p>
+</div>
+<a href="#contact" style="font-weight: 600; color: {{primary}}">Request a demo →</a>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 18px">
+<a href="#contact" style="text-decoration: none; color: inherit; border: 1px solid #E1E5DE; border-radius: 14px; padding: 26px; display: flex; flex-direction: column; gap: 10px; background: #F8F9F5">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #A8541F">Education</div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 26px; font-weight: 800">SKUU</div>
+<div style="color: #4A5A52; font-size: 16px">School &amp; student management for Grades 1–12 — enrolment, fees via mobile money, ECZ exam tracking, payroll and parent SMS.</div>
+</a>
+<a href="#contact" style="text-decoration: none; color: inherit; border: 1px solid #E1E5DE; border-radius: 14px; padding: 26px; display: flex; flex-direction: column; gap: 10px; background: #F8F9F5">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #A8541F">Non-profit</div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 26px; font-weight: 800">Varidian Reach</div>
+<div style="color: #4A5A52; font-size: 16px">NGO management — beneficiaries, programmes, donors and reporting in one dedicated installation per organisation.</div>
+</a>
+<a href="#contact" style="text-decoration: none; color: inherit; border: 1px solid #E1E5DE; border-radius: 14px; padding: 26px; display: flex; flex-direction: column; gap: 10px; background: #F8F9F5">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #A8541F">Business</div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 26px; font-weight: 800">BizManager</div>
+<div style="color: #4A5A52; font-size: 16px">SME business management with ZRA Smart Invoice integration — sales, stock, customers and compliant invoices.</div>
+</a>
+<a href="#contact" style="text-decoration: none; color: inherit; border: 1px solid #E1E5DE; border-radius: 14px; padding: 26px; display: flex; flex-direction: column; gap: 10px; background: #F8F9F5">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #A8541F">Accounting</div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 26px; font-weight: 800">Varidian Books</div>
+<div style="color: #4A5A52; font-size: 16px">Offline-first accounting that keeps working when the connection drops, and syncs when it returns.</div>
+</a>
+<a href="#contact" style="text-decoration: none; color: inherit; border: 1px solid #E1E5DE; border-radius: 14px; padding: 26px; display: flex; flex-direction: column; gap: 10px; background: #F8F9F5">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #A8541F">Finance</div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 26px; font-weight: 800">Village Banking</div>
+<div style="color: #4A5A52; font-size: 16px">Microfinance and savings-group platform — members, loans, repayments and mobile money collections.</div>
+</a>
+<a href="#contact" style="text-decoration: none; color: inherit; border: 1px solid #E1E5DE; border-radius: 14px; padding: 26px; display: flex; flex-direction: column; gap: 10px; background: #F8F9F5">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #A8541F">Faith</div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 26px; font-weight: 800">ChurchMS</div>
+<div style="color: #4A5A52; font-size: 16px">Church management — membership, giving, groups, events and congregation communication.</div>
+</a>
+<a href="#contact" style="text-decoration: none; color: inherit; border: 1px solid #E1E5DE; border-radius: 14px; padding: 26px; display: flex; flex-direction: column; gap: 10px; background: #F8F9F5">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #A8541F">Higher education</div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 26px; font-weight: 800">Coursify</div>
+<div style="color: #4A5A52; font-size: 16px">Online learning management for universities and colleges — courses, assessments and student progress.</div>
+</a>
+<a href="#contact" style="text-decoration: none; color: inherit; border: 1px solid #E1E5DE; border-radius: 14px; padding: 26px; display: flex; flex-direction: column; gap: 10px; background: #F8F9F5">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #A8541F">Events</div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 26px; font-weight: 800">Varidian Events</div>
+<div style="color: #4A5A52; font-size: 16px">Event registration and ticketing with online payments — a data-protection-compliant alternative to generic forms.</div>
+</a>
+</div>
+</div>
+</section>
+
+<!-- WHY VARIDIAN -->
+<section id="about" style="padding: 104px 24px">
+<div style="max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 56px; align-items: start">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: {{primary}}">Why Varidian</div>
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(32px, 3.6vw, 48px); line-height: 1.08">Local knowledge is the feature.</h2>
+<p style="margin: 0; color: #4A5A52">Imported software rarely understands mobile money, ZRA rules or the school calendar. Ours starts there. We're a Lusaka team that answers the phone, visits the site and stays after go-live.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 0">
+<div style="display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; padding: 22px 0; border-top: 1px solid #D5DBD3">
+<div style="font-family: 'IBM Plex Mono', monospace; color: #A8541F; font-size: 15px">01</div>
+<div><div style="font-weight: 600; font-size: 19px">Built for local systems</div><div style="color: #4A5A52">Airtel Money, MTN MoMo, ZRA Smart Invoice, NAPSA, PAYE and bulk SMS — integrated, not bolted on.</div></div>
+</div>
+<div style="display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; padding: 22px 0; border-top: 1px solid #D5DBD3">
+<div style="font-family: 'IBM Plex Mono', monospace; color: #A8541F; font-size: 15px">02</div>
+<div><div style="font-weight: 600; font-size: 19px">Your data stays home</div><div style="color: #4A5A52">Hosted on our own servers in Zambia, so personal data is stored at rest within the country.</div></div>
+</div>
+<div style="display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; padding: 22px 0; border-top: 1px solid #D5DBD3">
+<div style="font-family: 'IBM Plex Mono', monospace; color: #A8541F; font-size: 15px">03</div>
+<div><div style="font-weight: 600; font-size: 19px">Own it or rent it</div><div style="color: #4A5A52">Choose a monthly cloud subscription, or a one-off licence where you own the system and its customisations.</div></div>
+</div>
+<div style="display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; padding: 22px 0; border-top: 1px solid #D5DBD3; border-bottom: 1px solid #D5DBD3">
+<div style="font-family: 'IBM Plex Mono', monospace; color: #A8541F; font-size: 15px">04</div>
+<div><div style="font-weight: 600; font-size: 19px">Support you can reach</div><div style="color: #4A5A52">Standard support included on hosted plans, with premium support and SLAs available.</div></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- HOSTING BAND -->
+<section id="hosting" style="background: {{primary}}; color: #FFFFFF; padding: 88px 24px">
+<div style="max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 48px; align-items: center">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: #CFE6D9">Varidian Hosting</div>
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.1">Hosting in Zambia, priced for Zambian businesses.</h2>
+<p style="margin: 0; color: #E2EFE7">Shared hosting for SMEs, developers and existing clients — free SSL, daily backups and local support, with your files stored on Zambian soil.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px">
+<div style="background: #FFFFFF; color: #10201A; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 8px">
+<div style="font-weight: 600">Starter</div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 28px; font-weight: 800">ZMW [PRICE]<span style="font-size: 15px; font-weight: 500; color: #5F6F67">/mo</span></div>
+<div style="font-size: 15px; color: #4A5A52">1 website · [STORAGE] SSD</div>
+</div>
+<div style="background: #FFFFFF; color: #10201A; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 8px; outline: 3px solid {{accent}}">
+<div style="font-weight: 600">Business</div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 28px; font-weight: 800">ZMW [PRICE]<span style="font-size: 15px; font-weight: 500; color: #5F6F67">/mo</span></div>
+<div style="font-size: 15px; color: #4A5A52">[N] websites · [STORAGE] SSD</div>
+</div>
+<div style="background: #FFFFFF; color: #10201A; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 8px">
+<div style="font-weight: 600">Developer</div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 28px; font-weight: 800">ZMW [PRICE]<span style="font-size: 15px; font-weight: 500; color: #5F6F67">/mo</span></div>
+<div style="font-size: 15px; color: #4A5A52">Unlimited sites · multi-PHP</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- WORK -->
+<section id="work" style="padding: 104px 24px">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 44px">
+<div style="display: flex; flex-direction: column; gap: 14px; max-width: 680px">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: {{primary}}">Selected work</div>
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(32px, 3.6vw, 48px); line-height: 1.08">Systems running in the field.</h2>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 22px">
+<div style="background: #FFFFFF; border: 1px solid #E1E5DE; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 220px; background: #DDE4DC; display: flex; align-items: center; justify-content: center; color: #5F6F67; font-family: 'IBM Plex Mono', monospace; font-size: 13px">[SCREENSHOT — admin dashboard]</div>
+<div style="padding: 28px; display: flex; flex-direction: column; gap: 10px">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #A8541F">NGO · Southern Province</div>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 25px; font-weight: 700">Choma District Women's Development Association</h3>
+<p style="margin: 0; color: #4A5A52">A seven-module management system and public website for chomadwda.org, covering members, programmes and reporting.</p>
+</div>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #E1E5DE; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 220px; background: #DDE4DC; display: flex; align-items: center; justify-content: center; color: #5F6F67; font-family: 'IBM Plex Mono', monospace; font-size: 13px">[SCREENSHOT — loans module]</div>
+<div style="padding: 28px; display: flex; flex-direction: column; gap: 10px">
+<div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #A8541F">Microfinance</div>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 25px; font-weight: 700">ZMAI village banking platform</h3>
+<p style="margin: 0; color: #4A5A52">A savings and microfinance platform managing members, loans and repayments. [ADD ONE-LINE OUTCOME FROM CLIENT]</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- PROCESS -->
+<section style="background: #FFFFFF; border-top: 1px solid #E1E5DE; padding: 96px 24px">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(30px, 3.2vw, 42px)">How we work</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 8px; border-top: 3px solid {{primary}}; padding-top: 18px"><div style="font-weight: 700; font-size: 19px">1. Discover</div><div style="color: #4A5A52">We map your processes, users and compliance needs on site.</div></div>
+<div style="display: flex; flex-direction: column; gap: 8px; border-top: 3px solid {{primary}}; padding-top: 18px"><div style="font-weight: 700; font-size: 19px">2. Design</div><div style="color: #4A5A52">A clear scope, fixed quotation and screens you approve before we build.</div></div>
+<div style="display: flex; flex-direction: column; gap: 8px; border-top: 3px solid {{primary}}; padding-top: 18px"><div style="font-weight: 700; font-size: 19px">3. Build</div><div style="color: #4A5A52">Iterative delivery with regular demos, testing and staff training.</div></div>
+<div style="display: flex; flex-direction: column; gap: 8px; border-top: 3px solid {{primary}}; padding-top: 18px"><div style="font-weight: 700; font-size: 19px">4. Run &amp; support</div><div style="color: #4A5A52">Hosting, monitoring, backups and support after go-live.</div></div>
+</div>
+</div>
+</section>
+
+<!-- CONTACT CTA -->
+<section id="contact" style="background: #0A2A1E; color: #F3F4EF; padding: 104px 24px">
+<div style="max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 56px">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(34px, 4vw, 56px); line-height: 1.04">Have a system in mind? Let's talk it through.</h2>
+<p style="margin: 0; color: #C9D6CE">Tell us what you need. We'll come back within one working day with next steps and, where possible, a ballpark figure.</p>
+<div style="display: flex; flex-direction: column; gap: 6px; color: #DCE3DD; margin-top: 8px">
+<div>Lusaka, Zambia · [STREET ADDRESS]</div>
+<div>[PHONE / WHATSAPP]</div>
+<div>[EMAIL]@varidianlab.com</div>
+</div>
+</div>
+<form style="background: #12392A; border: 1px solid #23513D; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 500">Name<input type="text" style="min-height: 46px; border-radius: 8px; border: 1px solid #3B6B55; background: #0A2A1E; color: #F3F4EF; padding: 0 14px; font: inherit"></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 500">Organisation<input type="text" style="min-height: 46px; border-radius: 8px; border: 1px solid #3B6B55; background: #0A2A1E; color: #F3F4EF; padding: 0 14px; font: inherit"></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 500">Phone or email<input type="text" style="min-height: 46px; border-radius: 8px; border: 1px solid #3B6B55; background: #0A2A1E; color: #F3F4EF; padding: 0 14px; font: inherit"></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 500">What do you need?<textarea rows="4" style="border-radius: 8px; border: 1px solid #3B6B55; background: #0A2A1E; color: #F3F4EF; padding: 12px 14px; font: inherit; resize: vertical"></textarea></label>
+<button type="button" style="background: {{accent}}; color: #FFFFFF; border: 0; border-radius: 8px; min-height: 50px; font: inherit; font-weight: 600; cursor: pointer">Send enquiry</button>
+</form>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background: #071D15; color: #9FB4A8; padding: 40px 24px; font-size: 14px">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px">
+<div>© 2026 Varidian Consulting Limited · Lusaka, Zambia</div>
+<div style="display: flex; flex-wrap: wrap; gap: 22px">
+<a href="#services" style="color: #C9D6CE">Services</a>
+<a href="#products" style="color: #C9D6CE">Products</a>
+<a href="#hosting" style="color: #C9D6CE">Hosting</a>
+<a href="#contact" style="color: #C9D6CE">Privacy policy</a>
+</div>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"primary":{"editor":"color","default":"#0B5D3B","options":["#0B5D3B","#0F4C81","#1F2937"]},"accent":{"editor":"color","default":"#A8541F","options":["#A8541F","#B45309","#0B5D3B"]},"$preview":{"width":1440,"height":5600}}'>
+class Component extends DCLogic {
+renderVals() {
+return { primary: this.props.primary ?? '#0B5D3B', accent: this.props.accent ?? '#A8541F' };
+}
+}
+</script>
+</body>
+</html>
