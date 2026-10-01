@@ -24,12 +24,12 @@ interface HostingPlan {
     featured: boolean;
 }
 
-interface CaseStudy {
-    tag: string;
-    title: string;
-    body: string;
-    preview: string;
-}
+// interface CaseStudy {
+//     tag: string;
+//     title: string;
+//     body: string;
+//     preview: string;
+// }
 
 const integrations = [
     { title: 'Airtel Money', body: 'Collections & payouts' },
@@ -144,20 +144,20 @@ const hostingPlans: HostingPlan[] = [
     { name: 'Developer', price: '500', spec: '3 websites · multi-PHP', featured: false },
 ];
 
-const caseStudies: CaseStudy[] = [
-    {
-        tag: 'NGO · Southern Province',
-        title: "Choma District Women's Development Association",
-        body: 'A seven-module management system and public website for chomadwda.org, covering members, programmes and reporting.',
-        preview: 'Admin dashboard',
-    },
-    {
-        tag: 'Microfinance',
-        title: 'ZMAI village banking platform',
-        body: 'A savings and microfinance platform managing members, loans and repayments.',
-        preview: 'Loans module',
-    },
-];
+// const caseStudies: CaseStudy[] = [
+//     {
+//         tag: 'NGO · Southern Province',
+//         title: "Choma District Women's Development Association",
+//         body: 'A seven-module management system and public website for chomadwda.org, covering members, programmes and reporting.',
+//         preview: 'Admin dashboard',
+//     },
+//     {
+//         tag: 'Microfinance',
+//         title: 'ZMAI village banking platform',
+//         body: 'A savings and microfinance platform managing members, loans and repayments.',
+//         preview: 'Loans module',
+//     },
+// ];
 
 const steps = [
     { title: 'Discover', body: 'We map your processes, users and compliance needs on site.' },
@@ -310,7 +310,7 @@ useScrollReveal();
         </section>
 
         <!-- ══════════════ SELECTED WORK ══════════════ -->
-        <section id="work" class="v-sec">
+        <!-- <section id="work" class="v-sec hidden">
             <div class="v-wrap">
                 <div class="v-sec-head" data-reveal>
                     <div class="v-chip">Selected work</div>
@@ -330,7 +330,7 @@ useScrollReveal();
                     </article>
                 </div>
             </div>
-        </section>
+        </section> -->
 
         <!-- ══════════════ PROCESS ══════════════ -->
         <section class="v-sec v-sec-alt">

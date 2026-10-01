@@ -1,1 +1,0 @@
-import{an as e,on as t}from"./app-B4NKg-Bq.js";function n(){let n=null;t(()=>{n=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&e.target.classList.add(`in`)})},{threshold:.1}),document.querySelectorAll(`[data-reveal]`).forEach(e=>n?.observe(e))}),e(()=>n?.disconnect())}export{n as t};
