@@ -10,6 +10,7 @@ Route::inertia('/', 'Welcome')->name('home');
 Route::inertia('/about', 'marketing/About')->name('about');
 Route::inertia('/services', 'marketing/Services')->name('services');
 Route::inertia('/work', 'marketing/Work')->name('work');
+Route::inertia('/hosting', 'marketing/Hosting')->name('hosting');
 Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 Route::middleware('throttle:5,1')->post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
@@ -27,6 +28,9 @@ Route::get('/sitemap.xml', function () {
     $urls = [
         ['loc' => url('/'), 'changefreq' => 'weekly', 'priority' => '1.0'],
         ['loc' => url('/about'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['loc' => url('/services'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['loc' => url('/hosting'), 'changefreq' => 'monthly', 'priority' => '0.9'],
+        ['loc' => url('/work'), 'changefreq' => 'monthly', 'priority' => '0.7'],
         ['loc' => url('/products'), 'changefreq' => 'weekly', 'priority' => '0.9'],
         ['loc' => url('/products/school-management-system'), 'changefreq' => 'monthly', 'priority' => '0.8'],
         ['loc' => url('/products/church-management-system'), 'changefreq' => 'monthly', 'priority' => '0.8'],

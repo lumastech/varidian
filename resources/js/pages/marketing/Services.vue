@@ -1,207 +1,171 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
-import { onMounted } from 'vue';
+import MarketingCtaBand from '@/components/marketing/MarketingCtaBand.vue';
+import MarketingPageHero from '@/components/marketing/MarketingPageHero.vue';
+import SeoHead from '@/components/SeoHead.vue';
+import WhatsAppButton from '@/components/WhatsAppButton.vue';
+import { useScrollReveal } from '@/composables/useScrollReveal';
 
-const coreSubs = [
-    { name: 'Custom Business Applications', desc: 'Tailored software that automates and streamlines your core business processes.' },
-    { name: 'Web Applications & Portals', desc: 'Responsive, high-performance web platforms optimised for all devices.' },
-    { name: 'Mobile Applications', desc: 'Native and cross-platform apps for Android and iOS.' },
-    { name: 'Enterprise Software', desc: 'Robust back-office systems for complex operational requirements.' },
-    { name: 'Cloud-Based Solutions', desc: 'Scalable, always-available applications built on modern cloud infrastructure.' },
-    { name: 'API & Payment Integration', desc: 'Bank APIs, mobile money (Airtel, MTN, Zamtel), and third-party system connections.' },
+const anchors = [
+    { href: '#custom', label: 'Custom software' },
+    { href: '#ai', label: 'AI & automation' },
+    { href: '#hosting', label: 'Zambian hosting' },
+    { href: '#consulting', label: 'Consulting & support' },
 ];
 
-const services = [
-    {
-        title: 'Web Development',
-        desc: 'Your digital presence, professionally crafted. We design and develop experiences that are visually compelling and functionally powerful.',
-        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>`,
-        bullets: ['Corporate websites & landing pages', 'E-commerce platforms & online stores', 'Web portals & information systems', 'CMS development', 'Hosting support & optimisation'],
-    },
-    {
-        title: 'Cybersecurity',
-        desc: 'Cyber threats are increasingly sophisticated. We help you identify vulnerabilities, mitigate risks, and protect your most valuable digital assets.',
-        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
-        bullets: ['Vulnerability assessments & penetration testing', 'Risk management & cybersecurity strategy', 'Security policy & staff awareness training', 'Incident response planning'],
-    },
-    {
-        title: 'Data Analytics & AI',
-        desc: 'Transform raw data into actionable insights that enable smarter, faster decision-making across your organisation.',
-        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>`,
-        bullets: ['BI dashboards & reporting', 'Data pipeline design & management', 'Operational analytics & monitoring', 'Custom data models & AI automation'],
-    },
-    {
-        title: 'Payment & Financial Integration',
-        desc: 'Bridge the gap between technology and finance with solutions that support your financial operations and open new growth opportunities.',
-        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>`,
-        bullets: ['Bank API & core banking integration', 'Mobile money (Airtel, MTN, Zamtel)', 'Order financing technology', 'Financial monitoring & reporting dashboards'],
-    },
-    {
-        title: 'ICT Audits',
-        desc: 'Independent, thorough assessments of your technology environment — giving you the clarity and confidence to act.',
-        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>`,
-        bullets: ['Systems & cybersecurity audits', 'Disaster recovery readiness review', 'Business process & technology alignment', 'Database integrity & compliance audit'],
-    },
-    {
-        title: 'Management Consulting',
-        desc: 'Technology is most powerful when aligned with clear business strategy. We help you define where you are going and build the foundations to get there.',
-        icon: `<svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>`,
-        bullets: ['Digitalising operations & process mapping', 'Project management', 'Digital strategy roadmaps', 'IT advisory & vendor selection'],
-    },
+const customIncludes = [
+    'Requirements & process mapping',
+    'UX design & screen approval',
+    'Web & mobile-friendly apps',
+    'Mobile money & SMS integration',
+    'ZRA Smart Invoice integration',
+    'Roles, permissions & audit logs',
+    'Testing & staff training',
+    'Source code handover option',
 ];
 
-const addServices = [
-    {
-        title: 'ICT Outsourcing',
-        desc: 'Full or partial management of your IT operations by our experienced team — skilled capacity when and where you need it.',
-        icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>`,
-    },
-    {
-        title: 'Backup & Security Management',
-        desc: 'Proactive management of your data backups and security systems, including off-site backup solutions.',
-        icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>`,
-    },
-    {
-        title: 'Data Entry & Collection',
-        desc: 'Accurate, efficient data capture and management services to keep your records clean and reliable.',
-        icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>`,
-    },
-    {
-        title: 'ICT Equipment Supply',
-        desc: 'Premium hardware and licensed software from leading vendors — competitively priced with reliable after-sales support.',
-        icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`,
-    },
+const aiCapabilities = [
+    { title: 'Document processing', body: 'Extract data from invoices, forms and applications.' },
+    { title: 'Assistants', body: 'Answer staff and customer questions from your own documents.' },
+    { title: 'Workflow automation', body: 'Connect systems and remove manual re-typing.' },
+    { title: 'Local inference', body: 'Models run on servers in Zambia for sensitive data.' },
 ];
 
-onMounted(() => {
-    const obs = new IntersectionObserver(
-        (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); } }),
-        { threshold: 0.1 },
-    );
-    document.querySelectorAll('[data-reveal]').forEach((el) => obs.observe(el));
-});
+const consultingServices = [
+    { label: 'Digital strategy', value: 'Roadmaps for moving off paper and spreadsheets.' },
+    { label: 'System audits', value: 'Reviews of existing software, security and data handling.' },
+    { label: 'Standard support', value: 'Included with hosted products and systems.' },
+    { label: 'Premium support & SLAs', value: 'Agreed response times and day-to-day IT help.' },
+];
+
+const engagementModels = [
+    { title: 'Fixed-price project', body: 'An agreed scope and a single quotation, paid in milestones.' },
+    { title: 'Monthly subscription', body: 'Use a Varidian product on our cloud for a setup fee plus a monthly fee.' },
+    { title: 'One-off licence', body: 'Own the system and its customisations, installed on your own infrastructure.' },
+];
+
+useScrollReveal();
 </script>
 
 <template>
-    <Head title="Services — Varidian" />
+    <SeoHead
+        title="Services — Custom software, AI, hosting & consulting | Varidian"
+        description="Custom software, practical AI and automation, Zambian web hosting, and consulting and support — from a first conversation to a system your team runs every day."
+        canonical-url="https://varidianlab.com/services"
+    />
 
-    <!-- PAGE HEADER -->
-    <section class="mkt-page-header relative overflow-hidden px-6 pt-40 pb-20 text-center" style="background: radial-gradient(ellipse 80% 50% at 50% -5%, rgba(0,180,160,0.14) 0%, transparent 65%), #080c10;">
-        <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:60px 60px"></div>
-        <div class="relative z-10 mx-auto max-w-3xl">
-            <div class="mkt-chip mb-5">Our Services</div>
-            <h1 class="mkt-page-title mb-5">Everything You Need to<br /><span class="accent">Build, Secure &amp; Scale</span></h1>
-            <p class="mx-auto max-w-lg text-base leading-relaxed text-slate-400">Software development is our core. Every other service we offer is designed to support, protect, and extend the technology that runs your business.</p>
-        </div>
-    </section>
+    <div class="v-landing">
+        <MarketingPageHero eyebrow="Services" title="From a first conversation to a system your team runs every day." lead="Four ways we help — use one, or all of them together.">
+            <nav class="v-anchors" aria-label="Services">
+                <a v-for="anchor in anchors" :key="anchor.href" :href="anchor.href">{{ anchor.label }}</a>
+            </nav>
+        </MarketingPageHero>
 
-    <!-- CORE SERVICE & GRID -->
-    <section class="px-6 py-20" style="background:#080c10">
-        <div class="mx-auto max-w-6xl">
-
-            <!-- Core service featured block -->
-            <div class="mb-5" data-reveal>
-                <div class="rounded-2xl p-8" style="background:linear-gradient(160deg,rgba(0,201,167,0.09),rgba(0,163,255,0.05));border:1px solid rgba(0,201,167,0.28)">
-                    <div class="mb-6 flex flex-col gap-5 sm:flex-row sm:items-start">
-                        <div class="mkt-service-icon flex-shrink-0" style="width:52px;height:52px;border-radius:12px;">
-                            <svg class="h-6 w-6 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                                <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="mkt-chip mb-2">Core Service</div>
-                            <h2 class="svc-sec-title mb-2">Custom Software Development</h2>
-                            <p class="max-w-3xl text-sm leading-relaxed text-slate-400">
-                                Our flagship practice. We cover the entire development lifecycle — from requirements discovery and system design through to testing, deployment, and ongoing support. We specialise in building custom information systems that are scalable, reliable, and secure. Every solution is engineered to your exact business context, not adapted from a generic template.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                        <div v-for="sub in coreSubs" :key="sub.name" class="svc-sub-item">
-                            <svg class="svc-check" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                <path d="M5 13l4 4L19 7" />
-                            </svg>
-                            <div>
-                                <div class="mb-0.5 text-xs font-semibold text-white">{{ sub.name }}</div>
-                                <div class="text-xs leading-relaxed text-slate-500">{{ sub.desc }}</div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- ══════════════ 01 CUSTOM SOFTWARE ══════════════ -->
+        <section id="custom" class="v-sec">
+            <div class="v-wrap v-split" data-reveal>
+                <div>
+                    <div class="v-eyebrow">01 · Custom software</div>
+                    <h2 class="v-sec-title">Systems shaped around <em>how you work.</em></h2>
+                    <p class="v-sec-lead">
+                        When an off-the-shelf product doesn't fit, we design and build one that does — web platforms, client portals, management systems and internal tools, with local payments and compliance built in.
+                    </p>
                 </div>
-            </div>
-
-            <!-- Supporting services grid -->
-            <div class="mb-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <div v-for="svc in services" :key="svc.title" class="mkt-card p-6" data-reveal>
-                    <div class="mkt-service-icon mb-4" v-html="svc.icon"></div>
-                    <h3 class="mb-2 text-base font-semibold text-white">{{ svc.title }}</h3>
-                    <p class="mb-4 text-sm leading-relaxed text-slate-400">{{ svc.desc }}</p>
-                    <ul class="space-y-2">
-                        <li v-for="b in svc.bullets" :key="b" class="flex items-start gap-2 text-xs text-slate-400">
-                            <svg class="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-teal-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                <path d="M5 13l4 4L19 7" />
-                            </svg>
-                            {{ b }}
-                        </li>
+                <div class="v-panel">
+                    <div class="v-eyebrow">What's included</div>
+                    <ul class="v-checklist">
+                        <li v-for="item in customIncludes" :key="item">{{ item }}</li>
                     </ul>
                 </div>
             </div>
+        </section>
 
-            <!-- Additional services -->
-            <div class="mb-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" data-reveal>
-                <div v-for="add in addServices" :key="add.title" class="mkt-card p-5">
-                    <div class="mb-3 text-teal-400" v-html="add.icon"></div>
-                    <h4 class="mb-1.5 text-sm font-semibold text-white">{{ add.title }}</h4>
-                    <p class="text-xs leading-relaxed text-slate-500">{{ add.desc }}</p>
+        <!-- ══════════════ 02 AI & AUTOMATION ══════════════ -->
+        <section id="ai" class="v-sec v-sec-alt">
+            <div class="v-wrap v-split" data-reveal>
+                <div>
+                    <div class="v-eyebrow">02 · AI &amp; automation</div>
+                    <h2 class="v-sec-title">Practical AI, <em>without sending your data abroad.</em></h2>
+                    <p class="v-sec-lead">
+                        We help businesses put AI to work on real tasks — reading documents, answering routine questions, drafting reports and automating repetitive steps — with on-premise options for sensitive information.
+                    </p>
+                </div>
+                <div class="v-mini-grid">
+                    <div v-for="capability in aiCapabilities" :key="capability.title" class="v-mini">
+                        <h3>{{ capability.title }}</h3>
+                        <p>{{ capability.body }}</p>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="mkt-sep mb-16"></div>
-
-            <!-- CTA -->
-            <div class="mkt-cta-bottom px-8 py-14 text-center" data-reveal>
-                <div class="mkt-chip mb-5">Work With Us</div>
-                <h2 class="svc-sec-title mb-3">Have a Project in Mind?</h2>
-                <p class="mx-auto mb-8 max-w-md text-sm leading-relaxed text-slate-400">Start with a free 45-minute discovery call. We'll learn about your business and tell you exactly how we can help — no obligation.</p>
-                <div class="flex flex-wrap items-center justify-center gap-4">
-                    <a href="https://wa.me/260971864421" target="_blank" rel="noopener noreferrer" class="mkt-btn-wa mkt-btn-wa-lg">
-                        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                        </svg>
-                        Book Free Discovery Call
-                    </a>
-                    <a href="/contact" class="mkt-btn-outline">Send Us a Message</a>
+        <!-- ══════════════ 03 ZAMBIAN HOSTING ══════════════ -->
+        <section id="hosting" class="v-band">
+            <div class="v-hero-grid"></div>
+            <div class="v-wrap v-band-in" data-reveal>
+                <div>
+                    <div class="v-chip">03 · Zambian hosting</div>
+                    <h2 class="v-sec-title">Your website and systems, <em>stored in Zambia.</em></h2>
+                    <p class="v-band-lead">
+                        Shared hosting for websites and managed hosting for business applications, on servers we own and operate locally — priced in kwacha, supported from Lusaka.
+                    </p>
+                    <a href="/hosting" class="v-band-link">See hosting plans →</a>
+                </div>
+                <div class="v-int">
+                    <div class="v-int-l">Why it matters</div>
+                    <p class="v-band-lead">
+                        The Data Protection Act, 2021 sets rules on how personal data is stored and transferred. Keeping data at rest in Zambia makes those obligations simpler to meet.
+                    </p>
+                    <p class="v-band-lead v-band-note">This is general information, not legal advice.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- ══════════════ 04 CONSULTING & SUPPORT ══════════════ -->
+        <section id="consulting" class="v-sec">
+            <div class="v-wrap v-split" data-reveal>
+                <div>
+                    <div class="v-eyebrow">04 · Consulting &amp; support</div>
+                    <h2 class="v-sec-title">Advice before you build. <em>Support after you launch.</em></h2>
+                    <p class="v-sec-lead">
+                        Not sure what you need yet? We'll assess your current setup, recommend options honestly — including ones we don't sell — and stay on to support what you run.
+                    </p>
+                </div>
+                <dl class="v-rows">
+                    <div v-for="service in consultingServices" :key="service.label" class="v-row">
+                        <dt>{{ service.label }}</dt>
+                        <dd>{{ service.value }}</dd>
+                    </div>
+                </dl>
+            </div>
+        </section>
+
+        <!-- ══════════════ WAYS TO ENGAGE ══════════════ -->
+        <section class="v-sec v-sec-alt">
+            <div class="v-wrap">
+                <div class="v-sec-head" data-reveal>
+                    <div class="v-chip">Ways to engage</div>
+                    <h2 class="v-sec-title">Pay the way that <em>suits your budget.</em></h2>
+                </div>
+                <div class="v-svc-grid" data-reveal>
+                    <div v-for="model in engagementModels" :key="model.title" class="v-card">
+                        <h3>{{ model.title }}</h3>
+                        <p>{{ model.body }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <MarketingCtaBand title="Tell us what you're trying to fix.">
+            <WhatsAppButton variant="inline" label="Book a consultation" message="Hi, I'd like to book a consultation with Varidian." class="v-btn-wa" />
+            <a href="/contact" class="v-btn-ghost">Send an enquiry</a>
+        </MarketingCtaBand>
+    </div>
 </template>
 
 <style>
-.svc-sec-title {
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: clamp(22px, 3vw, 36px);
-    font-weight: 800;
-    color: #eef2f7;
-    line-height: 1.2;
-}
-.svc-sub-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 14px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 10px;
-}
-.svc-sub-item:hover {
-    border-color: rgba(0, 201, 167, 0.2);
-}
-.svc-check {
-    width: 16px;
-    height: 16px;
-    flex-shrink: 0;
-    color: #00c9a7;
-    margin-top: 1px;
+.v-band-note {
+    font-size: 13px;
+    font-style: italic;
+    margin-top: 12px;
 }
 </style>

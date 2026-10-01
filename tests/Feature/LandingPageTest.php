@@ -40,11 +40,13 @@ test('landing page keeps the WhatsApp calls to action', function () {
 
 test('landing page enquiry form posts every field the contact request requires', function () {
     [$source] = landingPageSource();
+    $form = file_get_contents(resource_path('js/components/marketing/EnquiryForm.vue'));
 
-    expect($source)->toContain("form.post('/contact'");
+    expect($source)->toContain('<EnquiryForm');
+    expect($form)->toContain("form.post('/contact'");
 
-    foreach (['name', 'organisation', 'phone', 'email', 'product_interest', 'message'] as $field) {
-        expect($source)->toContain("v-model=\"form.{$field}\"");
+    foreach (['name', 'organisation', 'phone', 'email', 'product_interest', 'message', 'consent'] as $field) {
+        expect($form)->toContain("v-model=\"form.{$field}\"");
     }
 });
 
@@ -56,6 +58,7 @@ test('landing enquiry form submissions are accepted by the contact endpoint', fu
         'email' => 'mwila@example.com',
         'product_interest' => 'Web Hosting',
         'message' => 'We would like hosting for our school website.',
+        'consent' => true,
     ])->assertRedirect()->assertSessionHasNoErrors();
 });
 

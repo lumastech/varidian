@@ -3,6 +3,7 @@ import { Head, Link, usePage } from '@inertiajs/vue3';
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
 import WhatsAppButton from '@/components/WhatsAppButton.vue';
 import { ref } from 'vue';
+import '../../css/marketing.css';
 
 const page = usePage();
 const mobileOpen = ref(false);
@@ -15,7 +16,10 @@ const isActive = (href: string): boolean => {
 
 const navLinks = [
     { href: '/', label: 'Home' },
+    { href: '/services', label: 'Services' },
     { href: '/products', label: 'Products', hasDropdown: true },
+    { href: '/hosting', label: 'Hosting' },
+    { href: '/work', label: 'Our work' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
 ];
@@ -88,7 +92,7 @@ const jsonLd = JSON.stringify({
                     </Link>
 
                     <!-- Desktop links -->
-                    <div class="mkt-nav-pill hidden items-center gap-7 md:flex">
+                    <div class="mkt-nav-pill hidden items-center gap-6 lg:flex">
                         <template v-for="link in navLinks" :key="link.href">
                             <!-- Products with dropdown -->
                             <div v-if="link.hasDropdown" class="relative" @mouseenter="productsOpen = true" @mouseleave="productsOpen = false">
@@ -136,7 +140,7 @@ const jsonLd = JSON.stringify({
                         </a>
 
                         <!-- Hamburger (mobile) -->
-                        <button class="mkt-hamburger md:hidden" :aria-expanded="mobileOpen" aria-label="Toggle menu" @click="mobileOpen = !mobileOpen">
+                        <button class="mkt-hamburger lg:hidden" :aria-expanded="mobileOpen" aria-label="Toggle menu" @click="mobileOpen = !mobileOpen">
                             <svg v-if="!mobileOpen" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
@@ -150,7 +154,7 @@ const jsonLd = JSON.stringify({
 
             <!-- Mobile menu -->
             <Transition name="mkt-slide">
-                <div v-if="mobileOpen" class="mkt-mobile-menu md:hidden">
+                <div v-if="mobileOpen" class="mkt-mobile-menu lg:hidden">
                     <Link
                         v-for="link in navLinks"
                         :key="link.href"
@@ -216,7 +220,10 @@ const jsonLd = JSON.stringify({
                         <h4 class="mb-4 text-xs font-semibold tracking-wider text-white uppercase">Company</h4>
                         <ul class="space-y-2.5">
                             <li><Link href="/about" class="text-xs text-slate-500 transition-colors hover:text-slate-300">About Us</Link></li>
+                            <li><Link href="/services" class="text-xs text-slate-500 transition-colors hover:text-slate-300">Services</Link></li>
                             <li><Link href="/products" class="text-xs text-slate-500 transition-colors hover:text-slate-300">Our Products</Link></li>
+                            <li><Link href="/hosting" class="text-xs text-slate-500 transition-colors hover:text-slate-300">Hosting</Link></li>
+                            <li><Link href="/work" class="text-xs text-slate-500 transition-colors hover:text-slate-300">Our Work</Link></li>
                             <li><Link href="/contact" class="text-xs text-slate-500 transition-colors hover:text-slate-300">Contact Us</Link></li>
                         </ul>
                     </div>

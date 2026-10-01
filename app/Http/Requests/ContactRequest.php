@@ -24,6 +24,17 @@ class ContactRequest extends FormRequest
             'email' => ['nullable', 'email', 'max:150'],
             'product_interest' => ['required', 'string', 'max:100'],
             'message' => ['required', 'string', 'min:10', 'max:2000'],
+            'consent' => ['accepted'],
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'consent.accepted' => 'Please agree to us storing your details so we can respond.',
         ];
     }
 }

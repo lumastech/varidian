@@ -1,192 +1,170 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import MarketingCtaBand from '@/components/marketing/MarketingCtaBand.vue';
+import MarketingPageHero from '@/components/marketing/MarketingPageHero.vue';
 import SeoHead from '@/components/SeoHead.vue';
+import WhatsAppButton from '@/components/WhatsAppButton.vue';
+import { useScrollReveal } from '@/composables/useScrollReveal';
 
-const companyDetails = [
-    { label: 'Registered name', value: 'Varidian Consulting Limited' },
-    { label: 'Registration', value: 'PACRA Reg. No: 120261044865' },
-    { label: 'Address', value: '10 Miles Great North Road, Chieftainess Mungule, Chibombo, Central Province, Zambia' },
-    { label: 'Website', value: 'varidianlab.com' },
-    { label: 'Email', value: 'info@varidianlab.com', href: 'mailto:info@varidianlab.com' },
-    { label: 'Phone / WhatsApp', value: '+260 97 1864421', href: 'tel:+260971864421' },
+const values = [
+    { title: 'Local first', body: 'We design around Zambian payments, regulations, connectivity and calendars before anything else.' },
+    { title: 'Plain dealing', body: 'Clear scopes, fixed quotations and honest timelines — no surprises on the invoice.' },
+    {
+        title: 'Data responsibility',
+        body: 'We treat client data as theirs: stored in Zambia, protected, and handled in line with the Data Protection Act, 2021.',
+    },
+    { title: 'In it for the long run', body: 'Go-live is the start. We train your people, support the system and keep improving it.' },
 ];
 
-onMounted(() => {
-    const obs = new IntersectionObserver(
-        (entries) =>
-            entries.forEach((e) => {
-                if (e.isIntersecting) {
-                    e.target.classList.add('in');
-                }
-            }),
-        { threshold: 0.08 },
-    );
-    document.querySelectorAll('[data-reveal]').forEach((el) => obs.observe(el));
-});
+const leaders = [
+    {
+        name: 'Lubomba Mulomya',
+        initials: 'LM',
+        role: 'Director & Software Development Lead',
+        bio: "A full-stack developer and systems engineer, Lubomba leads Varidian's product development and infrastructure — from application architecture to the servers that host client systems.",
+    },
+    {
+        name: 'Banji Chisumpa',
+        initials: 'BC',
+        role: 'Executive Chairperson',
+        bio: "Provides strategic leadership and oversight for Varidian's operations, partnerships, and growth across African markets.",
+    },
+];
+
+const capabilities = [
+    { label: 'Applications', value: 'Laravel, Vue 3, TypeScript, Tailwind CSS, MySQL' },
+    { label: 'Integrations', value: 'Airtel Money, MTN MoMo, ZRA Smart Invoice, bulk SMS gateways' },
+    { label: 'Infrastructure', value: 'Enterprise servers in Lusaka, virtualised and backed up, with encrypted connections end to end' },
+    { label: 'Quality', value: 'Automated testing, role-based access control and full audit logs as standard' },
+];
+
+const companyFacts = [
+    { label: 'Registered name', value: 'Varidian Consulting Limited' },
+    { label: 'PACRA reg. no.', value: '120261044865' },
+    { label: 'TPIN', value: '2004412831' },
+    { label: 'Head office', value: 'Lusaka, Zambia' },
+];
+
+useScrollReveal();
 </script>
 
 <template>
     <SeoHead
-        title="About Varidian — Software Built for Africa"
-        description="Varidian Consulting Limited is a Zambia-based software development firm building offline-first, sector-specific management systems for African schools, churches, NGOs, and businesses."
+        title="About Varidian — A Zambian software house"
+        description="Varidian Consulting Limited is a Lusaka-based software development and consulting firm. We design, build, host and support business systems for schools, NGOs, churches, financial groups and growing businesses."
         canonical-url="https://varidianlab.com/about"
     />
 
-    <!-- PAGE HEADER -->
-    <section class="mkt-page-header relative overflow-hidden px-6 pt-40 pb-20 text-center">
-        <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(var(--mkt-dot-grid) 1px,transparent 1px),linear-gradient(90deg,var(--mkt-dot-grid) 1px,transparent 1px);background-size:60px 60px"></div>
-        <div class="relative z-10 mx-auto max-w-3xl">
-            <div class="mkt-chip mb-5">About Varidian</div>
-            <h1 class="mkt-page-title mb-5">Built from Zambia,<br /><span class="accent">deployed across Africa</span></h1>
-            <p class="mx-auto max-w-lg text-base leading-relaxed" style="color:var(--mkt-text-m)">
-                A software development firm based in Chibombo, Zambia, building offline-first management systems for African schools, churches, NGOs, and businesses.
-            </p>
-        </div>
-    </section>
+    <div class="v-landing">
+        <MarketingPageHero
+            eyebrow="About Varidian"
+            title="A Zambian software house building the systems Zambian organisations actually need."
+            lead="Varidian Consulting Limited is a Lusaka-based software development and consulting firm. We design, build, host and support business systems for schools, NGOs, churches, financial groups and growing businesses."
+        />
 
-    <!-- ABOUT BODY -->
-    <section class="mkt-sec-dark px-6 py-20">
-        <div class="mx-auto max-w-6xl">
-
-            <!-- Two-col intro -->
-            <div class="mb-20 grid items-start gap-14 lg:grid-cols-2" data-reveal>
+        <!-- ══════════════ STORY ══════════════ -->
+        <section class="v-sec">
+            <div class="v-wrap v-split" data-reveal>
                 <div>
-                    <div class="mkt-chip mb-5">Who We Are</div>
-                    <h2 class="about-sec-title mb-6">Software that understands<br />the African context.</h2>
-                    <p class="mb-4 text-sm leading-relaxed" style="color:var(--mkt-text-m)">
-                        Varidian Consulting Limited is a software development firm based in Zambia. We build sector-specific management systems for African institutions — schools, churches, NGOs, and small businesses — designed to work in the conditions where those institutions actually operate.
+                    <div class="v-chip">Our story</div>
+                    <h2 class="v-sec-title">We started by fixing the gap between <em>global software and local reality.</em></h2>
+                </div>
+                <div class="v-prose">
+                    <p>
+                        Too many Zambian organisations were running on spreadsheets, paper registers or imported software that didn't understand mobile money, ZRA requirements or the school calendar. Varidian was founded to close that gap.
                     </p>
-                    <p class="mb-4 text-sm leading-relaxed" style="color:var(--mkt-text-m)">
-                        Our products are not generic software adapted for Africa. They are built from the ground up for the African context: the Zambian Ministry of Education three-term calendar, ECZ examination tracking, ZRA Smart Invoice compliance, NAPSA and PAYE payroll, mobile money integrations with Airtel Money, MTN MoMo, and Zamtel Kwacha, and offline-first operation where connectivity is intermittent.
+                    <p>
+                        We began with custom builds for individual clients — a management system for a women's development association, a village banking platform for a microfinance group. Each project taught us what local organisations need, and those lessons became our product range.
                     </p>
-                    <p class="mb-4 text-sm leading-relaxed" style="color:var(--mkt-text-m)">
-                        We believe the organisations doing the most important work in Africa — the schools educating the next generation, the churches holding communities together, the microfinance groups lifting families out of poverty — deserve software built specifically for them, supported by people who understand their world.
-                    </p>
-                    <p class="text-sm leading-relaxed" style="color:var(--mkt-text-m)">
-                        Our home base is Zambia. Our systems are deployed across Zambia, Zimbabwe, Malawi, Tanzania, and beyond. Every system we deliver is built on a proven technology stack, works offline, and is supported locally.
+                    <p>
+                        Today we combine custom development, ready-made platforms and our own Zambian hosting infrastructure, so a client can go from idea to a running, supported system with one local partner.
                     </p>
                 </div>
+            </div>
+        </section>
 
-                <!-- Company details card -->
-                <div class="mkt-card p-8" data-reveal>
-                    <div class="mkt-chip mb-5">Company Details</div>
-                    <dl class="space-y-4">
-                        <div v-for="detail in companyDetails" :key="detail.label" class="flex flex-col gap-0.5 border-b pb-4 last:border-0 last:pb-0" style="border-color:var(--mkt-line)">
-                            <dt class="text-xs font-semibold uppercase tracking-wider" style="color:var(--mkt-text-m)">{{ detail.label }}</dt>
-                            <dd class="text-sm" style="color:var(--mkt-text-h)">
-                                <a v-if="detail.href" :href="detail.href" class="transition-colors hover:text-teal-400">{{ detail.value }}</a>
-                                <span v-else>{{ detail.value }}</span>
-                            </dd>
+        <!-- ══════════════ MISSION / VISION ══════════════ -->
+        <section class="v-sec v-sec-alt">
+            <div class="v-wrap v-pair" data-reveal>
+                <div class="v-panel">
+                    <div class="v-eyebrow">Mission</div>
+                    <p>To give Zambian organisations reliable, locally-built software they can afford, understand and own.</p>
+                </div>
+                <div class="v-panel">
+                    <div class="v-eyebrow">Vision</div>
+                    <p>A Zambia where every school, NGO and business runs on technology built for its realities — and hosted at home.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════ VALUES ══════════════ -->
+        <section class="v-sec">
+            <div class="v-wrap v-why" data-reveal>
+                <div class="v-why-head">
+                    <div class="v-chip">What we believe</div>
+                    <h2 class="v-sec-title">How we work <em>with every client.</em></h2>
+                </div>
+                <ol class="v-why-list">
+                    <li v-for="(value, i) in values" :key="value.title" class="v-why-row">
+                        <span class="v-why-n">{{ String(i + 1).padStart(2, '0') }}</span>
+                        <div>
+                            <h3>{{ value.title }}</h3>
+                            <p>{{ value.body }}</p>
                         </div>
-                    </dl>
-                </div>
+                    </li>
+                </ol>
             </div>
+        </section>
 
-            <div class="mkt-sep mb-20"></div>
-
-            <!-- Leadership -->
-            <div class="mb-20" data-reveal>
-                <div class="mb-10 text-center">
-                    <div class="mkt-chip mb-4">Leadership</div>
-                    <h2 class="about-sec-title">The team behind Varidian</h2>
+        <!-- ══════════════ LEADERSHIP ══════════════ -->
+        <section class="v-sec v-sec-alt">
+            <div class="v-wrap">
+                <div class="v-sec-head" data-reveal>
+                    <div class="v-chip">Leadership</div>
+                    <h2 class="v-sec-title">The people <em>behind Varidian.</em></h2>
                 </div>
-                <div class="mx-auto max-w-3xl grid gap-6 sm:grid-cols-2">
-                    <!-- Executive Chairperson -->
-                    <div class="mkt-card p-7">
-                        <div class="flex flex-col items-center gap-5 text-center">
-                            <div class="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full" style="background:rgba(0,201,167,0.1);border:1px solid rgba(0,201,167,0.25)">
-                                <svg class="h-7 w-7 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                                    <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="mb-1 text-base font-bold" style="color:var(--mkt-text-h)">Banji Chisumpa</h3>
-                                <p class="mb-3 text-xs font-semibold uppercase tracking-wider text-teal-400">Executive Chairperson</p>
-                                <p class="text-sm leading-relaxed" style="color:var(--mkt-text-m)">
-                                    Provides strategic leadership and oversight for Varidian's operations, partnerships, and growth across African markets.
-                                </p>
-                            </div>
+                <div class="v-people" data-reveal>
+                    <article v-for="leader in leaders" :key="leader.name" class="v-panel v-person">
+                        <div class="v-person-avatar" aria-hidden="true">{{ leader.initials }}</div>
+                        <div>
+                            <h3>{{ leader.name }}</h3>
+                            <div class="v-person-role">{{ leader.role }}</div>
+                            <p>{{ leader.bio }}</p>
                         </div>
-                    </div>
-                    <!-- Director & Dev Lead -->
-                    <div class="mkt-card p-7">
-                        <div class="flex flex-col items-center gap-5 text-center">
-                            <!-- Replace src with actual photo path: /images/team/director.jpg -->
-                            <div class="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full"
-                                style="background:rgba(0,201,167,0.1);border:1px solid rgba(0,201,167,0.25)">
-                                <svg class="h-7 w-7 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5"
-                                    viewBox="0 0 24 24">
-                                    <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="mb-1 text-base font-bold" style="color:var(--mkt-text-h)">Lubomba Mulomya</h3>
-                                <p class="mb-3 text-xs font-semibold uppercase tracking-wider text-teal-400">Director &amp; Software Development Lead</p>
-                                <p class="text-sm leading-relaxed" style="color:var(--mkt-text-m)">
-                                    Over 10 years building software for African institutions. Led development of systems for the Tobacco Board of Zambia, Northern Technical College, and Varidian's full product suite — ZSSMS, ChurchMS, BizManager, and Village Banking.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    </article>
                 </div>
             </div>
+        </section>
 
-            <div class="mkt-sep mb-20"></div>
-
-            <!-- MISSION & VISION -->
-            <div class="mb-20 grid gap-5 sm:grid-cols-2" data-reveal>
-                <div class="mkt-card p-8">
-                    <div class="mb-5 flex h-10 w-10 items-center justify-center rounded-xl" style="background:rgba(0,201,167,0.1);border:1px solid rgba(0,201,167,0.2)">
-                        <svg class="h-5 w-5 text-teal-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                            <path d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
+        <!-- ══════════════ CAPABILITIES ══════════════ -->
+        <section class="v-sec">
+            <div class="v-wrap v-split" data-reveal>
+                <div>
+                    <div class="v-chip">How we build</div>
+                    <h2 class="v-sec-title">Modern tools. <em>Our own infrastructure.</em></h2>
+                    <p class="v-sec-lead">We build on proven, open-source technology — no lock-in to expensive licences — and run client systems on servers we own and operate in Zambia.</p>
+                </div>
+                <dl class="v-rows">
+                    <div v-for="capability in capabilities" :key="capability.label" class="v-row">
+                        <dt>{{ capability.label }}</dt>
+                        <dd>{{ capability.value }}</dd>
                     </div>
-                    <div class="mkt-chip mb-3">Our Mission</div>
-                    <p class="text-sm leading-relaxed" style="color:var(--mkt-text)">
-                        To build offline-first, sector-specific software for African organisations — systems that understand the local regulatory, financial, and operating context — so that schools, churches, businesses, and NGOs can focus on their work instead of their tools.
-                    </p>
-                </div>
-                <div class="mkt-card p-8">
-                    <div class="mb-5 flex h-10 w-10 items-center justify-center rounded-xl" style="background:rgba(0,163,255,0.1);border:1px solid rgba(0,163,255,0.2)">
-                        <svg class="h-5 w-5 text-blue-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" />
-                        </svg>
-                    </div>
-                    <div class="mkt-chip mb-3" style="background:rgba(0,163,255,0.1);border-color:rgba(0,163,255,0.25);color:#00a3ff">Our Vision</div>
-                    <p class="text-sm leading-relaxed" style="color:var(--mkt-text)">
-                        To be Africa's most trusted software partner for institutions and organisations — recognised for depth of local knowledge, quality of support, and the measurable outcomes we deliver to the people and communities our clients serve.
-                    </p>
-                </div>
+                </dl>
             </div>
+        </section>
 
-            <div class="mkt-sep mb-16"></div>
-
-            <!-- CTA -->
-            <div class="mkt-cta-bottom px-8 py-14 text-center" data-reveal>
-                <div class="mkt-chip mb-5">Work With Us</div>
-                <h2 class="about-sec-title mb-3">Ready to see a product<br />built for your sector?</h2>
-                <p class="mx-auto mb-8 max-w-md text-sm leading-relaxed" style="color:var(--mkt-text-m)">Request a demo via WhatsApp or fill in the contact form. We'll walk you through the right product for your organisation.</p>
-                <div class="flex flex-wrap items-center justify-center gap-4">
-                    <a href="https://wa.me/260971864421?text=Hi%2C%20I%27d%20like%20to%20learn%20more%20about%20Varidian%20products." target="_blank" rel="noopener noreferrer" class="mkt-btn-wa mkt-btn-wa-lg">
-                        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                        </svg>
-                        Request a demo
-                    </a>
-                    <a href="/products" class="mkt-btn-outline">See our products</a>
+        <!-- ══════════════ COMPANY FACTS ══════════════ -->
+        <section aria-label="Company details" class="v-strip">
+            <dl class="v-wrap v-facts">
+                <div v-for="fact in companyFacts" :key="fact.label">
+                    <dt>{{ fact.label }}</dt>
+                    <dd>{{ fact.value }}</dd>
                 </div>
-            </div>
-        </div>
-    </section>
+            </dl>
+        </section>
+
+        <MarketingCtaBand title="Let's build something that works here." lead="Meet us in Lusaka or online. We'll listen first, then tell you honestly what it would take.">
+            <WhatsAppButton variant="inline" label="Book a consultation" message="Hi, I'd like to book a consultation with Varidian." class="v-btn-wa" />
+            <a href="/products" class="v-btn-ghost">See our products</a>
+        </MarketingCtaBand>
+    </div>
 </template>
-
-<style>
-.about-sec-title {
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: clamp(22px, 3vw, 38px);
-    font-weight: 800;
-    color: var(--mkt-text-h);
-    line-height: 1.18;
-}
-</style>

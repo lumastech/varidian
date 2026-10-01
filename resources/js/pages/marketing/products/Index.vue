@@ -1,138 +1,175 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
-import { onMounted } from 'vue';
+import MarketingCtaBand from '@/components/marketing/MarketingCtaBand.vue';
+import MarketingPageHero from '@/components/marketing/MarketingPageHero.vue';
 import SeoHead from '@/components/SeoHead.vue';
 import WhatsAppButton from '@/components/WhatsAppButton.vue';
+import { useScrollReveal } from '@/composables/useScrollReveal';
 
-onMounted(() => {
-    const obs = new IntersectionObserver(
-        (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); } }),
-        { threshold: 0.08 },
-    );
-    document.querySelectorAll('[data-reveal]').forEach((el) => obs.observe(el));
-});
+interface Product {
+    name: string;
+    sector: string;
+    summary: string;
+    features: string[];
+    demoLabel: string;
+    detailHref: string | null;
+}
 
-const products = [
+const products: Product[] = [
     {
-        title: 'School Management System (ZSSMS)',
-        badge: null,
-        desc: 'Grades 1–12 on the MoE three-term calendar. ECZ exam tracking, Airtel/MTN fee collection, NAPSA payroll. Offline-first — works through connectivity outages. Built for schools across Africa.',
-        href: '/products/school-management-system',
-        price: 'From K12,000/year',
-        tags: ['ECZ Exams', 'Mobile Money', 'NAPSA Payroll', 'Offline-first'],
+        name: 'SKUU',
+        sector: 'Schools',
+        summary: 'School and student management for private, mission and grant-aided schools, Grades 1–12.',
+        features: ['Enrolment, classes & timetables', 'Fees collected by Airtel Money & MTN MoMo', 'ECZ exam tracking at Grades 7, 9 & 12', 'Payroll with NAPSA & PAYE, parent SMS'],
+        demoLabel: 'Request a SKUU demo',
+        detailHref: '/products/school-management-system',
     },
     {
-        title: 'Church Management System',
-        badge: null,
-        desc: 'Member and cell group registry. Tithe and offering tracking with mobile money. Attendance, events, and SMS or WhatsApp notifications. Purpose-built for African churches and ministries.',
-        href: '/products/church-management-system',
-        price: 'From K6,000/year',
-        tags: ['Member Registry', 'Tithe Tracking', 'SMS/WhatsApp', 'Multi-campus'],
+        name: 'Varidian Reach',
+        sector: 'NGOs',
+        summary: 'NGO management in a dedicated installation for each organisation — your data never shares a database.',
+        features: ['Members & beneficiaries', 'Programmes & activities', 'Donors, grants & finances', 'Donor-ready reporting'],
+        demoLabel: 'Request a Reach demo',
+        detailHref: null,
     },
     {
-        title: 'Varidian BizManager',
-        badge: 'ZRA Smart Invoice compliant',
-        desc: 'Complete business manager for SMEs. Invoicing, inventory, sales, expenses — integrated with ZRA Smart Invoice. Offline queue ensures no transactions are lost during outages.',
-        href: '/products/bizmanager',
-        price: 'From K2,400/year',
-        tags: ['ZRA Smart Invoice', 'Inventory', 'Offline Queue', 'VAT Reports'],
+        name: 'BizManager',
+        sector: 'SMEs',
+        summary: 'Everyday business management for SMEs with ZRA Smart Invoice built in.',
+        features: ['Sales, quotations & invoices', 'Stock & suppliers', 'Customer records', 'ZRA-compliant invoicing'],
+        demoLabel: 'Request a BizManager demo',
+        detailHref: '/products/bizmanager',
     },
     {
-        title: 'Village Banking & Microfinance Platform',
-        badge: null,
-        desc: 'Group and member management for VSLAs and NGO microfinance programmes. Loan and savings cycle tracking, mobile money disbursements. Field agent portal works offline.',
-        href: '/products/village-banking',
-        price: 'Custom pricing',
-        tags: ['VSLA Groups', 'Loan Tracking', 'Mobile Money', 'Field Agents'],
+        name: 'Varidian Books',
+        sector: 'Accounting',
+        summary: "Offline-first accounting that keeps working without internet and syncs when you're back online.",
+        features: ['Ledgers, invoices & bills', 'Bank reconciliation', 'Financial statements', 'Works offline, syncs to the cloud'],
+        demoLabel: 'Join the waiting list',
+        detailHref: null,
+    },
+    {
+        name: 'Village Banking',
+        sector: 'Microfinance',
+        summary: 'A platform for savings groups and microfinance institutions.',
+        features: ['Member savings & shares', 'Loan applications & schedules', 'Repayments by mobile money', 'Group & portfolio reports'],
+        demoLabel: 'Request a demo',
+        detailHref: '/products/village-banking',
+    },
+    {
+        name: 'ChurchMS',
+        sector: 'Churches',
+        summary: 'Church management for congregations of any size.',
+        features: ['Membership & families', 'Tithes, offerings & pledges', 'Groups, events & attendance', 'SMS announcements'],
+        demoLabel: 'Request a demo',
+        detailHref: '/products/church-management-system',
+    },
+    {
+        name: 'Coursify',
+        sector: 'Higher education',
+        summary: 'Online learning management for universities and colleges.',
+        features: ['Courses & learning materials', 'Assignments & online assessments', 'Student progress tracking', 'Lecturer & admin dashboards'],
+        demoLabel: 'Request a demo',
+        detailHref: null,
+    },
+    {
+        name: 'Varidian Events',
+        sector: 'Events',
+        summary: 'Event registration and ticketing — a privacy-conscious replacement for generic online forms.',
+        features: ['Custom registration forms', 'Online payments', 'Attendee lists & check-in', 'Consent captured for every registrant'],
+        demoLabel: 'Request a demo',
+        detailHref: null,
     },
 ];
+
+const buyingOptions = [
+    {
+        name: 'Cloud',
+        terms: 'Setup fee + monthly fee',
+        features: ['Hosted by Varidian in Zambia', 'Updates & backups included', 'Standard support'],
+        featured: false,
+    },
+    {
+        name: 'Cloud + IT support',
+        terms: 'Setup fee + higher monthly fee',
+        features: ['Everything in Cloud', 'Day-to-day IT help for your team', 'Priority response'],
+        featured: true,
+    },
+    {
+        name: 'Own it',
+        terms: 'One-off licence',
+        features: ['Installed on your infrastructure', 'You own the system & customisations', 'Optional support agreement (SLA)'],
+        featured: false,
+    },
+];
+
+function demoMessage(product: Product): string {
+    return product.demoLabel === 'Join the waiting list'
+        ? `Hi, I'd like to join the waiting list for ${product.name}.`
+        : `Hi, I'd like to request a demo of ${product.name}.`;
+}
+
+useScrollReveal();
 </script>
 
 <template>
     <SeoHead
-        title="Our Products — Varidian Consulting Limited"
-        description="School management, church management, ZRA-compliant business management, and village banking systems — purpose-built for African institutions. Offline-first, mobile-ready."
+        title="Products — Ready-made platforms for Zambian organisations | Varidian"
+        description="SKUU, Varidian Reach, BizManager, Varidian Books, Village Banking, ChurchMS, Coursify and Varidian Events — configured to your organisation, branded for you and supported locally."
         canonical-url="https://varidianlab.com/products"
     />
 
-    <!-- PAGE HEADER -->
-    <section class="mkt-page-header relative overflow-hidden px-6 pt-40 pb-20 text-center">
-        <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(var(--mkt-dot-grid) 1px,transparent 1px),linear-gradient(90deg,var(--mkt-dot-grid) 1px,transparent 1px);background-size:60px 60px"></div>
-        <div class="relative z-10 mx-auto max-w-3xl">
-            <div class="mkt-chip mb-5">Our Products</div>
-            <h1 class="mkt-page-title mb-5">Management systems<br /><span class="accent">built for Africa</span></h1>
-            <p class="mx-auto max-w-lg text-base leading-relaxed" style="color:var(--mkt-text-m)">
-                Each product is purpose-built for a specific sector — not adapted from a generic template. Offline-first, mobile-ready, and locally supported.
-            </p>
-        </div>
-    </section>
+    <div class="v-landing">
+        <MarketingPageHero
+            eyebrow="Products"
+            title="Ready-made platforms for Zambian organisations."
+            lead="Each product is configured to your organisation, branded for you and supported locally. Run it on our cloud or own it outright."
+        />
 
-    <!-- PRODUCTS GRID -->
-    <section class="mkt-sec-dark px-6 py-20">
-        <div class="mx-auto max-w-6xl">
-            <div class="grid gap-6 sm:grid-cols-2" data-reveal>
-                <div v-for="product in products" :key="product.title" class="prod-index-card flex flex-col">
-                    <div class="mb-3">
-                        <div v-if="product.badge" class="mb-2">
-                            <span class="zra-badge">✓ {{ product.badge }}</span>
+        <!-- ══════════════ PRODUCT CATALOGUE ══════════════ -->
+        <section class="v-sec">
+            <div class="v-wrap">
+                <div class="v-prod-grid v-prod-grid--wide" data-reveal>
+                    <article v-for="product in products" :key="product.name" class="v-prod">
+                        <div class="v-prod-head">
+                            <h2 class="v-prod-name">{{ product.name }}</h2>
+                            <div class="v-prod-sector">{{ product.sector }}</div>
                         </div>
-                        <h2 class="text-lg font-bold text-white">{{ product.title }}</h2>
-                    </div>
-                    <p class="mb-4 flex-1 text-sm leading-relaxed text-slate-400">{{ product.desc }}</p>
-                    <div class="mb-5 flex flex-wrap gap-2">
-                        <span v-for="tag in product.tags" :key="tag" class="prod-tag">{{ tag }}</span>
-                    </div>
-                    <div class="flex items-center justify-between border-t border-white/5 pt-4">
-                        <span class="text-xs font-semibold text-teal-400">{{ product.price }}</span>
-                        <Link :href="product.href" class="text-xs font-semibold text-white transition-colors hover:text-teal-400">Learn more →</Link>
-                    </div>
+                        <p>{{ product.summary }}</p>
+                        <ul class="v-checklist v-checklist--single">
+                            <li v-for="feature in product.features" :key="feature">{{ feature }}</li>
+                        </ul>
+                        <div class="v-prod-links">
+                            <WhatsAppButton variant="inline" :label="`${product.demoLabel} →`" :message="demoMessage(product)" class="v-prod-demo" />
+                            <a v-if="product.detailHref" :href="product.detailHref">Learn more</a>
+                        </div>
+                    </article>
                 </div>
             </div>
+        </section>
 
-            <div class="mt-16 text-center" data-reveal>
-                <div class="mkt-cta-bottom mx-auto max-w-2xl px-8 py-12">
-                    <p class="mb-5 text-sm leading-relaxed text-slate-400">Not sure which product fits your organisation? WhatsApp us and we'll point you in the right direction.</p>
-                    <WhatsAppButton
-                        variant="inline"
-                        label="Ask us which product fits"
-                        message="Hi, I'd like to find out which Varidian product is right for my organisation."
-                    />
+        <!-- ══════════════ HOW YOU CAN BUY ══════════════ -->
+        <section class="v-sec v-sec-alt">
+            <div class="v-wrap">
+                <div class="v-sec-head" data-reveal>
+                    <div class="v-chip">How you can buy</div>
+                    <h2 class="v-sec-title">Three ways to run <em>any Varidian product.</em></h2>
+                </div>
+                <div class="v-tiers" data-reveal>
+                    <div v-for="option in buyingOptions" :key="option.name" class="v-tier" :class="{ 'v-tier--featured': option.featured }">
+                        <div>
+                            <h3>{{ option.name }}</h3>
+                            <div class="v-tier-term">{{ option.terms }}</div>
+                        </div>
+                        <ul class="v-checklist v-checklist--single">
+                            <li v-for="feature in option.features" :key="feature">{{ feature }}</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <MarketingCtaBand title="See it working with your own data." lead="Book a free demo and we'll walk your team through it.">
+            <WhatsAppButton variant="inline" label="Book a demo" message="Hi, I'd like to book a demo of a Varidian product." class="v-btn-wa" />
+        </MarketingCtaBand>
+    </div>
 </template>
-
-<style scoped>
-.prod-index-card {
-    background: var(--mkt-surface);
-    border: 1px solid var(--mkt-line);
-    border-radius: 16px;
-    padding: 28px;
-    transition: border-color 0.25s, transform 0.25s;
-}
-.prod-index-card:hover {
-    border-color: rgba(0, 201, 167, 0.3);
-    transform: translateY(-3px);
-}
-.prod-tag {
-    background: var(--mkt-surface-2);
-    border: 1px solid var(--mkt-line);
-    border-radius: 999px;
-    padding: 2px 10px;
-    font-size: 10px;
-    font-weight: 500;
-    color: var(--mkt-text-m);
-}
-.zra-badge {
-    display: inline-block;
-    background: rgba(0, 201, 167, 0.12);
-    border: 1px solid rgba(0, 201, 167, 0.3);
-    color: #00c9a7;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    border-radius: 999px;
-    padding: 2px 8px;
-}
-</style>
