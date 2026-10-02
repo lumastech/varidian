@@ -28,7 +28,7 @@ test('landing page renders every section of the homepage design', function () {
         ->toContain('id="work"')
         ->toContain('id="contact"')
         ->toContain('Software built for the way')
-        ->toContain('Integrated out of the box')
+        ->toContain('Integrated software solutions')
         ->toContain('How <em>we work</em>');
 });
 
