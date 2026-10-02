@@ -9,6 +9,7 @@ interface CaseStudy {
     tag: string;
     client: string;
     preview: string;
+    image: string;
     /** Rows render in order; leave a key out until the client has confirmed the wording. */
     details: { label: 'Challenge' | 'Solution' | 'Result'; value: string }[];
 }
@@ -17,13 +18,15 @@ const caseStudies: CaseStudy[] = [
     {
         tag: 'Case study · NGO · Southern Province',
         client: "Choma District Women's Development Association",
-        preview: 'Choma DWDA dashboard',
+        preview: 'Choma DWA dashboard',
+        image: '/images/hero-bg.png',
         details: [{ label: 'Solution', value: 'A seven-module management system with an admin backend and public website at chomadwda.org.' }],
     },
     {
         tag: 'Case study · Microfinance',
-        client: 'ZMAI village banking platform',
+        client: 'Village banking platform',
         preview: 'Loans module',
+        image: '/images/hero-bg-girl.jpg',
         details: [{ label: 'Solution', value: 'A village banking and microfinance platform for members, savings, loans and repayments.' }],
     },
 ];
@@ -51,7 +54,12 @@ useScrollReveal();
             :class="{ 'v-sec-alt': i % 2 === 1 }"
         >
             <div class="v-wrap v-case" :class="{ 'v-case--flip': i % 2 === 1 }" data-reveal>
-                <div class="v-work-shot" aria-hidden="true">
+
+                <div v-if="study.image" class="v-work-shot" :style="`background-image: url(${study.image}); background-size: cover; background-position: center;`" aria-hidden="true">
+
+                    <span>{{ study.preview }}</span>
+                </div>
+                <div v-else class="v-work-shot" aria-hidden="true">
                     <span>{{ study.preview }}</span>
                 </div>
                 <div>

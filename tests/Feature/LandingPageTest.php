@@ -83,3 +83,35 @@ test('marketing nav hides the hamburger button on desktop widths', function () {
     // `.mkt-hamburger` sets its own display, which overrides Tailwind's layered `lg:hidden`.
     expect($layout)->toMatch('#@media \(min-width: 1024px\) \{\s*\.mkt-hamburger \{\s*display: none;#');
 });
+
+test('landing background images exist in public', function (string $constant) {
+    [$source] = landingPageSource();
+
+    preg_match("#const {$constant} = '([^']+)'#", $source, $matches);
+
+    expect($matches)->toHaveKey(1)
+        ->and(file_exists(public_path(ltrim($matches[1], '/'))))->toBeTrue();
+})->with(['heroImage', 'hostingImage', 'contactImage']);
+
+test('marketing page heroes default to the shared hero background image', function () {
+    $hero = file_get_contents(resource_path('js/components/marketing/MarketingPageHero.vue'));
+
+    expect($hero)->toContain("image: '/images/hero-bg.png'")
+        ->and(file_exists(public_path('images/hero-bg.png')))->toBeTrue();
+});
+
+test('product page headers render the shared hero background image', function (string $page) {
+    $source = file_get_contents(resource_path("js/pages/marketing/products/{$page}.vue"));
+
+    expect($source)
+        ->toContain('mkt-page-header--photo')
+        ->toContain('src="/images/hero-bg.png"');
+})->with(['BizManager', 'ChurchManagement', 'SchoolManagement', 'VillageBanking']);
+
+test('dark marketing bands render the shared hero background image', function () {
+    $services = file_get_contents(resource_path('js/pages/marketing/Services.vue'));
+    $ctaBand = file_get_contents(resource_path('js/components/marketing/MarketingCtaBand.vue'));
+
+    expect($services)->toContain('src="/images/hero-bg.png"')->toContain('v-band-shade')
+        ->and($ctaBand)->toContain("image: '/images/hero-bg.png'")->toContain('v-cta-shade');
+});

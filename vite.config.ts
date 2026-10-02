@@ -31,4 +31,14 @@ export default defineConfig({
             formVariants: true,
         }),
     ],
+    server: {
+        watch: {
+            ignored: [
+                '**/vendor/**',
+                '**/storage/**',
+                '**/public/build/**',
+                '**/bootstrap/cache/**',
+            ],
+        },
+    },
 });

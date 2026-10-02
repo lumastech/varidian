@@ -1,13 +1,24 @@
 <script setup lang="ts">
-defineProps<{
-    eyebrow: string;
-    title: string;
-    lead?: string;
-}>();
+withDefaults(
+    defineProps<{
+        eyebrow: string;
+        title: string;
+        lead?: string;
+        /**
+         * Background photo; pass a different path to override per page.
+         */
+        image?: string;
+    }>(),
+    {
+        image: '/images/hero-bg.png',
+    },
+);
 </script>
 
 <template>
     <section id="top" class="v-hero v-hero--page">
+        <img :src="image" alt="" class="v-hero-img" fetchpriority="high" />
+        <div class="v-hero-shade" aria-hidden="true"></div>
         <div class="v-hero-grid"></div>
         <div class="v-hero-in" :class="{ 'v-hero-in--single': !$slots.aside }">
             <div class="v-hero-copy">

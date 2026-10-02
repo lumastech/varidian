@@ -55,7 +55,9 @@ const features = [
     />
 
     <!-- PAGE HEADER -->
-    <section class="mkt-page-header relative overflow-hidden px-6 pt-40 pb-20 text-center">
+    <section class="mkt-page-header mkt-page-header--photo relative overflow-hidden px-6 pt-40 pb-20 text-center">
+        <img src="/images/hero-bg.png" alt="" class="v-hero-img" fetchpriority="high" />
+        <div class="mkt-page-header-shade" aria-hidden="true"></div>
         <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(var(--mkt-dot-grid) 1px,transparent 1px),linear-gradient(90deg,var(--mkt-dot-grid) 1px,transparent 1px);background-size:60px 60px"></div>
         <div class="relative z-10 mx-auto max-w-3xl">
             <!-- ZRA compliance badge -->

@@ -100,6 +100,8 @@ useScrollReveal();
 
         <!-- ══════════════ 03 ZAMBIAN HOSTING ══════════════ -->
         <section id="hosting" class="v-band">
+            <img src="/images/hero-bg.png" alt="" class="v-hero-img" loading="lazy" />
+            <div class="v-band-shade" aria-hidden="true"></div>
             <div class="v-hero-grid"></div>
             <div class="v-wrap v-band-in" data-reveal>
                 <div>

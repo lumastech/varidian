@@ -31,6 +31,21 @@ interface HostingPlan {
 //     preview: string;
 // }
 
+/**
+ * Hero background photo. Swap this path for your own image (ideally 1920×800, subject on the right).
+ */
+const heroImage = '/images/hero-bg.png';
+
+/**
+ * Hosting band background photo. Swap this path for your own image (ideally 1920×800).
+ */
+const hostingImage = '/images/hero-bg-girl.jpg';
+
+/**
+ * Contact card background photo. Swap this path for your own image (ideally 1600×900).
+ */
+const contactImage = '/images/hero-bg-girl.jpg';
+
 interface Solution {
     title: string;
     body: string;
@@ -82,12 +97,12 @@ const audiences = [
 const services: Service[] = [
     {
         title: 'Custom software',
-        body: 'Web platforms, portals and internal systems designed around your processes — not the other way round.',
+        body: 'Web platforms, portals and internal systems designed around your processes  not the other way round.',
         icon: `<svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5"/><path d="M16 7l5 5-5 5"/><path d="M14 4l-4 16"/></svg>`,
     },
     {
         title: 'AI & automation',
-        body: 'Practical AI for businesses — document processing, assistants and workflow automation, with local inference options for sensitive data.',
+        body: 'Practical AI for businesses  document processing, assistants and workflow automation, with local inference options for sensitive data.',
         icon: `<svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>`,
     },
     {
@@ -106,19 +121,19 @@ const products: Product[] = [
     {
         sector: 'Education',
         name: 'SKUU',
-        desc: 'School & student management for Grades 1-12 — enrolment, fees via mobile money, ECZ exam tracking, payroll and parent SMS.',
+        desc: 'School & student management for Grades 1-12  enrolment, fees via mobile money, ECZ exam tracking, payroll and parent SMS.',
         href: '/products/school-management-system',
     },
     {
         sector: 'Non-profit',
         name: 'Varidian Reach',
-        desc: 'NGO management — beneficiaries, programmes, donors and reporting in one dedicated installation per organisation.',
+        desc: 'NGO management  beneficiaries, programmes, donors and reporting in one dedicated installation per organisation.',
         href: '#contact',
     },
     {
         sector: 'Business',
         name: 'BizManager',
-        desc: 'SME business management with ZRA Smart Invoice integration — sales, stock, customers and compliant invoices.',
+        desc: 'SME business management with ZRA Smart Invoice integration  sales, stock, customers and compliant invoices.',
         href: '/products/bizmanager',
     },
     {
@@ -130,25 +145,25 @@ const products: Product[] = [
     {
         sector: 'Finance',
         name: 'Village Banking',
-        desc: 'Microfinance and savings-group platform — members, loans, repayments and mobile money collections.',
+        desc: 'Microfinance and savings-group platform  members, loans, repayments and mobile money collections.',
         href: '/products/village-banking',
     },
     {
         sector: 'Faith',
         name: 'ChurchMS',
-        desc: 'Church management — membership, giving, groups, events and congregation communication.',
+        desc: 'Church management  membership, giving, groups, events and congregation communication.',
         href: '/products/church-management-system',
     },
     {
         sector: 'Higher education',
         name: 'Coursify',
-        desc: 'Online learning management for universities and colleges — courses, assessments and student progress.',
+        desc: 'Online learning management for universities and colleges  courses, assessments and student progress.',
         href: '#contact',
     },
     {
         sector: 'Events',
         name: 'Varidian Events',
-        desc: 'Event registration and ticketing with online payments — a data-protection-compliant alternative to generic forms.',
+        desc: 'Event registration and ticketing with online payments  a data-protection-compliant alternative to generic forms.',
         href: '#contact',
     },
 ];
@@ -156,7 +171,7 @@ const products: Product[] = [
 const reasons = [
     {
         title: 'Built for local systems',
-        body: 'Airtel Money, MTN MoMo, ZRA Smart Invoice, NAPSA, PAYE and bulk SMS — integrated, not bolted on.',
+        body: 'Airtel Money, MTN MoMo, ZRA Smart Invoice, NAPSA, PAYE and bulk SMS  integrated, not bolted on.',
     },
     {
         title: 'Your data stays home',
@@ -235,8 +250,8 @@ useScrollReveal();
 
 <template>
     <SeoHead
-        title="Varidian Consulting Limited — Software built for the way Zambia works"
-        description="Varidian designs, builds and hosts business systems for schools, NGOs, SMEs and institutions — with mobile money, SMS and ZRA compliance built in from day one, and your data kept in Zambia."
+        title="Varidian Consulting Limited  Software built for the way Zambia works"
+        description="Varidian designs, builds and hosts business systems for schools, NGOs, SMEs and institutions  with mobile money, SMS and ZRA compliance built in from day one, and your data kept in Zambia."
         keywords="varidianlab, varidian lab, varidian consulting, software house Lusaka, school management system Zambia, NGO management software, church management system Zambia, ZRA Smart Invoice software, village banking software, web hosting Zambia, data protection act Zambia hosting, Airtel Money MTN MoMo integration, AI automation Zambia, Varidian Consulting Limited"
         canonical-url="https://varidianlab.com"
     />
@@ -244,6 +259,13 @@ useScrollReveal();
     <div class="v-landing">
         <!-- ══════════════ HERO ══════════════ -->
         <section id="top" class="v-hero v-hero--home">
+            <img
+                :src="heroImage"
+                alt=""
+                class="v-hero-img"
+                fetchpriority="high"
+            />
+            <div class="v-hero-shade" aria-hidden="true"></div>
             <div class="v-hero-grid"></div>
             <div class="v-hero-glow" aria-hidden="true"></div>
 
@@ -338,7 +360,7 @@ useScrollReveal();
                     </h1>
                     <p class="v-hero-body">
                         We design, build and deploy modern business systems for
-                        schools, SMEs and institutions — with reliable money
+                        schools, SMEs and institutions  with reliable money
                         flows, secure data and real-world solutions built in
                         from day one… and your data kept in Zambia.
                     </p>
@@ -437,7 +459,7 @@ useScrollReveal();
                             Proven products, <em>configured for you.</em>
                         </h2>
                         <p class="v-sec-lead">
-                            Start faster with a Varidian platform — on our cloud
+                            Start faster with a Varidian platform  on our cloud
                             for a monthly fee, or licensed outright and
                             installed on your own infrastructure.
                         </p>
@@ -505,6 +527,8 @@ useScrollReveal();
 
         <!-- ══════════════ HOSTING ══════════════ -->
         <section id="hosting" class="v-band">
+            <img :src="hostingImage" alt="" class="v-hero-img" loading="lazy" />
+            <div class="v-band-shade" aria-hidden="true"></div>
             <div class="v-hero-grid"></div>
             <div class="v-wrap v-band-in" data-reveal>
                 <div>
@@ -515,7 +539,7 @@ useScrollReveal();
                     </h2>
                     <p class="v-band-lead">
                         Shared hosting for SMEs, developers and existing clients
-                        — free SSL, daily backups and local support, with your
+                         free SSL, daily backups and local support, with your
                         files stored on Zambian soil.
                     </p>
                     <a href="/hosting" class="v-band-link"
@@ -593,6 +617,13 @@ useScrollReveal();
         <section id="contact" class="v-sec">
             <div class="v-wrap">
                 <div class="v-cta" data-reveal>
+                    <img
+                        :src="contactImage"
+                        alt=""
+                        class="v-hero-img"
+                        loading="lazy"
+                    />
+                    <div class="v-cta-shade" aria-hidden="true"></div>
                     <div class="v-cta-copy">
                         <div class="v-chip">Let's get started</div>
                         <h2 class="v-sec-title">

@@ -62,6 +62,7 @@ useScrollReveal();
 
     <div class="v-landing">
         <MarketingPageHero
+            image="/images/hero-bg-girl.jpg"
             eyebrow="Varidian Hosting"
             title="Your data, hosted at home."
             lead="Web hosting on servers in Lusaka — affordable for SMEs, billed in kwacha, supported by people you can call."
