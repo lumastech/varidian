@@ -1,0 +1,1 @@
+import{ct as e,it as t}from"./runtime-core.esm-bundler-DZo3dYLJ.js";function n(){let n=null;e(()=>{n=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&e.target.classList.add(`in`)})},{threshold:.1}),document.querySelectorAll(`[data-reveal]`).forEach(e=>n?.observe(e))}),t(()=>n?.disconnect())}export{n as t};
