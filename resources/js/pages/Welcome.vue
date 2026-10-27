@@ -192,21 +192,27 @@ const reasons = [
  */
 const hostingPlans: HostingPlan[] = [
     {
+        name: 'Community',
+        price: '99',
+        spec: '1 website · 1GB storage',
+        featured: false,
+    },
+    {
         name: 'Starter',
-        price: '250',
-        spec: '1 website · 5GB SSD',
+        price: '199',
+        spec: '1 website · 5GB storage',
         featured: false,
     },
     {
         name: 'Business',
-        price: '1000',
-        spec: '5 websites · 20GB SSD',
+        price: '499',
+        spec: '5 websites · 20GB storage',
         featured: true,
     },
     {
         name: 'Developer',
-        price: '500',
-        spec: '3 websites · multi-PHP',
+        price: '899',
+        spec: '10 websites · 40GB storage',
         featured: false,
     },
 ];
@@ -539,7 +545,7 @@ useScrollReveal();
                     </h2>
                     <p class="v-band-lead">
                         Shared hosting for SMEs, developers and existing clients
-                         free SSL, daily backups and local support, with your
+                         free SSL, automatic backups and local support, with your
                         files stored on Zambian soil.
                     </p>
                     <a href="/hosting" class="v-band-link"

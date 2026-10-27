@@ -14,24 +14,31 @@ const highlights = [
 
 const plans = [
     {
+        name: 'Community',
+        audience: 'For personal sites, clubs and churches',
+        price: '99',
+        features: ['1GB storage', '10GB bandwidth', '1 website', '1 database', '2 cron jobs', '3 backups kept'],
+        featured: false,
+    },
+    {
         name: 'Starter',
-        audience: 'For a single business website',
-        price: '250',
-        features: ['1 website', '5GB SSD storage', 'Free SSL certificate', '1 database', 'Standard support'],
+        audience: 'For a small business website',
+        price: '199',
+        features: ['5GB storage', '20GB bandwidth', '1 website', '1 database', '2 cron jobs', '3 backups kept'],
         featured: false,
     },
     {
         name: 'Business',
-        audience: 'For growing SMEs',
-        price: '1000',
-        features: ['5 websites', '20GB SSD storage', 'Free SSL certificates', '5 databases', 'Priority support'],
+        audience: 'For growing SMEs with several sites',
+        price: '499',
+        features: ['20GB storage', '75GB bandwidth', '5 websites', '10 databases', '10 cron jobs', '7 backups kept'],
         featured: true,
     },
     {
         name: 'Developer',
-        audience: 'For agencies & freelancers',
-        price: '500',
-        features: ['3 websites + 3 databases', '10GB SSD storage', 'Multiple PHP versions', 'SSH access', 'Priority support'],
+        audience: 'For developers and agencies hosting clients',
+        price: '899',
+        features: ['40GB storage', '150GB bandwidth', '10 websites', '20 databases', '25 cron jobs', '7 backups kept'],
         featured: false,
     },
 ];
@@ -86,14 +93,14 @@ useScrollReveal();
                     <div class="v-chip">Shared hosting plans</div>
                     <h2 class="v-sec-title">Pick a plan. <em>Upgrade any time.</em></h2>
                 </div>
-                <div class="v-tiers" data-reveal>
+                <div class="v-tiers v-tiers--four" data-reveal>
                     <div v-for="plan in plans" :key="plan.name" class="v-tier" :class="{ 'v-tier--featured': plan.featured }">
                         <div class="v-tier-head">
                             <div>
                                 <h3>{{ plan.name }}</h3>
                                 <div class="v-tier-sub">{{ plan.audience }}</div>
                             </div>
-                            <span v-if="plan.featured" class="v-tier-badge">Most popular</span>
+                            <span v-if="plan.featured" class="v-tier-badge">Best for SMEs</span>
                         </div>
                         <div class="v-tier-price">ZMW {{ plan.price }}<span>/month</span></div>
                         <ul class="v-checklist v-checklist--single">
@@ -108,7 +115,7 @@ useScrollReveal();
                         />
                     </div>
                 </div>
-                <p class="v-note" data-reveal>Email hosting is not included. We'll help you set up a reputable email provider alongside your website.</p>
+                <p class="v-note" data-reveal>Every plan includes free SSL, automatic backups, an easy control panel and PHP/MySQL support. Prices in kwacha, billed monthly. Email hosting is not included. We'll help you set up a reputable email provider alongside your website.</p>
             </div>
         </section>
 

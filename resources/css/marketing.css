@@ -1394,6 +1394,15 @@
     grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
     gap: 20px;
 }
+.v-tiers--four {
+    grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
+}
+.v-tiers--four .v-tier {
+    padding: 26px 22px;
+}
+.v-tiers--four .v-tier-head {
+    flex-wrap: wrap;
+}
 .v-tier {
     position: relative;
     display: flex;

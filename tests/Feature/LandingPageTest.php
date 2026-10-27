@@ -115,3 +115,18 @@ test('dark marketing bands render the shared hero background image', function ()
     expect($services)->toContain('src="/images/hero-bg.png"')->toContain('v-band-shade')
         ->and($ctaBand)->toContain("image: '/images/hero-bg.png'")->toContain('v-cta-shade');
 });
+
+test('hosting plans match the current price list on the homepage and hosting page', function () {
+    $sources = [
+        file_get_contents(resource_path('js/pages/Welcome.vue')),
+        file_get_contents(resource_path('js/pages/marketing/Hosting.vue')),
+    ];
+
+    foreach ($sources as $source) {
+        foreach (["name: 'Community'", "price: '99'", "price: '199'", "price: '499'", "price: '899'"] as $expected) {
+            expect($source)->toContain($expected);
+        }
+
+        expect($source)->not->toContain("price: '250'")->not->toContain("price: '1000'");
+    }
+});
