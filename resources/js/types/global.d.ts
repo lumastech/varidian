@@ -1,5 +1,21 @@
 import type { Auth } from '@/types/auth';
+import type { LencoCheckout } from '@/types/hosting';
 import type { Team } from '@/types/teams';
+
+declare global {
+    interface Window {
+        LencoPay?: {
+            getPaid(
+                options: LencoCheckout & {
+                    channels?: string[];
+                    onSuccess: (response: { reference: string }) => void;
+                    onClose: () => void;
+                    onConfirmationPending: () => void;
+                },
+            ): void;
+        };
+    }
+}
 
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {

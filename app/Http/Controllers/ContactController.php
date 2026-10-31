@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactRequest;
 use App\Mail\ContactInquiryMail;
+use App\Models\ContactInquiry;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -23,11 +24,15 @@ class ContactController extends Controller
     {
         $validated = $request->validated();
 
+        $inquiry = ContactInquiry::create($validated);
+
         try {
             Mail::to(config('mail.contact_recipient', 'info@varidianlab.com'))
                 ->send(new ContactInquiryMail($validated));
+
+            $inquiry->update(['mailed_at' => now()]);
         } catch (\Throwable $e) {
-            Log::error('Contact form mail failed', ['error' => $e->getMessage()]);
+            Log::error('Contact form mail failed', ['inquiry_id' => $inquiry->id, 'error' => $e->getMessage()]);
         }
 
         return back()->with('status', 'message-sent');

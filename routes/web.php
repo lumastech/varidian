@@ -1,16 +1,23 @@
 <?php
 
+use App\Http\Controllers\Billing\CheckoutController;
+use App\Http\Controllers\Billing\InvoiceController;
+use App\Http\Controllers\Billing\PaymentController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HostingController;
 use App\Http\Controllers\Teams\TeamInvitationController;
+use App\Http\Controllers\Webhooks\LencoWebhookController;
+use App\Http\Controllers\WelcomeController;
 use App\Http\Middleware\EnsureTeamMembership;
 use Illuminate\Support\Facades\Route;
 
-Route::inertia('/', 'Welcome')->name('home');
+Route::get('/', WelcomeController::class)->name('home');
 
 Route::inertia('/about', 'marketing/About')->name('about');
 Route::inertia('/services', 'marketing/Services')->name('services');
 Route::inertia('/work', 'marketing/Work')->name('work');
-Route::inertia('/hosting', 'marketing/Hosting')->name('hosting');
+Route::get('/hosting', HostingController::class)->name('hosting');
 Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 Route::middleware('throttle:5,1')->post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
@@ -57,8 +64,27 @@ Route::get('/sitemap.xml', function () {
 Route::prefix('{current_team}')
     ->middleware(['auth', 'verified', EnsureTeamMembership::class])
     ->group(function () {
-        Route::inertia('dashboard', 'Dashboard')->name('dashboard');
+        Route::get('dashboard', DashboardController::class)->name('dashboard');
+
+        Route::get('invoices/{invoice}', [InvoiceController::class, 'show'])->scopeBindings()->name('invoices.show');
+
+        Route::middleware(EnsureTeamMembership::class.':admin')->group(function () {
+            Route::get('hosting/checkout/{plan}', [CheckoutController::class, 'create'])->name('checkout.create');
+            Route::post('hosting/checkout/{plan}', [CheckoutController::class, 'store'])->name('checkout.store');
+
+            Route::scopeBindings()->group(function () {
+                Route::post('invoices/{invoice}/payments', [PaymentController::class, 'store'])
+                    ->middleware('throttle:10,1')
+                    ->name('invoices.payments.store');
+                Route::post('invoices/{invoice}/payments/{payment}/verify', [PaymentController::class, 'verify'])
+                    ->name('invoices.payments.verify');
+            });
+        });
     });
+
+Route::middleware('auth')->get('hosting/{plan}/order', [CheckoutController::class, 'order'])->name('hosting.order');
+
+Route::post('webhooks/lenco', LencoWebhookController::class)->name('webhooks.lenco');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('invitations/{invitation}/accept', [TeamInvitationController::class, 'accept'])->name('invitations.accept');

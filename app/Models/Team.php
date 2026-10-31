@@ -82,6 +82,26 @@ class Team extends Model
     }
 
     /**
+     * Get all hosting subscriptions for this team.
+     *
+     * @return HasMany<Subscription, $this>
+     */
+    public function subscriptions(): HasMany
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
+    /**
+     * Get all invoices for this team.
+     *
+     * @return HasMany<Invoice, $this>
+     */
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>

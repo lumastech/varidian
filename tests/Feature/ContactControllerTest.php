@@ -1,6 +1,7 @@
 <?php
 
 use App\Mail\ContactInquiryMail;
+use App\Models\ContactInquiry;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Testing\AssertableInertia;
 
@@ -34,6 +35,19 @@ test('contact form stores a valid submission', function () {
         ->assertSessionHas('status', 'message-sent');
 
     Mail::assertSent(ContactInquiryMail::class, fn (ContactInquiryMail $mail) => $mail->data['product_interest'] === 'Web hosting');
+
+    $inquiry = ContactInquiry::sole();
+    expect($inquiry->name)->toBe('John Banda')
+        ->and($inquiry->mailed_at)->not->toBeNull();
+});
+
+test('contact form keeps the inquiry when the mail fails', function () {
+    Mail::shouldReceive('to')->andThrow(new RuntimeException('SMTP down'));
+
+    $this->post('/contact', validEnquiry())
+        ->assertSessionHas('status', 'message-sent');
+
+    expect(ContactInquiry::sole()->mailed_at)->toBeNull();
 });
 
 test('contact form rejects missing required fields', function () {
@@ -53,6 +67,7 @@ test('contact form requires consent to store the enquiry', function () {
         ->assertSessionHasErrors(['consent']);
 
     Mail::assertNothingSent();
+    expect(ContactInquiry::count())->toBe(0);
 });
 
 test('marketing pages render', function (string $url, string $component) {

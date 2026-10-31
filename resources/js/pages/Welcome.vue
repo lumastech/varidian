@@ -3,6 +3,11 @@ import EnquiryForm from '@/components/marketing/EnquiryForm.vue';
 import SeoHead from '@/components/SeoHead.vue';
 import WhatsAppButton from '@/components/WhatsAppButton.vue';
 import { useScrollReveal } from '@/composables/useScrollReveal';
+import type { HostingPlan } from '@/types';
+
+defineProps<{
+    plans: HostingPlan[];
+}>();
 
 interface Service {
     title: string;
@@ -15,13 +20,6 @@ interface Product {
     name: string;
     desc: string;
     href: string;
-}
-
-interface HostingPlan {
-    name: string;
-    price: string | null;
-    spec: string;
-    featured: boolean;
 }
 
 // interface CaseStudy {
@@ -187,36 +185,6 @@ const reasons = [
     },
 ];
 
-/**
- * A null `price` renders a "Pricing on request" WhatsApp link instead.
- */
-const hostingPlans: HostingPlan[] = [
-    {
-        name: 'Community',
-        price: '99',
-        spec: '1 website · 1GB storage',
-        featured: false,
-    },
-    {
-        name: 'Starter',
-        price: '199',
-        spec: '1 website · 5GB storage',
-        featured: false,
-    },
-    {
-        name: 'Business',
-        price: '499',
-        spec: '5 websites · 20GB storage',
-        featured: true,
-    },
-    {
-        name: 'Developer',
-        price: '899',
-        spec: '10 websites · 40GB storage',
-        featured: false,
-    },
-];
-
 // const caseStudies: CaseStudy[] = [
 //     {
 //         tag: 'NGO · Southern Province',
@@ -366,7 +334,7 @@ useScrollReveal();
                     </h1>
                     <p class="v-hero-body">
                         We design, build and deploy modern business systems for
-                        schools, SMEs and institutions  with reliable money
+                        schools, SMEs and institutions with reliable money
                         flows, secure data and real-world solutions built in
                         from day one… and your data kept in Zambia.
                     </p>
@@ -465,7 +433,7 @@ useScrollReveal();
                             Proven products, <em>configured for you.</em>
                         </h2>
                         <p class="v-sec-lead">
-                            Start faster with a Varidian platform  on our cloud
+                            Start faster with a Varidian platform on our cloud
                             for a monthly fee, or licensed outright and
                             installed on your own infrastructure.
                         </p>
@@ -545,7 +513,7 @@ useScrollReveal();
                     </h2>
                     <p class="v-band-lead">
                         Shared hosting for SMEs, developers and existing clients
-                         free SSL, automatic backups and local support, with your
+                        free SSL, automatic backups and local support, with your
                         files stored on Zambian soil.
                     </p>
                     <a href="/hosting" class="v-band-link"
@@ -554,7 +522,7 @@ useScrollReveal();
                 </div>
                 <div class="v-plan-grid">
                     <div
-                        v-for="plan in hostingPlans"
+                        v-for="plan in plans"
                         :key="plan.name"
                         class="v-plan"
                         :class="{ 'v-plan--featured': plan.featured }"

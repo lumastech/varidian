@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('subscriptions', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('team_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('plan_id')->constrained()->restrictOnDelete();
+            $table->string('domain');
+            $table->string('hestia_username', 32)->unique();
+            $table->string('status')->index();
+            $table->timestamp('current_period_ends_at')->nullable();
+            $table->timestamp('provisioned_at')->nullable();
+            $table->timestamp('suspended_at')->nullable();
+            $table->timestamp('cancelled_at')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('subscriptions');
+    }
+};

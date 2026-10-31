@@ -1,59 +1,56 @@
 <script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
 import MarketingCtaBand from '@/components/marketing/MarketingCtaBand.vue';
 import MarketingPageHero from '@/components/marketing/MarketingPageHero.vue';
 import SeoHead from '@/components/SeoHead.vue';
 import WhatsAppButton from '@/components/WhatsAppButton.vue';
 import { useScrollReveal } from '@/composables/useScrollReveal';
+import { order } from '@/routes/hosting';
+import type { HostingPlan } from '@/types';
+
+defineProps<{
+    plans: HostingPlan[];
+}>();
 
 const highlights = [
-    { title: 'Stored in Zambia', body: 'Data at rest never leaves the country' },
+    {
+        title: 'Stored in Zambia',
+        body: 'Data at rest never leaves the country',
+    },
     { title: 'Billed in ZMW', body: 'No dollar card needed' },
     { title: 'Free SSL', body: 'On every website' },
     { title: 'Local support', body: 'From our Lusaka team' },
 ];
 
-const plans = [
-    {
-        name: 'Community',
-        audience: 'For personal sites, clubs and churches',
-        price: '99',
-        features: ['1GB storage', '10GB bandwidth', '1 website', '1 database', '2 cron jobs', '3 backups kept'],
-        featured: false,
-    },
-    {
-        name: 'Starter',
-        audience: 'For a small business website',
-        price: '199',
-        features: ['5GB storage', '20GB bandwidth', '1 website', '1 database', '2 cron jobs', '3 backups kept'],
-        featured: false,
-    },
-    {
-        name: 'Business',
-        audience: 'For growing SMEs with several sites',
-        price: '499',
-        features: ['20GB storage', '75GB bandwidth', '5 websites', '10 databases', '10 cron jobs', '7 backups kept'],
-        featured: true,
-    },
-    {
-        name: 'Developer',
-        audience: 'For developers and agencies hosting clients',
-        price: '899',
-        features: ['40GB storage', '150GB bandwidth', '10 websites', '20 databases', '25 cron jobs', '7 backups kept'],
-        featured: false,
-    },
-];
-
 const managedHosting = [
-    { label: 'Isolation', value: 'Business applications run separately from shared websites.' },
-    { label: 'Encryption', value: 'Secure connections end to end, with certificates held in Zambia.' },
+    {
+        label: 'Isolation',
+        value: 'Business applications run separately from shared websites.',
+    },
+    {
+        label: 'Encryption',
+        value: 'Secure connections end to end, with certificates held in Zambia.',
+    },
     { label: 'Backups', value: 'Scheduled backups to separate hardware.' },
-    { label: 'Updates', value: 'Security patches and application updates handled by us.' },
+    {
+        label: 'Updates',
+        value: 'Security patches and application updates handled by us.',
+    },
 ];
 
 const faqs = [
-    { question: 'Can you move my existing website?', answer: "Yes. We'll migrate your site and help point your domain to its new home." },
-    { question: 'How do I pay?', answer: 'In kwacha, by mobile money or bank transfer.' },
-    { question: 'Where exactly is my data stored?', answer: 'On servers we own and operate in Lusaka, Zambia.' },
+    {
+        question: 'Can you move my existing website?',
+        answer: "Yes. We'll migrate your site and help point your domain to its new home.",
+    },
+    {
+        question: 'How do I pay?',
+        answer: 'In kwacha, by mobile money or bank transfer.',
+    },
+    {
+        question: 'Where exactly is my data stored?',
+        answer: 'On servers we own and operate in Lusaka, Zambia.',
+    },
 ];
 
 useScrollReveal();
@@ -77,7 +74,11 @@ useScrollReveal();
             <template #aside>
                 <div class="v-int v-int--compact">
                     <div class="v-int-grid">
-                        <div v-for="highlight in highlights" :key="highlight.title" class="v-int-item">
+                        <div
+                            v-for="highlight in highlights"
+                            :key="highlight.title"
+                            class="v-int-item"
+                        >
                             <div class="v-int-t">{{ highlight.title }}</div>
                             <div class="v-int-b">{{ highlight.body }}</div>
                         </div>
@@ -91,31 +92,54 @@ useScrollReveal();
             <div class="v-wrap">
                 <div class="v-sec-head" data-reveal>
                     <div class="v-chip">Shared hosting plans</div>
-                    <h2 class="v-sec-title">Pick a plan. <em>Upgrade any time.</em></h2>
+                    <h2 class="v-sec-title">
+                        Pick a plan. <em>Upgrade any time.</em>
+                    </h2>
                 </div>
                 <div class="v-tiers v-tiers--four" data-reveal>
-                    <div v-for="plan in plans" :key="plan.name" class="v-tier" :class="{ 'v-tier--featured': plan.featured }">
+                    <div
+                        v-for="plan in plans"
+                        :key="plan.name"
+                        class="v-tier"
+                        :class="{ 'v-tier--featured': plan.featured }"
+                    >
                         <div class="v-tier-head">
                             <div>
                                 <h3>{{ plan.name }}</h3>
-                                <div class="v-tier-sub">{{ plan.audience }}</div>
+                                <div class="v-tier-sub">
+                                    {{ plan.audience }}
+                                </div>
                             </div>
-                            <span v-if="plan.featured" class="v-tier-badge">Best for SMEs</span>
+                            <span v-if="plan.featured" class="v-tier-badge"
+                                >Best for SMEs</span
+                            >
                         </div>
-                        <div class="v-tier-price">ZMW {{ plan.price }}<span>/month</span></div>
+                        <div class="v-tier-price">
+                            ZMW {{ plan.price }}<span>/month</span>
+                        </div>
                         <ul class="v-checklist v-checklist--single">
-                            <li v-for="feature in plan.features" :key="feature">{{ feature }}</li>
+                            <li v-for="feature in plan.features" :key="feature">
+                                {{ feature }}
+                            </li>
                         </ul>
-                        <WhatsAppButton
-                            variant="inline"
-                            :label="`Choose ${plan.name}`"
-                            :message="`Hi, I'd like to sign up for the ${plan.name} hosting plan (ZMW ${plan.price}/month).`"
+                        <Link
+                            :href="order(plan.slug)"
                             class="v-tier-cta"
-                            :class="plan.featured ? 'v-btn-wa' : 'v-btn-outline'"
-                        />
+                            :class="
+                                plan.featured ? 'v-btn-wa' : 'v-btn-outline'
+                            "
+                        >
+                            Choose {{ plan.name }}
+                        </Link>
                     </div>
                 </div>
-                <p class="v-note" data-reveal>Every plan includes free SSL, automatic backups, an easy control panel and PHP/MySQL support. Prices in kwacha, billed monthly. Email hosting is not included. We'll help you set up a reputable email provider alongside your website.</p>
+                <p class="v-note" data-reveal>
+                    Every plan includes free SSL, automatic backups, an easy
+                    control panel and PHP/MySQL support. Prices in kwacha,
+                    billed monthly. Pay online by mobile money or card. Email
+                    hosting is not included. We'll help you set up a reputable
+                    email provider alongside your website.
+                </p>
             </div>
         </section>
 
@@ -124,8 +148,15 @@ useScrollReveal();
             <div class="v-wrap v-split" data-reveal>
                 <div>
                     <div class="v-chip">Application hosting</div>
-                    <h2 class="v-sec-title">Running a business system? <em>We manage it for you.</em></h2>
-                    <p class="v-sec-lead">Varidian products and custom systems run on separate, managed servers — isolated from shared hosting, monitored, and backed up.</p>
+                    <h2 class="v-sec-title">
+                        Running a business system?
+                        <em>We manage it for you.</em>
+                    </h2>
+                    <p class="v-sec-lead">
+                        Varidian products and custom systems run on separate,
+                        managed servers — isolated from shared hosting,
+                        monitored, and backed up.
+                    </p>
                     <WhatsAppButton
                         variant="inline"
                         label="Ask about managed hosting →"
@@ -134,7 +165,11 @@ useScrollReveal();
                     />
                 </div>
                 <dl class="v-rows">
-                    <div v-for="item in managedHosting" :key="item.label" class="v-row">
+                    <div
+                        v-for="item in managedHosting"
+                        :key="item.label"
+                        class="v-row"
+                    >
                         <dt>{{ item.label }}</dt>
                         <dd>{{ item.value }}</dd>
                     </div>
@@ -159,7 +194,12 @@ useScrollReveal();
         </section>
 
         <MarketingCtaBand title="Ready to bring your website home?">
-            <WhatsAppButton variant="inline" label="Get started" message="Hi, I'd like to get started with Varidian Hosting." class="v-btn-wa" />
+            <WhatsAppButton
+                variant="inline"
+                label="Get started"
+                message="Hi, I'd like to get started with Varidian Hosting."
+                class="v-btn-wa"
+            />
             <a href="#plans" class="v-btn-ghost">Compare plans</a>
         </MarketingCtaBand>
     </div>
