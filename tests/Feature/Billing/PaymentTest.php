@@ -4,6 +4,7 @@ use App\Enums\InvoiceStatus;
 use App\Enums\PaymentStatus;
 use App\Enums\SubscriptionStatus;
 use App\Jobs\ProvisionHostingAccount;
+use App\Jobs\SyncHostingAccountState;
 use App\Models\Invoice;
 use App\Models\Payment;
 use App\Models\Subscription;
@@ -174,4 +175,39 @@ test('payments of other invoices cannot be verified through this one', function 
     $this->actingAs($this->user)
         ->post(route('invoices.payments.verify', ['current_team' => $this->team->slug, 'invoice' => $this->invoice, 'payment' => $payment]))
         ->assertNotFound();
+});
+
+test('paying a suspended subscription reactivates it from today and unsuspends hestia', function () {
+    Queue::fake();
+    $this->subscription->update([
+        'status' => SubscriptionStatus::Suspended,
+        'current_period_ends_at' => now()->subDays(10),
+        'provisioned_at' => now()->subMonths(2),
+        'suspended_at' => now()->subDays(3),
+    ]);
+    $payment = Payment::factory()->create(['invoice_id' => $this->invoice->id]);
+    fakeLenco(lencoCollection($payment->reference));
+
+    $this->actingAs($this->user)->post(verifyRoute($payment));
+
+    expect($this->subscription->fresh())
+        ->status->toBe(SubscriptionStatus::Active)
+        ->suspended_at->toBeNull()
+        ->current_period_ends_at->toDateString()->toBe(now()->addMonthNoOverflow()->toDateString());
+
+    Queue::assertPushed(SyncHostingAccountState::class);
+    Queue::assertNotPushed(ProvisionHostingAccount::class);
+});
+
+test('paying an overdue subscription continues from the missed due date', function () {
+    Queue::fake();
+    $dueAt = now()->subDays(3)->startOfSecond();
+    $this->subscription->update(['status' => SubscriptionStatus::PastDue, 'current_period_ends_at' => $dueAt, 'provisioned_at' => now()]);
+    $payment = Payment::factory()->create(['invoice_id' => $this->invoice->id]);
+    fakeLenco(lencoCollection($payment->reference));
+
+    $this->actingAs($this->user)->post(verifyRoute($payment));
+
+    expect($this->subscription->fresh()->current_period_ends_at->equalTo($dueAt->addMonthNoOverflow()))->toBeTrue();
+    Queue::assertNothingPushed();
 });

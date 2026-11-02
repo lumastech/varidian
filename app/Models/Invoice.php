@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\InvoiceStatus;
+use App\Enums\InvoiceType;
 use Database\Factories\InvoiceFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['number', 'team_id', 'subscription_id', 'description', 'amount_ngwee', 'status', 'due_at', 'paid_at'])]
+#[Fillable(['number', 'team_id', 'subscription_id', 'type', 'plan_id', 'description', 'amount_ngwee', 'status', 'due_at', 'paid_at'])]
 class Invoice extends Model
 {
     /** @use HasFactory<InvoiceFactory> */
@@ -48,6 +49,16 @@ class Invoice extends Model
     }
 
     /**
+     * Get the plan this invoice pays for.
+     *
+     * @return BelongsTo<Plan, $this>
+     */
+    public function plan(): BelongsTo
+    {
+        return $this->belongsTo(Plan::class);
+    }
+
+    /**
      * @return HasMany<Payment, $this>
      */
     public function payments(): HasMany
@@ -64,6 +75,14 @@ class Invoice extends Model
     }
 
     /**
+     * Get the amount for display, e.g. "199.00".
+     */
+    public function formattedAmount(): string
+    {
+        return number_format($this->amountInKwacha(), 2);
+    }
+
+    /**
      * Get the invoice as passed to customer pages.
      *
      * @return array{id: int, number: string, description: string, amount: string, status: string, statusLabel: string, dueAt: string, paidAt: ?string}
@@ -74,7 +93,7 @@ class Invoice extends Model
             'id' => $this->id,
             'number' => $this->number,
             'description' => $this->description,
-            'amount' => number_format($this->amountInKwacha(), 2),
+            'amount' => $this->formattedAmount(),
             'status' => $this->status->value,
             'statusLabel' => $this->status->label(),
             'dueAt' => $this->due_at->toDateString(),
@@ -91,6 +110,7 @@ class Invoice extends Model
     {
         return [
             'status' => InvoiceStatus::class,
+            'type' => InvoiceType::class,
             'amount_ngwee' => 'integer',
             'due_at' => 'datetime',
             'paid_at' => 'datetime',

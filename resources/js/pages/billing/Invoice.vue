@@ -7,6 +7,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { dashboard } from '@/routes';
+import { print } from '@/routes/invoices';
 import { store, verify } from '@/routes/invoices/payments';
 import type { Invoice, LencoCheckout, Team } from '@/types';
 
@@ -147,5 +148,20 @@ async function pay(): Promise<void> {
         >
             Paid on {{ props.invoice.paidAt }}.
         </p>
+
+        <a
+            :href="
+                print({ current_team: team.slug, invoice: props.invoice.id })
+                    .url
+            "
+            target="_blank"
+            class="text-sm underline"
+        >
+            {{
+                props.invoice.status === 'paid'
+                    ? 'Download receipt'
+                    : 'Download invoice'
+            }}
+        </a>
     </div>
 </template>

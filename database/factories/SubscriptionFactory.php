@@ -36,7 +36,8 @@ class SubscriptionFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'status' => SubscriptionStatus::Active,
-            'current_period_ends_at' => now()->addMonth(),
+            'current_period_starts_at' => now(),
+            'current_period_ends_at' => now()->addMonthNoOverflow(),
             'provisioned_at' => now(),
         ]);
     }

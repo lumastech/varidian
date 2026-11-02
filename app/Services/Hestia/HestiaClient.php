@@ -126,6 +126,10 @@ class HestiaClient
      */
     private function send(string $command, array $args, bool $returnCode): string
     {
+        if (! config('services.hestia.url') || ! config('services.hestia.access_key') || ! config('services.hestia.secret_key')) {
+            throw HestiaException::notConfigured();
+        }
+
         $form = [
             'hash' => config('services.hestia.access_key').':'.config('services.hestia.secret_key'),
             'returncode' => $returnCode ? 'yes' : 'no',

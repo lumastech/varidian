@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3';
+import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
 
@@ -13,6 +14,7 @@ defineOptions({
 defineProps<{
     status?: string;
     canResetPassword: boolean;
+    canRegister: boolean;
 }>();
 
 const form = useForm({
@@ -99,6 +101,11 @@ function submit() {
             </svg>
             {{ form.processing ? 'Signing in…' : 'Sign in' }}
         </button>
+
+        <p v-if="canRegister" class="text-center text-sm" style="color:var(--mkt-text-m)">
+            Don't have an account?
+            <a :href="register().url" class="auth-forgot-link" tabindex="6">Create one</a>
+        </p>
     </form>
 </template>
 

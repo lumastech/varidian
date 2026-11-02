@@ -1,11 +1,26 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\CommissionController;
+use App\Http\Controllers\Admin\LeadReviewController;
+use App\Http\Controllers\Admin\OfflinePaymentController;
+use App\Http\Controllers\Admin\PartnerController;
+use App\Http\Controllers\Admin\PayoutController;
+use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Billing\CheckoutController;
 use App\Http\Controllers\Billing\InvoiceController;
+use App\Http\Controllers\Billing\InvoicePrintController;
 use App\Http\Controllers\Billing\PaymentController;
+use App\Http\Controllers\Billing\PlanChangeController;
+use App\Http\Controllers\Billing\SubscriptionController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HostingController;
+use App\Http\Controllers\Partners\LeadController;
+use App\Http\Controllers\Partners\PartnerApplicationController;
+use App\Http\Controllers\Partners\PartnerDashboardController;
+use App\Http\Controllers\Partners\PartnerProgrammeController;
+use App\Http\Controllers\Partners\PayoutStatementController;
 use App\Http\Controllers\Teams\TeamInvitationController;
 use App\Http\Controllers\Webhooks\LencoWebhookController;
 use App\Http\Controllers\WelcomeController;
@@ -18,6 +33,7 @@ Route::inertia('/about', 'marketing/About')->name('about');
 Route::inertia('/services', 'marketing/Services')->name('services');
 Route::inertia('/work', 'marketing/Work')->name('work');
 Route::get('/hosting', HostingController::class)->name('hosting');
+Route::get('/partners', PartnerProgrammeController::class)->name('partners');
 Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 Route::middleware('throttle:5,1')->post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
@@ -43,6 +59,7 @@ Route::get('/sitemap.xml', function () {
         ['loc' => url('/products/church-management-system'), 'changefreq' => 'monthly', 'priority' => '0.8'],
         ['loc' => url('/products/bizmanager'), 'changefreq' => 'monthly', 'priority' => '0.8'],
         ['loc' => url('/products/village-banking'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['loc' => url('/partners'), 'changefreq' => 'monthly', 'priority' => '0.6'],
         ['loc' => url('/contact'), 'changefreq' => 'monthly', 'priority' => '0.7'],
     ];
 
@@ -67,6 +84,7 @@ Route::prefix('{current_team}')
         Route::get('dashboard', DashboardController::class)->name('dashboard');
 
         Route::get('invoices/{invoice}', [InvoiceController::class, 'show'])->scopeBindings()->name('invoices.show');
+        Route::get('invoices/{invoice}/print', InvoicePrintController::class)->scopeBindings()->name('invoices.print');
 
         Route::middleware(EnsureTeamMembership::class.':admin')->group(function () {
             Route::get('hosting/checkout/{plan}', [CheckoutController::class, 'create'])->name('checkout.create');
@@ -78,11 +96,37 @@ Route::prefix('{current_team}')
                     ->name('invoices.payments.store');
                 Route::post('invoices/{invoice}/payments/{payment}/verify', [PaymentController::class, 'verify'])
                     ->name('invoices.payments.verify');
+                Route::get('subscriptions/{subscription}/plan', [PlanChangeController::class, 'edit'])
+                    ->name('subscriptions.plan.edit');
+                Route::put('subscriptions/{subscription}/plan', [PlanChangeController::class, 'update'])
+                    ->name('subscriptions.plan.update');
+                Route::post('subscriptions/{subscription}/cancel', [SubscriptionController::class, 'cancel'])
+                    ->name('subscriptions.cancel');
             });
         });
     });
 
+Route::middleware(['auth', 'verified'])->prefix('partner')->name('partner.')->group(function () {
+    Route::get('/', PartnerDashboardController::class)->name('dashboard');
+    Route::get('apply', [PartnerApplicationController::class, 'create'])->name('apply');
+    Route::post('apply', [PartnerApplicationController::class, 'store'])->name('apply.store');
+    Route::post('leads', [LeadController::class, 'store'])->middleware(['can:act-as-partner', 'throttle:20,1'])->name('leads.store');
+    Route::get('payouts/{payout}', PayoutStatementController::class)->name('payouts.show');
+});
+
 Route::middleware('auth')->get('hosting/{plan}/order', [CheckoutController::class, 'order'])->name('hosting.order');
+
+Route::middleware(['auth', 'verified', 'can:access-admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', AdminDashboardController::class)->name('dashboard');
+    Route::post('invoices/{invoice}/offline-payments', OfflinePaymentController::class)->name('invoices.offline-payments.store');
+    Route::resource('plans', PlanController::class)->only(['index', 'create', 'store', 'edit', 'update']);
+    Route::get('partners', [PartnerController::class, 'index'])->name('partners.index');
+    Route::get('partners/{partner}', [PartnerController::class, 'show'])->name('partners.show');
+    Route::put('partners/{partner}/status', [PartnerController::class, 'updateStatus'])->name('partners.status.update');
+    Route::post('partners/{partner}/commissions', [CommissionController::class, 'store'])->name('partners.commissions.store');
+    Route::post('partners/{partner}/payouts', [PayoutController::class, 'store'])->name('partners.payouts.store');
+    Route::put('leads/{lead}', LeadReviewController::class)->name('leads.update');
+});
 
 Route::post('webhooks/lenco', LencoWebhookController::class)->name('webhooks.lenco');
 

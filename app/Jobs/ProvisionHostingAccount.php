@@ -75,14 +75,10 @@ class ProvisionHostingAccount implements ShouldBeUnique, ShouldQueue
             }
         }
 
-        try {
-            $hestia->addLetsEncrypt($username, $subscription->domain);
-        } catch (HestiaException $e) {
-            // Usually the domain doesn't point at us yet; SSL is issued later.
-            Log::warning('SSL not issued during provisioning', ['domain' => $subscription->domain, 'code' => $e->getCode()]);
-        }
-
         $subscription->update(['provisioned_at' => now()]);
+
+        // Usually fails until the domain points at us; the daily billing run keeps retrying.
+        IssueSslCertificate::dispatchSync($subscription);
 
         $owner->notify(new HostingAccountReady($subscription, $password));
     }

@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-vue-next';
+import {
+    BookOpen,
+    FolderGit2,
+    Handshake,
+    LayoutGrid,
+    ShieldCheck,
+} from 'lucide-vue-next';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
@@ -17,6 +23,8 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
+import { dashboard as adminDashboard } from '@/routes/admin';
+import { dashboard as partnerDashboard } from '@/routes/partner';
 import type { NavItem } from '@/types';
 
 const page = usePage();
@@ -31,6 +39,24 @@ const mainNavItems = computed<NavItem[]>(() => [
         href: dashboardUrl.value,
         icon: LayoutGrid,
     },
+    ...(page.props.partnerStatus
+        ? [
+              {
+                  title: 'Partner portal',
+                  href: partnerDashboard().url,
+                  icon: Handshake,
+              },
+          ]
+        : []),
+    ...(page.props.auth.user?.is_admin
+        ? [
+              {
+                  title: 'Admin',
+                  href: adminDashboard().url,
+                  icon: ShieldCheck,
+              },
+          ]
+        : []),
 ]);
 
 const footerNavItems: NavItem[] = [

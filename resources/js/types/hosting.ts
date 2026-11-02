@@ -37,6 +37,9 @@ export type HostingSubscription = {
     statusLabel: string;
     renewsAt: string | null;
     isProvisioned: boolean;
+    isCancelling: boolean;
+    scheduledPlan: string | null;
+    canChangePlan: boolean;
     latestInvoice: Invoice | null;
 };
 
@@ -51,4 +54,19 @@ export type LencoCheckout = {
     currency: string;
     bearer: string;
     label: string;
+};
+
+export type UsageMetric = {
+    used: number;
+    limit: number | null;
+};
+
+/**
+ * Hestia usage: disk and bandwidth in MB, websites and databases as counts.
+ */
+export type HostingUsage = {
+    disk: UsageMetric;
+    bandwidth: UsageMetric;
+    websites: UsageMetric;
+    databases: UsageMetric;
 };

@@ -2,11 +2,7 @@
 
 namespace App\Actions\Billing;
 
-use App\Enums\InvoiceStatus;
 use App\Enums\PaymentStatus;
-use App\Enums\SubscriptionStatus;
-use App\Jobs\ProvisionHostingAccount;
-use App\Models\Invoice;
 use App\Models\Payment;
 use App\Services\Lenco\LencoClient;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 class ConfirmPayment
 {
-    public function __construct(private LencoClient $lenco) {}
+    public function __construct(private LencoClient $lenco, private MarkInvoicePaid $markInvoicePaid) {}
 
     /**
      * Ask Lenco for the payment's outcome and apply it. Safe to call repeatedly, from the
@@ -55,7 +51,7 @@ class ConfirmPayment
             ]);
 
             if ($status === PaymentStatus::Successful) {
-                $this->markInvoicePaid($payment->invoice);
+                $this->markInvoicePaid->handle($payment->invoice);
             }
 
             return $payment;
@@ -69,33 +65,5 @@ class ConfirmPayment
     {
         return ($collection['currency'] ?? null) === 'ZMW'
             && (int) round((float) ($collection['amount'] ?? 0) * 100) === $payment->amount_ngwee;
-    }
-
-    private function markInvoicePaid(Invoice $invoice): void
-    {
-        if ($invoice->status === InvoiceStatus::Paid) {
-            Log::warning('Invoice paid more than once; refund the duplicate payment', ['invoice' => $invoice->number]);
-
-            return;
-        }
-
-        $invoice->update(['status' => InvoiceStatus::Paid, 'paid_at' => now()]);
-
-        $subscription = $invoice->subscription;
-
-        if (! $subscription) {
-            return;
-        }
-
-        $periodStart = $subscription->current_period_ends_at?->isFuture() ? $subscription->current_period_ends_at : now();
-
-        $subscription->update([
-            'status' => SubscriptionStatus::Active,
-            'current_period_ends_at' => $periodStart->copy()->addMonthNoOverflow(),
-        ]);
-
-        if (! $subscription->provisioned_at) {
-            ProvisionHostingAccount::dispatch($subscription)->afterCommit();
-        }
     }
 }

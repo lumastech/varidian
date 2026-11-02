@@ -1,5 +1,6 @@
 import type { Auth } from '@/types/auth';
 import type { LencoCheckout } from '@/types/hosting';
+import type { PartnerStatus } from '@/types/partners';
 import type { Team } from '@/types/teams';
 
 declare global {
@@ -36,6 +37,7 @@ declare module '@inertiajs/core' {
             name: string;
             auth: Auth;
             sidebarOpen: boolean;
+            partnerStatus: PartnerStatus | null;
             currentTeam: Team | null;
             teams: Team[];
             [key: string]: unknown;

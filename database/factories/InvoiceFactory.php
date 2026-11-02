@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\InvoiceStatus;
+use App\Enums\InvoiceType;
 use App\Models\Invoice;
 use App\Models\Subscription;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -22,6 +23,8 @@ class InvoiceFactory extends Factory
         return [
             'subscription_id' => Subscription::factory(),
             'team_id' => fn (array $attributes) => Subscription::find($attributes['subscription_id'])->team_id,
+            'type' => InvoiceType::Subscription,
+            'plan_id' => fn (array $attributes) => Subscription::find($attributes['subscription_id'])->plan_id,
             'description' => 'Starter hosting — 1 month',
             'amount_ngwee' => 19900,
             'status' => InvoiceStatus::Open,

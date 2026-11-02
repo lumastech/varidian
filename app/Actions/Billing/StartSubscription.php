@@ -40,6 +40,7 @@ class StartSubscription
 
             return $subscription->invoices()->create([
                 'team_id' => $team->id,
+                'plan_id' => $plan->id,
                 'description' => "{$plan->name} hosting for {$domain} — 1 month",
                 'amount_ngwee' => $plan->price_ngwee,
                 'status' => InvoiceStatus::Open,

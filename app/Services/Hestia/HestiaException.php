@@ -13,9 +13,18 @@ class HestiaException extends RuntimeException
 
     public const int NotExistCode = 3;
 
+    public const int SuspendedCode = 5;
+
+    public const int UnsuspendedCode = 6;
+
     public static function commandFailed(string $command, int $returnCode): self
     {
         return new self("Hestia command {$command} failed with return code {$returnCode}.", $returnCode);
+    }
+
+    public static function notConfigured(): self
+    {
+        return new self('Hestia is not configured; set HESTIA_URL, HESTIA_ACCESS_KEY and HESTIA_SECRET_KEY.');
     }
 
     public static function unexpectedResponse(string $command, string $body): self
@@ -37,5 +46,13 @@ class HestiaException extends RuntimeException
     public function notFound(): bool
     {
         return $this->getCode() === self::NotExistCode;
+    }
+
+    /**
+     * Whether a suspend or unsuspend failed only because the account was already in that state.
+     */
+    public function alreadyInRequestedState(): bool
+    {
+        return in_array($this->getCode(), [self::SuspendedCode, self::UnsuspendedCode], true);
     }
 }
