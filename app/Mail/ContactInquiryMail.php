@@ -35,6 +35,7 @@ class ContactInquiryMail extends Mailable
     public function content(): Content
     {
         return new Content(
+            markdown: 'emails.contact-inquiry',
             text: 'emails.contact-inquiry-text',
         );
     }
