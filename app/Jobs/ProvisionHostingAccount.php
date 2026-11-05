@@ -85,9 +85,11 @@ class ProvisionHostingAccount implements ShouldBeUnique, ShouldQueue
             }
         }
 
-        $subscription->update(['provisioned_at' => now()]);
-
+        // Mail first: if it fails, the retry resets the password and sends a new one, whereas
+        // marking the account provisioned first would lose the only copy of the password.
         $owner->notify(new HostingAccountReady($subscription, $password));
+
+        $subscription->update(['provisioned_at' => now()]);
 
         // Let's Encrypt can outlast the HTTP timeout and usually fails until the domain points
         // at us, so it runs on its own; the daily billing run keeps retrying.

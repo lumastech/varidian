@@ -71,6 +71,19 @@ test('a website added by another request in the meantime is accepted', function 
     expect($this->subscription->fresh()->provisioned_at)->not->toBeNull();
 });
 
+test('a failed welcome email leaves the account unprovisioned so the retry sends a new password', function () {
+    Queue::fake();
+    $this->hestia->shouldReceive('createUser')->once();
+    $this->hestia->shouldReceive('listWebDomains')->andReturn([]);
+    $this->hestia->shouldReceive('addWebDomain')->once();
+    Notification::shouldReceive('send')->andThrow(new RuntimeException('554 Recipient rejected'));
+
+    expect(fn () => provision($this->subscription))->toThrow(RuntimeException::class);
+
+    expect($this->subscription->fresh()->provisioned_at)->toBeNull();
+    Queue::assertNotPushed(IssueSslCertificate::class);
+});
+
 test('it never takes over a hestia account that belongs to someone else', function () {
     $this->hestia->shouldReceive('createUser')->andThrow(HestiaException::commandFailed('v-add-user', HestiaException::ExistsCode));
     $this->hestia->shouldReceive('getUser')->andReturn(['CONTACT' => 'someone@else.com']);
