@@ -26,6 +26,11 @@ class ProvisionHostingAccount implements ShouldBeUnique, ShouldQueue
     public int $tries = 5;
 
     /**
+     * How many usernames to try before giving up when the chosen one is taken.
+     */
+    private const int UsernameAttempts = 5;
+
+    /**
      * @var list<int>
      */
     public array $backoff = [60, 300, 900, 3600];
@@ -53,24 +58,13 @@ class ProvisionHostingAccount implements ShouldBeUnique, ShouldQueue
 
         /** @var User $owner */
         $owner = $subscription->team->owner();
-        $username = $subscription->hestia_username;
         $password = Str::password(16, symbols: false);
+        $username = $this->createAccount($hestia, $subscription, $owner, $password);
 
-        try {
-            $hestia->createUser($username, $password, $owner->email, $subscription->plan->hestia_package, $subscription->team->name);
-        } catch (HestiaException $e) {
-            if (! $e->alreadyExists()) {
-                throw $e;
-            }
+        if ($username === null) {
+            $this->fail(new RuntimeException("No free Hestia username found for subscription {$subscription->id}."));
 
-            // A previous attempt created the account; reset the password so the email we send works.
-            if (! $this->accountBelongsTo($hestia, $username, $owner->email)) {
-                $this->fail(new RuntimeException("Hestia user {$username} already exists and belongs to another contact."));
-
-                return;
-            }
-
-            $hestia->changePassword($username, $password);
+            return;
         }
 
         // Hestia checks the package's domain limit before whether the domain exists, so a retry
@@ -105,10 +99,64 @@ class ProvisionHostingAccount implements ShouldBeUnique, ShouldQueue
     }
 
     /**
-     * Guard against taking over an existing Hestia account that belongs to someone else.
+     * Create the Hestia account, or reclaim the one a previous attempt created. When the name is
+     * taken by someone else (another customer, or a Linux system user such as the server admin's
+     * login, which Hestia also reports as "exists"), move the subscription to a fresh name.
+     *
+     * @return string|null the username the account now lives under, or null if none was free
+     */
+    private function createAccount(HestiaClient $hestia, Subscription $subscription, User $owner, string $password): ?string
+    {
+        $username = $subscription->hestia_username;
+
+        for ($attempt = 0; $attempt < self::UsernameAttempts; $attempt++) {
+            try {
+                $hestia->createUser($username, $password, $owner->email, $subscription->plan->hestia_package, $subscription->team->name);
+
+                return $username;
+            } catch (HestiaException $e) {
+                if (! $e->alreadyExists()) {
+                    throw $e;
+                }
+            }
+
+            // A previous attempt created the account; reset the password so the email we send works.
+            if ($this->accountBelongsTo($hestia, $username, $owner->email)) {
+                $hestia->changePassword($username, $password);
+
+                return $username;
+            }
+
+            $username = $this->alternativeUsername($username);
+            $subscription->update(['hestia_username' => $username]);
+        }
+
+        return null;
+    }
+
+    /**
+     * Guard against taking over an existing account that belongs to someone else. System users
+     * aren't Hestia accounts, so looking them up fails; those are never ours either.
      */
     private function accountBelongsTo(HestiaClient $hestia, string $username, string $email): bool
     {
-        return Str::lower((string) ($hestia->getUser($username)['CONTACT'] ?? '')) === Str::lower($email);
+        try {
+            $contact = $hestia->getUser($username)['CONTACT'] ?? '';
+        } catch (HestiaException) {
+            return false;
+        }
+
+        return Str::lower((string) $contact) === Str::lower($email);
+    }
+
+    private function alternativeUsername(string $taken): string
+    {
+        $base = preg_replace('/\d+$/', '', $taken) ?: $taken;
+
+        do {
+            $username = $base.random_int(10, 9999);
+        } while (Subscription::where('hestia_username', $username)->exists());
+
+        return $username;
     }
 }

@@ -84,10 +84,43 @@ test('a failed welcome email leaves the account unprovisioned so the retry sends
     Queue::assertNotPushed(IssueSslCertificate::class);
 });
 
-test('it never takes over a hestia account that belongs to someone else', function () {
-    $this->hestia->shouldReceive('createUser')->andThrow(HestiaException::commandFailed('v-add-user', HestiaException::ExistsCode));
-    $this->hestia->shouldReceive('getUser')->andReturn(['CONTACT' => 'someone@else.com']);
+test('a name owned by another customer is never taken over; a new one is used', function () {
+    Queue::fake();
+    $this->hestia->shouldReceive('createUser')->with('acme', Mockery::any(), Mockery::any(), Mockery::any(), Mockery::any())
+        ->once()->andThrow(HestiaException::commandFailed('v-add-user', HestiaException::ExistsCode));
+    $this->hestia->shouldReceive('getUser')->with('acme')->andReturn(['CONTACT' => 'someone@else.com']);
+    $this->hestia->shouldReceive('createUser')->with(Mockery::pattern('/^acme\d{2,4}$/'), Mockery::any(), Mockery::any(), Mockery::any(), Mockery::any())->once();
     $this->hestia->shouldNotReceive('changePassword');
+    $this->hestia->shouldReceive('listWebDomains')->andReturn([]);
+    $this->hestia->shouldReceive('addWebDomain')->once()->with(Mockery::pattern('/^acme\d{2,4}$/'), 'acme.co.zm');
+
+    provision($this->subscription);
+
+    $subscription = $this->subscription->fresh();
+    expect($subscription->hestia_username)->toMatch('/^acme\d{2,4}$/')
+        ->and($subscription->provisioned_at)->not->toBeNull();
+    Notification::assertSentTo($this->owner, HostingAccountReady::class, fn ($notification) => $notification->subscription->hestia_username === $subscription->hestia_username);
+});
+
+test('a name held by a linux system user is replaced with a new one', function () {
+    Queue::fake();
+    $this->hestia->shouldReceive('createUser')->with('acme', Mockery::any(), Mockery::any(), Mockery::any(), Mockery::any())
+        ->once()->andThrow(HestiaException::commandFailed('v-add-user', HestiaException::ExistsCode));
+    $this->hestia->shouldReceive('getUser')->with('acme')->andThrow(HestiaException::unexpectedResponse('v-list-user', 'HTTP 400'));
+    $this->hestia->shouldReceive('createUser')->once();
+    $this->hestia->shouldReceive('listWebDomains')->andReturn([]);
+    $this->hestia->shouldReceive('addWebDomain')->once();
+
+    provision($this->subscription);
+
+    expect($this->subscription->fresh())
+        ->hestia_username->not->toBe('acme')
+        ->provisioned_at->not->toBeNull();
+});
+
+test('provisioning gives up when no free username can be found', function () {
+    $this->hestia->shouldReceive('createUser')->times(5)->andThrow(HestiaException::commandFailed('v-add-user', HestiaException::ExistsCode));
+    $this->hestia->shouldReceive('getUser')->andReturn(['CONTACT' => 'someone@else.com']);
     $this->hestia->shouldNotReceive('addWebDomain');
 
     $job = (new ProvisionHostingAccount($this->subscription))->withFakeQueueInteractions();
