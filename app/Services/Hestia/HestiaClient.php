@@ -68,6 +68,16 @@ class HestiaClient
         $this->run('v-change-user-package', [$username, $package]);
     }
 
+    /**
+     * List the web domain names a user has.
+     *
+     * @return list<string>
+     */
+    public function listWebDomains(string $username): array
+    {
+        return array_map('strval', array_keys($this->query('v-list-web-domains', [$username, 'json'])));
+    }
+
     public function addWebDomain(string $username, string $domain): void
     {
         $this->run('v-add-web-domain', [$username, $domain]);

@@ -73,20 +73,25 @@ class ProvisionHostingAccount implements ShouldBeUnique, ShouldQueue
             $hestia->changePassword($username, $password);
         }
 
-        try {
-            $hestia->addWebDomain($username, $subscription->domain);
-        } catch (HestiaException $e) {
-            if (! $e->alreadyExists()) {
-                throw $e;
+        // Hestia checks the package's domain limit before whether the domain exists, so a retry
+        // would fail with a limit error rather than "exists"; look before adding instead.
+        if (! in_array($subscription->domain, $hestia->listWebDomains($username), true)) {
+            try {
+                $hestia->addWebDomain($username, $subscription->domain);
+            } catch (HestiaException $e) {
+                if (! $e->alreadyExists()) {
+                    throw $e;
+                }
             }
         }
 
         $subscription->update(['provisioned_at' => now()]);
 
-        // Usually fails until the domain points at us; the daily billing run keeps retrying.
-        IssueSslCertificate::dispatchSync($subscription);
-
         $owner->notify(new HostingAccountReady($subscription, $password));
+
+        // Let's Encrypt can outlast the HTTP timeout and usually fails until the domain points
+        // at us, so it runs on its own; the daily billing run keeps retrying.
+        IssueSslCertificate::dispatch($subscription);
     }
 
     public function failed(?Throwable $exception): void

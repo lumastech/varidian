@@ -1,5 +1,6 @@
 <?php
 
+use App\Jobs\IssueSslCertificate;
 use App\Jobs\ProvisionHostingAccount;
 use App\Models\Plan;
 use App\Models\Subscription;
@@ -31,28 +32,43 @@ function provision(Subscription $subscription): void
     app()->call([new ProvisionHostingAccount($subscription), 'handle']);
 }
 
-test('it creates the account, website and ssl then emails the owner', function () {
+test('it creates the account and website, emails the owner, then queues ssl', function () {
+    Queue::fake();
     $this->hestia->shouldReceive('createUser')->once()->with('acme', Mockery::type('string'), 'it@acme.co.zm', 'Starter', $this->owner->currentTeam->name);
+    $this->hestia->shouldReceive('listWebDomains')->once()->with('acme')->andReturn([]);
     $this->hestia->shouldReceive('addWebDomain')->once()->with('acme', 'acme.co.zm');
-    $this->hestia->shouldReceive('addLetsEncrypt')->once()->with('acme', 'acme.co.zm');
+    $this->hestia->shouldNotReceive('addLetsEncrypt');
 
     provision($this->subscription);
 
     expect($this->subscription->fresh()->provisioned_at)->not->toBeNull();
     Notification::assertSentTo($this->owner, HostingAccountReady::class, fn ($notification) => strlen($notification->password) === 16);
+    Queue::assertPushed(IssueSslCertificate::class, fn ($job) => $job->subscription->is($this->subscription));
 });
 
 test('a retry after a partial run resets the password and carries on', function () {
+    Queue::fake();
     $this->hestia->shouldReceive('createUser')->andThrow(HestiaException::commandFailed('v-add-user', HestiaException::ExistsCode));
     $this->hestia->shouldReceive('getUser')->with('acme')->andReturn(['CONTACT' => 'IT@acme.co.zm']);
     $this->hestia->shouldReceive('changePassword')->once()->with('acme', Mockery::type('string'));
-    $this->hestia->shouldReceive('addWebDomain')->andThrow(HestiaException::commandFailed('v-add-web-domain', HestiaException::ExistsCode));
-    $this->hestia->shouldReceive('addLetsEncrypt')->andThrow(HestiaException::commandFailed('v-add-letsencrypt-domain', 15));
+    $this->hestia->shouldReceive('listWebDomains')->with('acme')->andReturn(['acme.co.zm']);
+    $this->hestia->shouldNotReceive('addWebDomain');
 
     provision($this->subscription);
 
     expect($this->subscription->fresh()->provisioned_at)->not->toBeNull();
     Notification::assertSentTo($this->owner, HostingAccountReady::class);
+});
+
+test('a website added by another request in the meantime is accepted', function () {
+    Queue::fake();
+    $this->hestia->shouldReceive('createUser')->once();
+    $this->hestia->shouldReceive('listWebDomains')->andReturn([]);
+    $this->hestia->shouldReceive('addWebDomain')->andThrow(HestiaException::commandFailed('v-add-web-domain', HestiaException::ExistsCode));
+
+    provision($this->subscription);
+
+    expect($this->subscription->fresh()->provisioned_at)->not->toBeNull();
 });
 
 test('it never takes over a hestia account that belongs to someone else', function () {

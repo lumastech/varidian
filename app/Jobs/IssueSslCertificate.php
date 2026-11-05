@@ -7,6 +7,7 @@ use App\Services\Hestia\HestiaClient;
 use App\Services\Hestia\HestiaException;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -37,6 +38,11 @@ class IssueSslCertificate implements ShouldQueue
 
                 return;
             }
+        } catch (ConnectionException) {
+            // Hestia may still finish issuing after we stop waiting; the next attempt sees it exists.
+            Log::info('SSL request timed out', ['domain' => $subscription->domain]);
+
+            return;
         }
 
         $subscription->update(['ssl_issued_at' => now()]);

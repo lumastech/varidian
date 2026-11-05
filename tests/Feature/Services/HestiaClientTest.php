@@ -45,6 +45,14 @@ test('contact names are reduced to characters hestia accepts', function (string 
     'nothing usable' => ["'&'", 'Customer'],
 ]);
 
+test('web domains are listed by name', function () {
+    Http::fake(['*' => Http::response(['acme.co.zm' => ['IP' => '1.2.3.4'], 'shop.acme.co.zm' => ['IP' => '1.2.3.4']])]);
+
+    expect(app(HestiaClient::class)->listWebDomains('acme'))->toBe(['acme.co.zm', 'shop.acme.co.zm']);
+
+    Http::assertSent(fn (Request $request) => $request['cmd'] === 'v-list-web-domains' && $request['arg1'] === 'acme' && $request['arg2'] === 'json');
+});
+
 test('a non-zero return code throws with the hestia code', function () {
     Http::fake(['*' => Http::response('4')]);
 

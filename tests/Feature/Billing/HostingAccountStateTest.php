@@ -6,6 +6,7 @@ use App\Jobs\SyncHostingAccountState;
 use App\Models\Subscription;
 use App\Services\Hestia\HestiaClient;
 use App\Services\Hestia\HestiaException;
+use Illuminate\Http\Client\ConnectionException;
 
 beforeEach(function () {
     $this->hestia = Mockery::mock(HestiaClient::class);
@@ -75,6 +76,15 @@ test('a certificate is issued and recorded', function () {
 test('a failed certificate attempt is left for the next run', function () {
     $subscription = Subscription::factory()->active()->create();
     $this->hestia->shouldReceive('addLetsEncrypt')->andThrow(HestiaException::commandFailed('v-add-letsencrypt-domain', 15));
+
+    runJob(new IssueSslCertificate($subscription));
+
+    expect($subscription->fresh()->ssl_issued_at)->toBeNull();
+});
+
+test('a certificate request that times out is left for the next run', function () {
+    $subscription = Subscription::factory()->active()->create();
+    $this->hestia->shouldReceive('addLetsEncrypt')->andThrow(new ConnectionException('cURL error 28: Operation timed out'));
 
     runJob(new IssueSslCertificate($subscription));
 
