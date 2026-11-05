@@ -7,7 +7,9 @@ use App\Models\User;
 use App\Notifications\HostingAccountReady;
 use App\Services\Hestia\HestiaClient;
 use App\Services\Hestia\HestiaException;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Queue;
 
 beforeEach(function () {
     Notification::fake();
@@ -90,4 +92,17 @@ test('the ready email includes the login details', function () {
     expect($mail->subject)->toContain('acme.co.zm')
         ->and(implode("\n", $mail->introLines))->toContain('acme')->toContain('S3cretPass')
         ->and($mail->actionUrl)->toBe('https://panel.test:8086');
+});
+
+test('an orphaned unique lock expires so provisioning can be queued again', function () {
+    Queue::fake();
+    Cache::lock('laravel_unique_job:'.ProvisionHostingAccount::class.':'.$this->subscription->id, 7200)->get();
+
+    ProvisionHostingAccount::dispatch($this->subscription);
+    Queue::assertNothingPushed();
+
+    $this->travel(121)->minutes();
+
+    ProvisionHostingAccount::dispatch($this->subscription);
+    Queue::assertPushed(ProvisionHostingAccount::class, 1);
 });

@@ -30,6 +30,12 @@ class ProvisionHostingAccount implements ShouldBeUnique, ShouldQueue
      */
     public array $backoff = [60, 300, 900, 3600];
 
+    /**
+     * Outlast every retry (~81 minutes of backoff), but let a lock orphaned by a cleared
+     * queue expire so the billing run can queue provisioning again.
+     */
+    public int $uniqueFor = 7200;
+
     public function __construct(public Subscription $subscription) {}
 
     public function uniqueId(): string
