@@ -111,7 +111,7 @@ class ProvisionHostingAccount implements ShouldBeUnique, ShouldQueue
 
         for ($attempt = 0; $attempt < self::UsernameAttempts; $attempt++) {
             try {
-                $hestia->createUser($username, $password, $owner->email, $subscription->plan->hestia_package, $subscription->team->name);
+                $hestia->createUser($username, $password, $owner->email, $subscription->plan->hestia_package, $owner->name);
 
                 return $username;
             } catch (HestiaException $e) {

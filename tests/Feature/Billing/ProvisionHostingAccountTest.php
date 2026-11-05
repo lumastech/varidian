@@ -34,7 +34,7 @@ function provision(Subscription $subscription): void
 
 test('it creates the account and website, emails the owner, then queues ssl', function () {
     Queue::fake();
-    $this->hestia->shouldReceive('createUser')->once()->with('acme', Mockery::type('string'), 'it@acme.co.zm', 'Starter', $this->owner->currentTeam->name);
+    $this->hestia->shouldReceive('createUser')->once()->with('acme', Mockery::type('string'), 'it@acme.co.zm', 'Starter', $this->owner->name);
     $this->hestia->shouldReceive('listWebDomains')->once()->with('acme')->andReturn([]);
     $this->hestia->shouldReceive('addWebDomain')->once()->with('acme', 'acme.co.zm');
     $this->hestia->shouldNotReceive('addLetsEncrypt');
