@@ -8,7 +8,7 @@ use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 
 #[Signature('billing:run')]
-#[Description('Issue renewal invoices, mark overdue hosting, suspend unpaid accounts and retry SSL')]
+#[Description('Issue renewal invoices, mark overdue hosting, suspend unpaid accounts and retry provisioning and SSL')]
 class RunBillingCycleCommand extends Command
 {
     public function handle(RunBillingCycle $billingCycle): int

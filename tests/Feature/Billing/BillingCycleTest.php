@@ -4,6 +4,7 @@ use App\Actions\Billing\RunBillingCycle;
 use App\Enums\InvoiceStatus;
 use App\Enums\SubscriptionStatus;
 use App\Jobs\IssueSslCertificate;
+use App\Jobs\ProvisionHostingAccount;
 use App\Jobs\SyncHostingAccountState;
 use App\Models\Invoice;
 use App\Models\Plan;
@@ -118,12 +119,26 @@ test('missing ssl certificates are retried for recently provisioned hosting', fu
     Queue::assertPushed(IssueSslCertificate::class, fn ($job) => $job->subscription->is($needsSsl));
 });
 
+test('paid hosting that was never provisioned is queued for provisioning again', function () {
+    $stuck = subscriptionEndingIn(20, ['provisioned_at' => null]);
+    $stuckOverdue = subscriptionEndingIn(-1, ['provisioned_at' => null, 'status' => SubscriptionStatus::PastDue]);
+    subscriptionEndingIn(20, ['provisioned_at' => null, 'status' => SubscriptionStatus::Pending]);
+    subscriptionEndingIn(20, ['provisioned_at' => null, 'status' => SubscriptionStatus::Cancelled]);
+    subscriptionEndingIn(20);
+
+    expect(app(RunBillingCycle::class)->retryMissingProvisioning())->toBe(2);
+
+    Queue::assertPushed(ProvisionHostingAccount::class, 2);
+    Queue::assertPushed(ProvisionHostingAccount::class, fn ($job) => $job->subscription->is($stuck));
+    Queue::assertPushed(ProvisionHostingAccount::class, fn ($job) => $job->subscription->is($stuckOverdue));
+});
+
 test('the command runs the whole cycle', function () {
     subscriptionEndingIn(5);
 
     $this->artisan('billing:run')
         ->expectsTable(['Step', 'Subscriptions'], [
-            ['expired', 0], ['cancelled', 0], ['invoiced', 1], ['overdue', 0], ['suspended', 0], ['ssl', 0],
+            ['expired', 0], ['cancelled', 0], ['invoiced', 1], ['overdue', 0], ['suspended', 0], ['provisioned', 0], ['ssl', 0],
         ])
         ->assertSuccessful();
 });

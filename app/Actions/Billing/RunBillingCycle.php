@@ -6,6 +6,7 @@ use App\Enums\InvoiceStatus;
 use App\Enums\InvoiceType;
 use App\Enums\SubscriptionStatus;
 use App\Jobs\IssueSslCertificate;
+use App\Jobs\ProvisionHostingAccount;
 use App\Jobs\SyncHostingAccountState;
 use App\Models\Invoice;
 use App\Models\Subscription;
@@ -21,7 +22,7 @@ use Illuminate\Support\Facades\DB;
 class RunBillingCycle
 {
     /**
-     * @return array{expired: int, cancelled: int, invoiced: int, overdue: int, suspended: int, ssl: int}
+     * @return array{expired: int, cancelled: int, invoiced: int, overdue: int, suspended: int, provisioned: int, ssl: int}
      */
     public function handle(): array
     {
@@ -31,6 +32,7 @@ class RunBillingCycle
             'invoiced' => $this->issueRenewalInvoices(),
             'overdue' => $this->markOverdueSubscriptions(),
             'suspended' => $this->suspendUnpaidSubscriptions(),
+            'provisioned' => $this->retryMissingProvisioning(),
             'ssl' => $this->retryMissingSslCertificates(),
         ];
     }
@@ -126,6 +128,20 @@ class RunBillingCycle
 
                 $subscription->billingContact()?->notify(new HostingSuspended($subscription));
             },
+        );
+    }
+
+    /**
+     * Paid hosting whose provisioning job ran out of retries (e.g. while Hestia was unreachable)
+     * would otherwise never be set up, so queue it again. The job is unique per subscription.
+     */
+    public function retryMissingProvisioning(): int
+    {
+        return $this->each(
+            Subscription::query()
+                ->whereIn('status', [SubscriptionStatus::Active, SubscriptionStatus::PastDue])
+                ->whereNull('provisioned_at'),
+            fn (Subscription $subscription) => ProvisionHostingAccount::dispatch($subscription),
         );
     }
 
