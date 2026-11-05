@@ -32,6 +32,19 @@ test('commands are posted with the hash and positional arguments', function () {
         && $request['arg5'] === 'Acme Ltd');
 });
 
+test('contact names are reduced to characters hestia accepts', function (string $name, string $expected) {
+    Http::fake(['*' => Http::response('0')]);
+
+    app(HestiaClient::class)->createUser('acme', 'secret-pass', 'it@acme.co.zm', 'Starter', $name);
+
+    Http::assertSent(fn (Request $request) => $request['arg5'] === $expected);
+})->with([
+    'apostrophe' => ["Lumas's Team", 'Lumass Team'],
+    'accents and symbols' => ['Café & Co. (Lusaka)', 'Cafe Co. Lusaka'],
+    'too long' => [str_repeat('a', 60), str_repeat('a', 50)],
+    'nothing usable' => ["'&'", 'Customer'],
+]);
+
 test('a non-zero return code throws with the hestia code', function () {
     Http::fake(['*' => Http::response('4')]);
 

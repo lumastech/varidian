@@ -5,6 +5,7 @@ namespace App\Services\Hestia;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 /**
  * Thin wrapper around the Hestia control panel API (POST /api/ with hash authentication).
@@ -43,7 +44,18 @@ class HestiaClient
 
     public function createUser(string $username, string $password, string $email, string $package, string $name): void
     {
-        $this->run('v-add-user', [$username, $password, $email, $package, $name]);
+        $this->run('v-add-user', [$username, $password, $email, $package, $this->contactName($name)]);
+    }
+
+    /**
+     * Hestia rejects contact names with anything but letters, digits, spaces, "-", "." and "_"
+     * (return code 2), so a team called "Lumas's Team" must be sent as "Lumass Team".
+     */
+    private function contactName(string $name): string
+    {
+        $clean = trim(preg_replace('/\s+/', ' ', preg_replace('/[^\pL\pN \-._]/u', '', Str::ascii($name))));
+
+        return mb_substr($clean, 0, 50) ?: 'Customer';
     }
 
     public function changePassword(string $username, string $password): void
